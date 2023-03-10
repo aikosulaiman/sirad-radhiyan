@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'Propensi123!',
-        'HOST': 'db.jipjwryijjugnxmqlbcg.supabase.co',
+        'HOST': 'db.dorgkkroxkevhodmfggz.supabase.co',
         'PORT': '5432',
     },
 
