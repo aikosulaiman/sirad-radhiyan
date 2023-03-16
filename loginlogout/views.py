@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -5,8 +6,21 @@ from django.http import JsonResponse, HttpResponse
 from .forms import LoginForm
 from django.db import connection
 
+def is_authenticated(request):
+    try:
+        request.session['Username']
+        return True
+    except:
+        return False
+
+
 def home(request):
-    return render(request, 'index.html', context=dict(request.session))
+    print(is_authenticated)
+    if is_authenticated(request):
+        return render(request, 'index.html', context=dict(request.session))
+    else:
+        return HttpResponseRedirect("/login")
+
 
 def login(request) :
     cursor = connection.cursor()
