@@ -7,6 +7,3 @@ def index(request):
 
 def customer_registration(request):
     return render(request, 'customer-registration.html')
-
-def read_profile(request):
-    return render(request, 'read-profile.html')
