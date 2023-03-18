@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import EventForm
 from .models import Event
 from datetime import datetime, timedelta, timezone
+from django.contrib import messages
 
 def create_event(request):
     form = EventForm()
@@ -10,7 +11,8 @@ def create_event(request):
         form = EventForm(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('list_event')
+            success_message = 'Event created successfully!'
+            return render(request, 'success_page.html', {'success_message': success_message})
 
     return render(request, 'create_event.html', {'form': form})
 

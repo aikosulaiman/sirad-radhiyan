@@ -20,4 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('sirad.urls')),
     path('event/', include('events.urls')),
+    path('', include('user.urls')),
 ]
