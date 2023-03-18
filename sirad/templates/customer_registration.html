@@ -1,0 +1,24 @@
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        {{form.as_p}}
+
+        <!-- <label>Nama Lengkap</label>
+        <input type="text" name="nama" placeholder="Input nama lengkap"/>
+
+        <label>Nomor Telepon</label>
+        <input type="text" name="phonenumber" placeholder="Input nomor telepon"/>
+
+        <label>E-mail</label>
+        <input type="text" name="email" placeholder="Input e-mail"/>
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Input password"/>
+
+        <label>VIP</label>
+        <input type="checkbox" name="vip"/> -->
+
+        <input type="submit" value="Sign In"/>
+    </form>
+</div>
