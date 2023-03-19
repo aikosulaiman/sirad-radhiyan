@@ -1,0 +1,62 @@
+{% extends 'static.html' %}
+{% block content %}
+<title>Update Profile</title>
+
+<br><br>
+<main id="main">
+    <section>
+<div class="container-fluid">
+    <h1 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;" class="text-center">
+        SIRAD
+    </h1>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header" style="color:#080808;
+                font-family: 'Poppins', sans-serif;
+                font-size: 20px; font-weight: bold;">
+                    <!-- Type: {{}} -->
+                </div>
+                <div class="card-body">
+                    <form class="user" method="POST">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        <div class="input-group-append">
+                            <label for="name">Nama Lengkap</label><br>
+                        </div>
+                        <input class="form-control" value="{{name}}" type="text" name="name" required><br>
+                        <div class="input-group-append">
+                            <label for="number">Nomor Telepon</label><br>
+                        </div>
+                        <input class="form-control" value="{{number}}" type="text" name="number" required><br>
+                        <div class="input-group-append">
+                            <label for="email">Email</label><br>
+                        </div>
+                        <input class="form-control" value="{{email}}" type="text" name="email" required><br>
+                        <button class="btn btn-primary px-4" type="submit">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <h2 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 500;">
+        Input Informasi User</h2>
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form> -->
+</div>
+    </section>
+</main>
+{% endblock %}
