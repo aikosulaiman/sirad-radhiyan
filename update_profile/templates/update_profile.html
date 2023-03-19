@@ -19,7 +19,7 @@
                 <div class="card-header" style="color:#080808;
                 font-family: 'Poppins', sans-serif;
                 font-size: 20px; font-weight: bold;">
-                    <!-- Type: {{}} -->
+                    Update Profile
                 </div>
                 <div class="card-body">
                     <form class="user" method="POST">
@@ -29,19 +29,39 @@
                             {{ form.non_field_errors }}
                         </div>
                         {% endif %}
-                        <div class="input-group-append">
-                            <label for="name">Nama Lengkap</label><br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="input-group-append">
+                                        <label for="name">Nama Depan</label><br>
+                                    </div>
+                                    <input class="form-control" value="{{first_name}}" type="text" name="first_name"><br>
+                                </div>
+                        
+                                <div class="col-sm">
+                                    <div class="input-group-append">
+                                        <label for="name">Nama Belakang</label><br>
+                                    </div>
+                                    <input class="form-control" value="{{last_name}}" type="text" name="last_name"><br>
+                                </div>
+                            </div>
                         </div>
-                        <input class="form-control" value="{{name}}" type="text" name="name" required><br>
                         <div class="input-group-append">
                             <label for="number">Nomor Telepon</label><br>
                         </div>
-                        <input class="form-control" value="{{number}}" type="text" name="number" required><br>
+                        <input class="form-control" value="{{no_telepon}}" type="text" name="number"><br>
                         <div class="input-group-append">
                             <label for="email">Email</label><br>
                         </div>
-                        <input class="form-control" value="{{email}}" type="text" name="email" required><br>
-                        <button class="btn btn-primary px-4" type="submit">Update</button>
+                        <input class="form-control" value="{{email}}" type="email" name="email"><br>
+                        <div class="input-group-append">
+                            <label for="email">Password</label><br>
+                        </div>
+                        <button class="btn btn-primary px-4" href="/">Ganti Password</button>
+
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <button class="btn btn-primary px-4" type="submit">Update</button>
+                        </div>
                     </form>
                 </div>
             </div>
