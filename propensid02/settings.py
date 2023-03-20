@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "sirad",
     "loginlogout",
     "user",
+    "events",
+    "user",
 ]
 
 MIDDLEWARE = [

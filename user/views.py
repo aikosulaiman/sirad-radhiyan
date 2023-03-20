@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import User
 from .forms import UserForm
 from django.http import HttpResponseRedirect
+from django.db import IntegrityError, connection
 
 # Create your views here.
 def index(request):
@@ -64,7 +65,76 @@ def list_user(request):
 def delete_user(request, id):
     user_by_id = User.objects.get(id=id)
     user_by_id.delete()
+    return HttpResponseRedirect('/user/list-user')
 
-    user = User.objects.all().values()
-    response = {'user':user}
-    return render(request, 'user_list.html', response)
+def update_user(request, user_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Admin':
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            # Mencari user
+            cursor.execute("""
+            SELECT *
+            FROM user_user
+            WHERE id = '{0}' ;
+            """.format(user_id))
+            user = cursor.fetchall()
+                
+            response = {
+                    'user_id':user_id,
+                    'user':user,}
+            cursor.close()
+            return render(request, 'user_update.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def update_user_handler(request, user_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Admin':
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            # get data dari form
+            username = request.GET.get('username')
+            first_name = request.GET.get('first_name')
+            last_name = request.GET.get('last_name')
+            email = request.GET.get('email')
+            no_telepon = request.GET.get('no_telepon')
+
+            try:
+                # update
+                cursor.execute("""
+                UPDATE user_user
+                SET username = '{0}', first_name = '{1}', last_name = '{2}', email = '{3}', no_telepon = '{4}'
+                WHERE id = '{5}';
+                """.format(username, first_name, last_name, email, no_telepon, user_id))
+                success_message = 'User updated successfully!'
+                cursor.close()
+                return render(request, 'success_page_user.html', {'success_message': success_message})
+            except IntegrityError:
+                # If the field is not unique, return an error message
+                error_message = 'This field is already taken. Please choose another one.'
+                cursor.execute("""
+                SELECT *
+                FROM user_user
+                WHERE id = '{0}' ;
+                """.format(user_id))
+                user = cursor.fetchall()
+                response = {
+                    'error_message': error_message,
+                    'user':user,
+                    'user_id': user_id}
+                cursor.close()
+                return render(request, 'user_update.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
