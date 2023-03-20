@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, update_profile, update_profile_handler
+from .views import index, update_profile, update_profile_handler, customer_registration, form_pendaftaran_hewan, payment_form
 
 urlpatterns = [
     path('', index, name='Index'),
