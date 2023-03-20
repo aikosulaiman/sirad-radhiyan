@@ -88,10 +88,11 @@
           </div>
           {% else %}
             <br>
+            <br>
             <p>No events.</p>
           {% endif %}
         </div>
-        <div id="past" class="tab-pane fade show active">
+        <div id="past" class="tab-pane fade">
           {% if past_events %}
             <div class="wrap">
               {% for event in past_events %}
@@ -118,7 +119,7 @@
             <p>No past events.</p>
           {% endif %}
         </div>
-        <div id="today" class="tab-pane fade show active">
+        <div id="today" class="tab-pane fade">
           {% if today_events %}
             <div class="wrap">
               {% for event in today_events %}
@@ -142,10 +143,11 @@
             {% endfor %}
           </div>
           {% else %}
+            <br>
             <p>No today's events.</p>
           {% endif %}
         </div>
-        <div id="future" class="tab-pane fade show active">
+        <div id="future" class="tab-pane fade">
           {% if upcoming_events %}
             <div class="wrap">
               {% for event in upcoming_events %}
@@ -168,6 +170,7 @@
             {% endfor %}
           </div>
           {% else %}
+            <br>
             <p>No upcoming events.</p>
           {% endif %}
         </div>
