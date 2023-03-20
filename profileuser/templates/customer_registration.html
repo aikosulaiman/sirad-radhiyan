@@ -1,97 +1,94 @@
-{% extends 'static.html' %}
-{% block content %}
-<title>Sign In</title>
-
-<br><br>
-<main id="main">
-    <section>
-<div class="container-fluid">
-    <h1 style="color:#080808;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    font-weight: 600;" class="text-center">
-        Form Sign In SIRAD
-    </h1>
-    <br>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header" style="color:#080808;
+{% extends 'static.html' %} {% block content %}
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#20a9f8;
                 font-family: 'Poppins', sans-serif;
-                font-size: 20px; font-weight: bold;">
-                    Form Sign In SIRAD
-                </div>
-                <div class="card-body">
-                    <form class="user" method="POST">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ form.non_field_errors }}
-                        </div>
-                        {% endif %}
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">Username:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="{{ form.username.name }}" class="form-control" id="username" required>
-                                </div>
+                font-size: 48px;
+                font-weight: 600;">SIRAD</h2>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Registrasi Customer
+                            </div>
+                            <div class="card-body">
+                                <form class="user" method="POST">
+                                    {% csrf_token %} {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Username:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.username.name }}" class="form-control" id="username" placeholder="Username" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">First Name:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.first_name.name }}" class="form-control" id="first_name" placeholder="First Name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Last Name:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.last_name.name }}" class="form-control" id="last_name" placeholder="Last Name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Email:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.email.name }}" class="form-control" id="email" placeholder="Email" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">No Telepon:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.no_telepon.name }}" class="form-control" id="no_telepon" placeholder="No Telepon" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Password:</label>
+                                            <div class="col-sm-8">
+                                                <input type="password" name="{{ form.password.name }}" class="form-control" id="password" placeholder="Password" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">VIP:</label>
+                                            <input type="checkbox" name="" class="form-control" id="">
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <button class="btn btn-primary px-4" type="submit" value="Sign In">Sign In</button>
+                                    </div>
+                                    <br>
+                                </form>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">First Name:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="{{ form.first_name.name }}" class="form-control" id="first_name" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">Last Name:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="{{ form.last_name.name }}" class="form-control" id="last_name" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">Email:</label>
-                                <div class="col-sm-8">
-                                    <input type="email" name="{{ form.email.name }}" class="form-control" id="email" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">Nomor Telepon:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" name="{{ form.no_telepon.name }}" class="form-control" id="no_telepon" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">Password:</label>
-                                <div class="col-sm-8">
-                                    <input type="password" name="{{ form.password.name }}" class="form-control" id="password" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label class="col-sm-4">VIP:</label>
-                                <div class="col-sm-8">
-                                    <input type="checkbox" name="{{ form.is_vip.name }}" class="form-control" id="is_vip"/>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary px-4" type="submit">Sign In</button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
-    </section>
+</section>
 </main>
-{% endblock %}
+</div>
+{% endblock content %}

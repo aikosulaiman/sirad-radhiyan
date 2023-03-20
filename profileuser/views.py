@@ -2,7 +2,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.conf import settings
 # from ..profileuser.forms import UserForm
-from .models import User, Customer
+from .models import User, Customer, Hewan
 from django.db import IntegrityError, connection
 from .forms import CustomerForm, FormPendaftaranHewan
 
@@ -67,28 +67,41 @@ def update_profile_handler(request, user_id):
     cursor.close()
     return HttpResponseRedirect('/list-user')
 
-def customer_registration(request):
+def customer_registration(request) :
+    cursor = connection.cursor()
     form = CustomerForm()
     if request.method == 'POST':
         form = CustomerForm(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('Index')
-
+            return HttpResponseRedirect('/')
+        else:
+            form.add_error(None, "Username already exists")
     response = {'form': form}
     return render(request, 'customer_registration.html', response)
 
 
-def form_pendaftaran_hewan(request):
-    form = FormPendaftaranHewan()
+def form_pendaftaran_hewan(request) :
+    cursor = connection.cursor()
     if request.method == 'POST':
         form = FormPendaftaranHewan(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('Index')
+            hewan_id = form.cleaned_data['hewan_id']
+            nama = form.cleaned_data['nama']
+            jenis = form.cleaned_data['jenis']
+            umur = form.cleaned_data['umur']
+            note = form.cleaned_data['note']
+            cursor.execute("SET search_path TO public")
+            cursor.execute('INSERT INTO public."profileuser_hewan" VALUES (%s, %s, %s, %s, %s)', [hewan_id, nama, jenis, umur, note])
+            return redirect('/profile')
+    else:
+        form = FormPendaftaranHewan()
+    return render(request, 'form_pendaftaran_hewan.html', {'form': form})
 
-    context = {'form': form}
-    return render(request, 'form_pendaftaran_hewan.html', context)
+def delete_hewan(request, id):
+    hewan_by_id = Hewan.objects.get(id=id)
+    hewan_by_id.delete()
+    return HttpResponseRedirect('/profile')
 
 def payment_form(request):
     context = {}
