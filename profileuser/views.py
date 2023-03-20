@@ -45,8 +45,8 @@ def update_profile_handler(request, user_id):
         SET username = '{0}', first_name = '{1}', last_name = '{2}', email = '{3}', no_telepon = '{4}', password = '{5}'
         WHERE id = '{6}';
         """.format(username, first_name, last_name, email, no_telepon, password, user_id))
-        success_message = 'User updated successfully!'
-        return render(request, 'success_page_user.html', {'success_message': success_message})
+        success_message = 'Profile updated successfully!'
+        return render(request, 'update_success.html', {'success_message': success_message})
     except IntegrityError:
         # If the field is not unique, return an error message
         error_message = 'This field is already taken. Please choose another one.'

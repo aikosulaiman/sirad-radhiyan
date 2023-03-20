@@ -23,7 +23,7 @@
                     Update Profile
                 </div>
                 <div class="card-body">
-                    <form action="{% url 'update_user_handler' user_id%}" method="GET">
+                    <form action="{% url 'update_profile_handler' user_id%}" method="GET">
                         {% if error_message %}
                             <div class="alert alert-danger">{{ error_message }}</div>
                         {% endif %}
