@@ -41,7 +41,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Event</a>
+                    <a class="dropdown-item" href="/event">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -67,126 +67,132 @@
 <br>
 
 <style>
-
-/* .logo-image{
+    /* .logo-image{
     width: 70px;
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
     margin-top: -6px;
 } */
-
-/* content styling */
-.content-text {
-    text-align: center;
-    color: #fff;
-    font-size: 15px;
-}
-
-/* button styling */
-.card-button {
-    font-size: 15px;
-    text-align: center;
-    cursor: pointer;
-    color: #fff;
-    border-style: solid;
-    border-color:#fff;
-    border-radius: 10px;
-    display: block;
-    width: 50%;
-    margin: 0 auto;
-    background-color: #eb4640;
-}
-
-.card-button:hover {
-    box-shadow:  4px 4px 4px 4px rgba(0,0,0,0.2);
-    background-color: #f86c67;
-}
-
-/* issues styling */
-.event-card, .adopsi-card, .doctor-card, .groomer-card {
-    border-style: solid;
-    border-color:#fff;
-    border-radius: 10px;
-    align-self: center;
-    transition: 0.3s;
-}
-
-.event-card:hover, .adopsi-card:hover, .doctor-card:hover, .groomer-card:hover {
-    box-shadow:  8px 8px 8px 8px rgba(0,0,0,0.2);
-}
-
-.doctor-card {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/veterinarian-check-ing-puppy-s-health_23-2148728396.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=sph");
-    background-position: left;
-}
-
-.groomer-card {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1625279138876-8910c2af9a30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGV0JTIwZG9jdG9yfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60");
-    background-position: left;
-}
-
-.event-card {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/beautiful-friends-playing-with-cute-dog_23-2148238379.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=ais");
-    background-position: left;
-}
-
-.adopsi-card {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/cheerful-young-couple-petting-cute-dog-home_651396-2757.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112");
-    background-position: left;
-}
-
-.card-text, .card-title {
-    text-align: center;
-    color: #fff;
-}
+    /* content styling */
+    
+    .content-text {
+        text-align: center;
+        color: #fff;
+        font-size: 15px;
+    }
+    /* button styling */
+    
+    .card-button {
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 10px;
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        background-color: #eb4640;
+    }
+    
+    .card-button:hover {
+        box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
+        background-color: #f86c67;
+    }
+    /* issues styling */
+    
+    .event-card,
+    .adopsi-card,
+    .doctor-card,
+    .groomer-card {
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 10px;
+        align-self: center;
+        transition: 0.3s;
+    }
+    
+    .event-card:hover,
+    .adopsi-card:hover,
+    .doctor-card:hover,
+    .groomer-card:hover {
+        box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .doctor-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/veterinarian-check-ing-puppy-s-health_23-2148728396.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=sph");
+        background-position: left;
+    }
+    
+    .groomer-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1625279138876-8910c2af9a30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGV0JTIwZG9jdG9yfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60");
+        background-position: left;
+    }
+    
+    .event-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/beautiful-friends-playing-with-cute-dog_23-2148238379.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=ais");
+        background-position: left;
+    }
+    
+    .adopsi-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/cheerful-young-couple-petting-cute-dog-home_651396-2757.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112");
+        background-position: left;
+    }
+    
+    .card-text,
+    .card-title {
+        text-align: center;
+        color: #fff;
+    }
 </style>
 
 <div class="cocontainer-fluid text-center">
 
-	<!-- hero image -->
+    <!-- hero image -->
     <div class="jumbotron jumbotron-fluid header" style="background-color: #c3d8ea">
-		<div class="container">
+        <div class="container">
             <h2>Selamat Datang di SIRAD,</h2>
             <h2>{{username}}!</h2>
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<!-- issues in card format -->
+    <!-- issues in card format -->
     <div class="card-deck" style="margin: 10px;">
         <div class="card doctor-card">
-			<div class="card-body">
-			<h5 class="card-title">Dokter</h5>
-			<p class="card-text">Buat appointment dokter disini!</p>
-			<button onclick="window.location.href='/'" class="btn card-button">Buat Appointment</button>
-			</div>
-		</div>
+            <div class="card-body">
+                <h5 class="card-title">Dokter</h5>
+                <p class="card-text">Buat appointment dokter disini!</p>
+                <button onclick="window.location.href='/'" class="btn card-button">Buat Appointment</button>
+            </div>
+        </div>
         <div class="card groomer-card">
-			<div class="card-body">
-			<h5 class="card-title">Groomer</h5>
-			<p class="card-text">Buat appointment grooming disini!</p>
-			<button onclick="window.location.href='/'" class="btn card-button">Buat Appointment</button>
-			</div>
-		</div>
-	</div>
+            <div class="card-body">
+                <h5 class="card-title">Groomer</h5>
+                <p class="card-text">Buat appointment grooming disini!</p>
+                <button onclick="window.location.href='/'" class="btn card-button">Buat Appointment</button>
+            </div>
+        </div>
+    </div>
 
-	<div class="card-deck" style="margin: 10px;">
+    <div class="card-deck" style="margin: 10px;">
         <div class="card event-card">
-			<div class="card-body">
-			<h5 class="card-title">Event</h5>
-			<p class="card-text">Lihat event disini!</p>
-			<button onclick="window.location.href='/'" class="btn card-button">Lihat Event</button>
-			</div>
-		</div>
+            <div class="card-body">
+                <h5 class="card-title">Event</h5>
+                <p class="card-text">Lihat event disini!</p>
+                <button onclick="window.location.href='/'" class="btn card-button">Lihat Event</button>
+            </div>
+        </div>
 
         <div class="card adopsi-card">
-			<div class="card-body">
-			<h5 class="card-title">Adopsi</h5>
-			<p class="card-text">Lihat hewan adopsi disini!</p>
-			<button onclick="window.location.href='/'" class="btn card-button">Lihat Hewan</button>
-			</div>
-		</div>
-	</div>
+            <div class="card-body">
+                <h5 class="card-title">Adopsi</h5>
+                <p class="card-text">Lihat hewan adopsi disini!</p>
+                <button onclick="window.location.href='/'" class="btn card-button">Lihat Hewan</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>
