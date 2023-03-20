@@ -13,12 +13,27 @@ def add_user(request):
         form = UserForm(request.POST or None)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('/list-user')
+            return HttpResponseRedirect('/user/list-user')
+        else:
+            form.add_error(None, "Username already exists")
+
     response = {'form': form}
     return render(request, 'user_add.html', response)
 
 def list_user(request):
+    user_admin = User.objects.filter(role="Admin") #Filter Role Admin
+    user_customer = User.objects.filter(role="Customer") #Filter Role Customer
+    user_dokter = User.objects.filter(role="Dokter") #Filter Role Dokter
+    user_groomer = User.objects.filter(role="Groomer") #Filter Role Groomer
+    user_karyawan = User.objects.filter(role="Karyawan") #Filter Role Karyawan
+    
     user = User.objects.all().values()
-    response = {'user':user}
-    return render(request, 'user_list.html', response)
 
+    response = {'user':user,
+                'user_admin':user_admin,
+                'user_customer':user_customer,
+                'user_dokter':user_dokter,
+                'user_groomer':user_groomer,
+                'user_karyawan':user_karyawan
+                }
+    return render(request, 'user_list.html', response)

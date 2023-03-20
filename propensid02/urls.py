@@ -20,5 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('sirad.urls')),
     path('', include('loginlogout.urls')),
-    path('', include('user.urls')),
+    path('/user', include('user.urls')),
 ]
