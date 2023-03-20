@@ -118,7 +118,7 @@ def update_user_handler(request, user_id):
                 return render(request, 'success_page_user.html', {'success_message': success_message})
             except IntegrityError:
                 # If the field is not unique, return an error message
-                error_message = 'This field is already taken. Please choose another one.'
+                error_message = 'Username or Email is already taken. Please choose another one.'
                 cursor.execute("""
                 SELECT *
                 FROM user_user
