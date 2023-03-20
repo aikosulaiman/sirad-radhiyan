@@ -1,0 +1,92 @@
+{% extends 'static.html' %}
+{% block content %}
+<title>Update Hewan</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+<br><br>
+<main id="main">
+    <section>
+<div class="container-fluid">
+    <h1 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;" class="text-center">
+        SIRAD
+    </h1>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header" style="color:#080808;
+                font-family: 'Poppins', sans-serif;
+                font-size: 20px; font-weight: bold;">
+                    Update Hewan
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'update_hewan_handler' user_id%}" method="GET">
+                        {% if error_message %}
+                            <div class="alert alert-danger">{{ error_message }}</div>
+                        {% endif %}
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label for="nama" class="col-sm-4">Nama:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="nama" name="nama" value="{{ user.0.1 }}" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label for="jenis" class="col-sm-4">Jenis:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="jenis" name="jenis" value="{{ user.0.2 }}" class="form-control" required>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label for="umur" class="col-sm-4">Umur:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" id="umur" name="umur" value="{{ user.0.3 }}" class="form-control" required>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label for="note" class="col-sm-4">Note:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="note" name="note" value="{{ user.0.4 }}" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-primary px-4" type="submit">Update</button>
+                        </div>
+                        
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+</main>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+</script>
+
+
+{% endblock %}
