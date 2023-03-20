@@ -37,3 +37,11 @@ def list_user(request):
                 'user_karyawan':user_karyawan
                 }
     return render(request, 'user_list.html', response)
+
+def delete_user(request, id):
+    user_by_id = User.objects.get(id=id)
+    user_by_id.delete()
+
+    user = User.objects.all().values()
+    response = {'user':user}
+    return render(request, 'user_list.html', response)

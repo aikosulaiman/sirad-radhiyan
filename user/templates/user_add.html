@@ -1,6 +1,7 @@
 {% extends 'static.html' %}
 {% block content %}
 <title>Manajemen User</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 <br><br>
 <main id="main">
@@ -57,11 +58,7 @@
                             <div class="row mt-4">
                                 <label class="col-sm-4">Email:</label>
                                 <div class="col-sm-8">
-<<<<<<< HEAD
                                     <input type="email" name="{{ form.email.name }}" class="form-control" id="email" required>
-=======
-                                    <input type="text" name="{{ form.email.name }}" class="form-control" id="email" required>
->>>>>>> 32ac432 (fitur create dan read all user)
                                 </div>
                             </div>
                         </div>
@@ -69,11 +66,7 @@
                             <div class="row mt-4">
                                 <label class="col-sm-4">Nomor Telepon:</label>
                                 <div class="col-sm-8">
-<<<<<<< HEAD
                                     <input type="number" name="{{ form.no_telepon.name }}" class="form-control" id="no_telepon" required>
-=======
-                                    <input type="text" name="{{ form.no_telepon.name }}" class="form-control" id="no_telepon" required>
->>>>>>> 32ac432 (fitur create dan read all user)
                                 </div>
                             </div>
                         </div>
@@ -81,7 +74,6 @@
                             <div class="row mt-4">
                                 <label class="col-sm-4">Role:</label>
                                 <div class="col-sm-8">
-<<<<<<< HEAD
                                     <select id="role" name="{{ form.role.name }}" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                         <option selected>Pilih Role</option>
                                         <option value="Admin">Admin</option>
@@ -99,37 +91,43 @@
                         <div class="form-group">
                             <div class="row mt-4">
                                 <label class="col-sm-4">Password:</label>
+                                
                                 <div class="col-sm-8">
                                     <input type="password" name="{{ form.password.name }}" class="form-control" id="password" required>
-=======
-                                    <!-- <select class="form-select form-select-sm" aria-label=".form-select-sm example"></select> -->
-                                    <input type="form-select" name="{{ form.role.name }}" class="form-control" id="role" required>
->>>>>>> 32ac432 (fitur create dan read all user)
+                                    <!-- <label for="password"> -->
+                                        <input type="password" name="{{ form.password.name }}" class="form-control" id="password" style="position:relative;" required>
+                                        <span class="far fa-eye" id="togglePassword" style="position:absolute; right:30px;top:11px; cursor: pointer;"></span>
+                                    <!-- </label> -->
                                 </div>
                             </div>
                         </div>
                         <button class="btn btn-primary px-4" type="submit">Create</button>
-<<<<<<< HEAD
+
                         <a href="/user/list-user">
                             <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
                         </a>
-=======
->>>>>>> 32ac432 (fitur create dan read all user)
+                        <a href="/user/list-user">
+                            <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
+                        </a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- <h2 style="color:#080808;
-    font-family: 'Poppins', sans-serif;
-    font-size: 36px;
-    font-weight: 500;">
-        Input Informasi User</h2>
-    <form method="post">
-        {% csrf_token %} {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form> -->
 </div>
     </section>
 </main>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+</script>
 {% endblock %}
