@@ -1,3 +1,4 @@
+import uuid
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -72,7 +73,7 @@ def customer_registration(request) :
     if request.method == 'POST':
         form = CustomerForm(request.POST)
         if form.is_valid():
-            customer_id = form.cleaned_data['id']
+            id = uuid.uuid4()
             username = form.cleaned_data['username']
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -81,7 +82,7 @@ def customer_registration(request) :
             no_telepon = form.cleaned_data['no_telepon']
             password = form.cleaned_data['password']
             cursor.execute("SET search_path TO public")
-            cursor.execute('INSERT INTO public."User" VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', [customer_id, username, first_name, last_name, role, email, no_telepon, password])
+            cursor.execute('INSERT INTO user_user VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', [id, username, first_name, last_name, role, email, no_telepon, password])
             return redirect('/')
     else:
         form = CustomerForm()
@@ -93,13 +94,13 @@ def form_pendaftaran_hewan(request) :
     if request.method == 'POST':
         form = FormPendaftaranHewan(request.POST)
         if form.is_valid():
-            hewan_id = form.cleaned_data['hewan_id']
+            hewan_id = uuid.uuid4()
             nama = form.cleaned_data['nama']
             jenis = form.cleaned_data['jenis']
             umur = form.cleaned_data['umur']
             note = form.cleaned_data['note']
             cursor.execute("SET search_path TO public")
-            cursor.execute('INSERT INTO public."profileuser_hewan" VALUES (%s, %s, %s, %s, %s)', [hewan_id, nama, jenis, umur, note])
+            cursor.execute('INSERT INTO profileuser_hewan VALUES (%s, %s, %s, %s, %s)', [hewan_id, nama, jenis, umur, note])
             return redirect('/profile')
     else:
         form = FormPendaftaranHewan()
