@@ -20,5 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('sirad.urls')),
     path('', include('loginlogout.urls')),
-    path('profile/', include('update_profile.urls')),
+    # path('profile/', include('update_profile.urls')),
 ]
