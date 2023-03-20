@@ -1,91 +1,152 @@
-{% extends 'static.html' %}
-{% block content %}
+{% extends 'static.html' %} {% block content %}
 <title>Update Hewan</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href='/' style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Create Appointment</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Create Appointment</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <br><br>
 <main id="main">
     <section>
-<div class="container-fluid">
-    <h1 style="color:#080808;
+        <div class="container-fluid">
+            <h1 style="color:#080808;
     font-family: 'Poppins', sans-serif;
     font-size: 40px;
     font-weight: 600;" class="text-center">
-        SIRAD
-    </h1>
-    <br>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header" style="color:#080808;
+                SIRAD
+            </h1>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header" style="color:#080808;
                 font-family: 'Poppins', sans-serif;
                 font-size: 20px; font-weight: bold;">
-                    Update Hewan
-                </div>
-                <div class="card-body">
-                    <form action="{% url 'update_hewan_handler' user_id%}" method="GET">
-                        {% if error_message %}
-                            <div class="alert alert-danger">{{ error_message }}</div>
-                        {% endif %}
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="nama" class="col-sm-4">Nama:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="nama" name="nama" value="{{ user.0.1 }}" class="form-control" required>
+                            Update Hewan
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'update_hewan_handler' user_id%}" method="GET">
+                                {% if error_message %}
+                                <div class="alert alert-danger">{{ error_message }}</div>
+                                {% endif %} {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="nama" class="col-sm-4">Nama:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="nama" name="nama" value="{{ user.0.1 }}" class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="jenis" class="col-sm-4">Jenis:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="jenis" name="jenis" value="{{ user.0.2 }}" class="form-control" required>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="jenis" class="col-sm-4">Jenis:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="jenis" name="jenis" value="{{ user.0.2 }}" class="form-control" required>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="umur" class="col-sm-4">Umur:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" id="umur" name="umur" value="{{ user.0.3 }}" class="form-control" required>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="umur" class="col-sm-4">Umur:</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" id="umur" name="umur" value="{{ user.0.3 }}" class="form-control" required>
+                                        </div>
+
+                                    </div>
                                 </div>
-                               
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="note" class="col-sm-4">Note:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="note" name="note" value="{{ user.0.4 }}" class="form-control" required>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="note" class="col-sm-4">Note:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="note" name="note" value="{{ user.0.4 }}" class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-primary px-4" type="submit">Update</button>
+                                </div>
+
+                            </form>
                         </div>
-                        <div class="mt-5 text-center">
-                            <button class="btn btn-primary px-4" type="submit">Update</button>
-                        </div>
-                        
-                      </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
     </section>
 </main>
 
 <script>
     const togglePassword = document.querySelector('#togglePassword');
-  const password = document.querySelector('#password');
+    const password = document.querySelector('#password');
 
-  togglePassword.addEventListener('click', function (e) {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
-});
+    togglePassword.addEventListener('click', function(e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
 </script>
 
 
