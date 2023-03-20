@@ -2,7 +2,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.conf import settings
 # from ..profileuser.forms import UserForm
-from .models import User
+from .models import User, Hewan
 from django.db import IntegrityError, connection
 
 def index(request):
@@ -64,7 +64,63 @@ def update_profile_handler(request, user_id):
 
         
     cursor.close()
-    return HttpResponseRedirect('/list-user')
+    return HttpResponseRedirect('/profile')
+
+def update_hewan(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM user_hewan
+    WHERE hewan_id = '{0}' ;
+    """.format(user_id))
+    user = cursor.fetchall()
+        
+    response = {
+            'user_id':user_id,
+            'user':user,}
+    cursor.close()
+    return render(request, 'update_hewan.html', response)
+
+def update_hewan_handler(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # get data dari form
+    nama = request.GET.get('nama')
+    jenis = request.GET.get('jenis')
+    umur = request.GET.get('umur')
+    note = request.GET.get('note')
+
+    try:
+        # update
+        cursor.execute("""
+        UPDATE user_hewan
+        SET nama = '{0}', jenis = '{1}', umur = '{2}', note = '{3}'
+        WHERE hewan_id = '{4}';
+        """.format(nama, jenis, umur, note, user_id))
+        success_message = 'Hewan updated successfully!'
+        return render(request, 'update_success.html', {'success_message': success_message})
+    except IntegrityError:
+        # If the field is not unique, return an error message
+        error_message = 'This field is already taken. Please choose another one.'
+        cursor.execute("""
+        SELECT *
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(user_id))
+        user = cursor.fetchall()
+        response = {
+            'error_message': error_message,
+            'user':user,
+            'user_id': user_id}
+        return render(request, 'update_hewan.html', response)
+
+        
+    cursor.close()
+    return HttpResponseRedirect('/profile')
 
 # @login_required()  
 # def update_profile(request, id):
