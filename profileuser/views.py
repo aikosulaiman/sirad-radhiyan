@@ -1,9 +1,10 @@
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 # from ..profileuser.forms import UserForm
-from .models import User
+from .models import User, Customer
 from django.db import IntegrityError, connection
+from .forms import CustomerForm, FormPendaftaranHewan
 
 def index(request):
     return render(request, 'base.html')
@@ -66,32 +67,29 @@ def update_profile_handler(request, user_id):
     cursor.close()
     return HttpResponseRedirect('/list-user')
 
-# @login_required()  
-# def update_profile(request, id):
-#     response = {}
-#     user = get_user(request)
-    
-#     profile = get_object_or_404(User, id=id)
-#     if request.POST:
-#         form = UserForm(request.POST or None, instance=profile)
-#         if form.is_valid():
-#             temp = form.save(commit=False)
-#             temp.save()
-#             profile = temp
-#             return HttpResponseRedirect('/')
+def customer_registration(request):
+    form = CustomerForm()
+    if request.method == 'POST':
+        form = CustomerForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('Index')
 
-#     form = UserForm(
-#             initial={
-#                 "Nama Depan": profile.first_name,
-#                 "Nama Belakang": profile.last_name,
-#                 "Nomor Telepon": profile.no_telepon,
-#                 "E-mail": profile.email,
-#             }
-#         )
-#     response['form'] = form
-#     response['first_name'] = profile.first_name
-#     response['last_name'] = profile.last_name
-#     response['no_telepon'] = profile.no_telepon
-#     response['email'] = profile.email
+    response = {'form': form}
+    return render(request, 'customer_registration.html', response)
 
-#     return render(request, 'update_profile.html', response)
+
+def form_pendaftaran_hewan(request):
+    form = FormPendaftaranHewan()
+    if request.method == 'POST':
+        form = FormPendaftaranHewan(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Index')
+
+    context = {'form': form}
+    return render(request, 'form_pendaftaran_hewan.html', context)
+
+def payment_form(request):
+    context = {}
+    return render(request, 'payment_form.html', context)
