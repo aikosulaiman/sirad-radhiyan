@@ -25,7 +25,7 @@ def add_user(request):
                     form.save()
                     return HttpResponseRedirect('/user/list-user')
                 else:
-                    form.add_error(None, "Username already exists")
+                    form.add_error(None, "Username or email already exists, please choose another one!")
             response = {'form': form}
             return render(request, 'user_add.html', response)
         else:
