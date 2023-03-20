@@ -1,7 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Hewan
-from .forms import FormPendaftaranHewan, CustomerForm
+from django.shortcuts import render
 
+# Create your views here.
 def index(request):
     return render(request, 'base.html')

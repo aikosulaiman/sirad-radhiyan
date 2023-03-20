@@ -1,11 +1,12 @@
 from django import forms
-from ..update_profile.models import User, Customer, Hewan
+from .models import Customer, Hewan
+# from ..update_profile.models import User
 
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = "__all__"
+# class UserForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = "__all__"
 
 class CustomerForm(forms.ModelForm):
     class Meta:
