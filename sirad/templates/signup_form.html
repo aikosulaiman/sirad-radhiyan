@@ -1,7 +1,100 @@
-<div>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit"/>
-    </form>
+{% extends 'static.html' %}
+{% block content %}
+<title>Pendaftaran Hewan</title>
+
+<br><br>
+<main id="main">
+    <section>
+<div class="container-fluid">
+    <h1 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;" class="text-center">
+        Form Pendaftaran Hewan SIRAD
+    </h1>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header" style="color:#080808;
+                font-family: 'Poppins', sans-serif;
+                font-size: 20px; font-weight: bold;">
+                    Form Pendaftaran Hewan SIRAD
+                </div>
+                <div class="card-body">
+                    <form class="user" method="POST">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Nama Hewan:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="" class="form-control" id="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Jenis Hewan:</label>
+                                <div class="col-sm-8">
+                                    <select id="" name="" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <option selected>Pilih Jenis Hewan</option>
+                                        <option value="Admin">Anjing</option>
+                                        <option value="Customer">Kucing</option>
+                                        <option value="Dokter">Burung</option>
+                                    </select>
+                                    <!-- <input type="text" name="{{ form.role.name }}" class="form-control" id="role" required> -->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Tahun:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="" class="form-control" id="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Bulan:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="" class="form-control" id="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Informasi Tambahan:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="" class="form-control" id="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary px-4" type="submit">Create</button>
+                        <a href="/user/list-user">
+                            <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <h2 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 500;">
+        Input Informasi User</h2>
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form> -->
 </div>
+    </section>
+</main>
+{% endblock %}
