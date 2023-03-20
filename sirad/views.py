@@ -31,3 +31,7 @@ def signup_form(request):
 
     context = {'form': form}
     return render(request, 'signup_form.html', context)
+
+def payment_form(request):
+    context = {}
+    return render(request, 'payment_form.html', context)

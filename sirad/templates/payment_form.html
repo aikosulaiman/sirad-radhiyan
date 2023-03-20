@@ -1,0 +1,76 @@
+{% extends 'static.html' %}
+{% block content %}
+<title>Payment Form</title>
+
+<br><br>
+<main id="main">
+    <section>
+<div class="container-fluid">
+    <h1 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;" class="text-center">
+        Form Pembayaran SIRAD
+    </h1>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header" style="color:#080808;
+                font-family: 'Poppins', sans-serif;
+                font-size: 20px; font-weight: bold;">
+                    Form Pembayaran SIRAD
+                </div>
+                <div class="card-body">
+                    <form class="user" method="POST">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Total:</label>
+                                <div class="col-sm-8">
+                                    Rp 50,000
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Pilih Metode Pembayaran:</label>
+                                <div class="col-sm-8">
+                                    <select id="" name="" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <option selected>Pilih Metode Pembayaran</option>
+                                        <option value="Admin">Gopay</option>
+                                        <option value="Customer">OVO</option>
+                                        <option value="Dokter">DANA</option>
+                    
+                                    </select>
+                                    <!-- <input type="text" name="{{ form.role.name }}" class="form-control" id="role" required> -->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row mt-4">
+                                <label class="col-sm-4">Upload Bukti Pembayaran:</label>
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Upload</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary px-4" type="submit">Bayar</button>
+                        <a href="/user/list-user">
+                            <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+</main>
+{% endblock %}
