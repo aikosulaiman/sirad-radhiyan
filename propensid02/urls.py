@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('sirad.urls')),
     path('', include('loginlogout.urls')),
     path('user/', include('user.urls')),
+    path('event/', include('events.urls')),
 ]
