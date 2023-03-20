@@ -69,16 +69,23 @@ def update_profile_handler(request, user_id):
 
 def customer_registration(request) :
     cursor = connection.cursor()
-    form = CustomerForm()
     if request.method == 'POST':
-        form = CustomerForm(request.POST or None)
+        form = CustomerForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/')
-        else:
-            form.add_error(None, "Username already exists")
-    response = {'form': form}
-    return render(request, 'customer_registration.html', response)
+            customer_id = form.cleaned_data['id']
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            role = "Customer"
+            email = form.cleaned_data['email']
+            no_telepon = form.cleaned_data['no_telepon']
+            password = form.cleaned_data['password']
+            cursor.execute("SET search_path TO public")
+            cursor.execute('INSERT INTO public."User" VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', [customer_id, username, first_name, last_name, role, email, no_telepon, password])
+            return redirect('/')
+    else:
+        form = CustomerForm()
+    return render(request, 'customer_registration.html', {'form': form})
 
 
 def form_pendaftaran_hewan(request) :
