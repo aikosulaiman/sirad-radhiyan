@@ -8,6 +8,9 @@ from django.db import IntegrityError, connection
 def index(request):
     return render(request, 'base.html')
 
+def read_profile(request):
+    return render(request, 'read-profile.html')
+
 def update_profile(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
