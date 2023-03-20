@@ -18,10 +18,15 @@ def index(request):
     if is_authenticated(request):
         context = {}
         context['username'] = request.session['Username']
-        if request.session['Role'] == 'Karyawan':
+        if request.session['Role'] == 'Admin':
+            return render(request, 'home_admin.html', context)
+        elif request.session['Role'] == 'Customer':
+            return render(request, 'home_customer.html', context)
+        elif request.session['Role'] == 'Dokter':
+            return render(request, 'home_dokter.html', context)
+        elif request.session['Role'] == 'Groomer':
+            return render(request, 'home_groomer.html', context)
+        elif request.session['Role'] == 'Karyawan':
             return render(request, 'home_karyawan.html', context)
-        # Bikin elif untuk tiap role
-        # elif request.session['Role'] == 'Dokter':
-        #     return render(request, 'home_dokter.html', context)
     else:
         return HttpResponseRedirect("/login")

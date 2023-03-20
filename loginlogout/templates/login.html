@@ -1,4 +1,5 @@
 {% extends 'static.html' %} {% block content %}
+<<<<<<< HEAD
 <!-- Outer Row -->
 <main id="main">
     <section class="vh-100" style="background-color: #e1eaf5;">
@@ -46,12 +47,70 @@
                                     Belum punya akun? daftar <a href="#">sebagai customer di sini</a>
                                 </div>
                             </form>
+=======
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#20a9f8;
+                font-family: 'Poppins', sans-serif;
+                font-size: 48px;
+                font-weight: 600;">SIRAD</h2>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Log In
+                            </div>
+                            <div class="card-body">
+                                <form class="user" method="POST">
+                                    {% csrf_token %} {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Username:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.username.name }}" class="form-control" id="username" placeholder="Username" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Password:</label>
+                                            <div class="col-sm-8">
+                                                <input type="password" name="{{ form.password.name }}" class="form-control" id="password" placeholder="Password" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <button class="btn btn-primary px-4" type="submit" value="Login">Login</button>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        Belum punya akun? daftar <a href="#">sebagai customer di sini</a>
+                                    </div>
+                                </form>
+                            </div>
+>>>>>>> 0e6c5d6 (finished building home)
                         </div>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
         </div>
         </div>
     </section>
 </main>
+=======
+</div>
+</section>
+</main>
+</div>
+>>>>>>> 0e6c5d6 (finished building home)
 {% endblock content %}
