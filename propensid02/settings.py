@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "loginlogout",
     "user",
     "events",
+    "user",
 ]
 
 MIDDLEWARE = [

@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('loginlogout.urls')),
     path('user/', include('user.urls')),
     path('event/', include('events.urls')),
+    path('', include('user.urls')),
 ]

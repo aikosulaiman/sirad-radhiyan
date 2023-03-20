@@ -1,18 +1,39 @@
 import datetime
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import EventForm
 from .models import Event
 from datetime import datetime, timedelta, timezone
+from django.contrib import messages
+
+def is_authenticated(request):
+    try:
+        request.session['Username']
+        return True
+    except:
+        return False
 
 def create_event(request):
-    form = EventForm()
-    if request.method == 'POST':
-        form = EventForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            return redirect('list_event')
+    if is_authenticated(request):
+        if request.session['Role'] == 'Karyawan':
+            form = EventForm()
+            if request.method == 'POST':
+                form = EventForm(request.POST or None)
+                if form.is_valid():
+                    form.save()
+                    success_message = 'Event created successfully!'
+                    return render(request, 'success_page.html', {'success_message': success_message})
 
-    return render(request, 'create_event.html', {'form': form})
+            return render(request, 'create_event.html', {'form': form})
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+    
+    
 
 def list_event(request):
     # Filter Event Today
