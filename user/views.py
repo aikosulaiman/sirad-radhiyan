@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from .models import User
 from .forms import UserForm
 from django.http import HttpResponseRedirect
@@ -65,11 +65,7 @@ def list_user(request):
 def delete_user(request, id):
     user_by_id = User.objects.get(id=id)
     user_by_id.delete()
-
-    user = User.objects.all().values()
-    response = {'user':user}
-    return render(request, 'user_list.html', response)
-
+    return HttpResponseRedirect('/user/list-user')
 
 def update_user(request, user_id):
     if is_authenticated(request):
@@ -141,5 +137,4 @@ def update_user_handler(request, user_id):
             return render(request, 'error_page.html', context)
     else:
         return HttpResponseRedirect("/login")
-
 
