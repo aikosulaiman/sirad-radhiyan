@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "sirad",
-    # "update_profile",
+    "update_profile",
 ]
 
 MIDDLEWARE = [
