@@ -1,0 +1,166 @@
+{% extends 'static.html' %} {% load static %} {% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/create-event">Create Event</a>
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Create Adopsi</a>
+                    <a class="dropdown-item" href="#">List Adopsi</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Statistik
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Statistik Dokter</a>
+                    <a class="dropdown-item" href="#">Statistik Grooming</a>
+                    <a class="dropdown-item" href="#">Statistik Event</a>
+                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<br>
+
+<style>
+    /* content styling */
+    
+    .content-text {
+        text-align: center;
+        color: #fff;
+        font-size: 15px;
+    }
+    /* button styling */
+    
+    .card-button {
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 10px;
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        background-color: #eb4640;
+    }
+    
+    .card-button:hover {
+        box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
+        background-color: #f86c67;
+    }
+    /* issues styling */
+    
+    .event-card,
+    .adopsi-card,
+    .statistik-card {
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 10px;
+        align-self: center;
+        transition: 0.3s;
+    }
+    
+    .event-card:hover,
+    .adopsi-card:hover,
+    .statistik-card:hover {
+        box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .event-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/beautiful-friends-playing-with-cute-dog_23-2148238379.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=ais");
+        background-position: left;
+    }
+    
+    .adopsi-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/cheerful-young-couple-petting-cute-dog-home_651396-2757.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112");
+        background-position: left;
+    }
+    
+    .statistik-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/businesswoman-using-tablet-analysis-graph-company-finance-strategy-statistics-success-concept-planning-future-office-room_74952-1410.jpg?size=626&ext=jpg&ga=GA1.2.203679071.1675664112&semt=sph");
+        background-position: left;
+    }
+    
+    .card-text,
+    .card-title {
+        text-align: center;
+        color: #fff;
+    }
+</style>
+
+<div class="cocontainer-fluid text-center">
+
+    <!-- hero image -->
+    <div class="jumbotron jumbotron-fluid header" style="background-color: #c3d8ea">
+        <div class="container">
+            <h2>Selamat Datang di SIRAD,</h2>
+            <h2>{{username}}!</h2>
+        </div>
+    </div>
+
+    <!-- issues in card format -->
+    <div class="card-deck" style="margin: 10px;">
+        <div class="card event-card">
+            <div class="card-body">
+                <h5 class="card-title">Event</h5>
+                <p class="card-text">Tambah event baru disini!</p>
+                <button onclick="window.location.href='/event/create-event'" class="btn card-button">Tambah Event</button>
+            </div>
+        </div>
+
+        <div class="card adopsi-card">
+            <div class="card-body">
+                <h5 class="card-title">Adopsi</h5>
+                <p class="card-text">Tambah hewan baru untuk diadopsi disini!</p>
+                <button onclick="window.location.href='/'" class="btn card-button">Tambah Hewan</button>
+            </div>
+        </div>
+
+        <div class="card statistik-card">
+            <div class="card-body">
+                <h5 class="card-title">Statistik</h5>
+                <p class="card-text">Cek statistik SIRAD disini!</p>
+                <button onclick="window.location.href='/'" class="btn card-button">Lihat Statistik</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

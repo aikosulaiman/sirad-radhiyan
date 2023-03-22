@@ -8,7 +8,7 @@ from django.db import IntegrityError, connection
 from .forms import CustomerForm, FormPendaftaranHewan
 
 def index(request):
-    return render(request, 'base.html')
+    return HttpResponseRedirect("/")
 
 def update_profile(request, user_id):
     cursor = connection.cursor()
@@ -51,7 +51,7 @@ def update_profile_handler(request, user_id):
         return render(request, 'update_success.html', {'success_message': success_message})
     except IntegrityError:
         # If the field is not unique, return an error message
-        error_message = 'This field is already taken. Please choose another one.'
+        error_message = 'Username or email is already taken. Please choose another one.'
         cursor.execute("""
         SELECT *
         FROM user_user
@@ -66,7 +66,7 @@ def update_profile_handler(request, user_id):
 
         
     cursor.close()
-    return HttpResponseRedirect('/list-user')
+    return HttpResponseRedirect('/profile')
 
 def customer_registration(request) :
     cursor = connection.cursor()
@@ -106,11 +106,67 @@ def form_pendaftaran_hewan(request) :
         form = FormPendaftaranHewan()
     return render(request, 'form_pendaftaran_hewan.html', {'form': form})
 
-def delete_hewan(request, id):
-    hewan_by_id = Hewan.objects.get(id=id)
-    hewan_by_id.delete()
-    return HttpResponseRedirect('/profile')
+# def delete_hewan(request, id):
+#     hewan_by_id = Hewan.objects.get(id=id)
+#     hewan_by_id.delete()
+#     return HttpResponseRedirect('/profile')
 
 def payment_form(request):
     context = {}
     return render(request, 'payment_form.html', context)
+
+def update_hewan(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM user_hewan
+    WHERE hewan_id = '{0}' ;
+    """.format(user_id))
+    user = cursor.fetchall()
+        
+    response = {
+            'user_id':user_id,
+            'user':user,}
+    cursor.close()
+    return render(request, 'update_hewan.html', response)
+
+def update_hewan_handler(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # get data dari form
+    nama = request.GET.get('nama')
+    jenis = request.GET.get('jenis')
+    umur = request.GET.get('umur')
+    note = request.GET.get('note')
+
+    try:
+        # update
+        cursor.execute("""
+        UPDATE user_hewan
+        SET nama = '{0}', jenis = '{1}', umur = '{2}', note = '{3}'
+        WHERE hewan_id = '{4}';
+        """.format(nama, jenis, umur, note, user_id))
+        success_message = 'Hewan updated successfully!'
+        return render(request, 'update_success.html', {'success_message': success_message})
+    except IntegrityError:
+        # If the field is not unique, return an error message
+        error_message = 'Username or email is already taken. Please choose another one.'
+        cursor.execute("""
+        SELECT *
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(user_id))
+        user = cursor.fetchall()
+        response = {
+            'error_message': error_message,
+            'user':user,
+            'user_id': user_id}
+        return render(request, 'update_hewan.html', response)
+
+        
+    cursor.close()
+    return HttpResponseRedirect('/profile')

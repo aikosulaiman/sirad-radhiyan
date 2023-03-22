@@ -30,13 +30,13 @@ def login(request) :
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             cursor.execute("SET search_path TO public")
-            cursor.execute('SELECT * FROM public."User" WHERE "User"."Username"=%s AND "User"."Password"=%s', [username, password])
+            cursor.execute('SELECT * FROM user_user WHERE username=%s AND password=%s', [username, password])
             user = cursor.fetchall()
             print(user)
             if len(user) > 0:
                 request.session["Username"] = user[0][1]
-                request.session["Email"] = user[0][2]
-                request.session["Role"] = user[0][6]
+                request.session["Email"] = user[0][5]
+                request.session["Role"] = user[0][4]
                 return redirect('/')
             else:
                 form.add_error(None, "Invalid username or password")
