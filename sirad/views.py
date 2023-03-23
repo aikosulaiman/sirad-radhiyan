@@ -1,12 +1,8 @@
 from contextlib import nullcontext
 from django.shortcuts import render
-<<<<<<< HEAD
-from django.contrib.auth.models import User
-=======
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
->>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
 
 # Create your views here.
 def is_authenticated(request):
@@ -18,10 +14,6 @@ def is_authenticated(request):
 
 
 def index(request):
-<<<<<<< HEAD
-    return render(request, 'base.html')
-
-=======
     print(is_authenticated)
     if is_authenticated(request):
         context = {}
@@ -38,4 +30,3 @@ def index(request):
             return render(request, 'home_karyawan.html', context)
     else:
         return HttpResponseRedirect("/login")
->>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
