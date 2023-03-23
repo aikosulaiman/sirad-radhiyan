@@ -140,9 +140,9 @@ def update_user_handler(request, user_id):
         return HttpResponseRedirect("/login")
 
 def customer_registration(request):
-    form = UserForm()
+    form = CustomerForm()
     if request.method == 'POST':
-        form = UserForm(request.POST or None)
+        form = CustomerForm(request.POST or None)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/login')
