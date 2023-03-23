@@ -1,0 +1,362 @@
+{% extends 'static_user.html' %} {% block content %}
+<title>Manajemen User</title>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Users
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/user/add-user">Create User</a>
+                    <a class="dropdown-item" href="/user/list-user">List User</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Layanan Master Data</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">List Adopsi</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Statistik
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Statistik Dokter</a>
+                    <a class="dropdown-item" href="#">Statistik Grooming</a>
+                    <a class="dropdown-item" href="#">Statistik Event</a>
+                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<style>
+    .containers {
+        padding: 16px 16px;
+        width: 300px;
+        height: 300px;
+    }
+    
+    .custom-table {
+        background-color: #ebf2f5;
+    }
+</style>
+
+<body style="background-color: rgb(255, 255, 255);">
+    <br>
+    <div class="container">
+        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600;">Manajemen User SIRAD</h2>
+
+        <div class="d-grid d-md-flex justify-content-md-end">
+            <a href="/user/add-user">
+                <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">+ Create User</button>
+            </a>
+        </div>
+
+        <br>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#all">All User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#admin">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#customer">Customer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#dokter">Dokter</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#groomer">Groomer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#karyawan">Karyawan</a>
+            </li>
+        </ul>
+        <br>
+        <div class="tab-content">
+            <div id="all" class="tab-pane fade show active">
+                {% if user %}
+                <div class="wrap">
+
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Username</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">First Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Last Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Role</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.username }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.first_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.last_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.role }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.email }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.no_telepon }}</td>
+                                <td class="text-center">
+                                    <!-- <button type="button" href="update-user/{{ user.id }}" class="btn btn-info" style="font-family: 'Poppins', sans-serif;">Update</button> -->
+                                    <a class="btn btn-info" href="update-user/{{ user.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-user/{{ user.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div id="admin" class="tab-pane fade">
+                {% if user_admin %}
+                <div class="wrap">
+
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Username</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">First Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Last Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Role</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_admin %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.username }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.first_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.last_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.role }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.email }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.no_telepon }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" href="update-user/{{ user.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-user/{{ user.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div id="customer" class="tab-pane fade">
+                {% if user_customer %}
+                <div class="wrap">
+
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Username</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">First Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Last Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Role</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_customer %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.username }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.first_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.last_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.role }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.email }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.no_telepon }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" href="update-user/{{ user.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-user/{{ user.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div id="dokter" class="tab-pane fade">
+                {% if user_dokter %}
+                <div class="wrap">
+
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Username</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">First Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Last Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Role</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_dokter %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.username }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.first_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.last_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.role }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.email }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.no_telepon }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" href="update-user/{{ user.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-user/{{ user.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div id="groomer" class="tab-pane fade">
+                {% if user_groomer %}
+                <div class="wrap">
+
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Username</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">First Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Last Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Role</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_groomer %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.username }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.first_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.last_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.role }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.email }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.no_telepon }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" href="update-user/{{ user.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-user/{{ user.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div id="karyawan" class="tab-pane fade">
+                {% if user_karyawan %}
+                <div class="wrap">
+
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Username</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">First Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Last Name</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Role</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_karyawan %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.username }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.first_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.last_name }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.role }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.email }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ user.no_telepon }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" href="update-user/{{ user.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-user/{{ user.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+{% endblock %}

@@ -6,10 +6,14 @@ from .models import User, Hewan
 from django.db import IntegrityError, connection
 
 def index(request):
+<<<<<<< HEAD
     return render(request, 'base.html')
 
 def read_profile(request):
     return render(request, 'read-profile.html')
+=======
+    return HttpResponseRedirect("/")
+>>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
 
 def update_profile(request, user_id):
     cursor = connection.cursor()
@@ -52,7 +56,11 @@ def update_profile_handler(request, user_id):
         return render(request, 'update_success.html', {'success_message': success_message})
     except IntegrityError:
         # If the field is not unique, return an error message
+<<<<<<< HEAD
         error_message = 'This field is already taken. Please choose another one.'
+=======
+        error_message = 'Username or email is already taken. Please choose another one.'
+>>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
         cursor.execute("""
         SELECT *
         FROM user_user
@@ -108,7 +116,11 @@ def update_hewan_handler(request, user_id):
         return render(request, 'update_success.html', {'success_message': success_message})
     except IntegrityError:
         # If the field is not unique, return an error message
+<<<<<<< HEAD
         error_message = 'This field is already taken. Please choose another one.'
+=======
+        error_message = 'Username or email is already taken. Please choose another one.'
+>>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
         cursor.execute("""
         SELECT *
         FROM user_hewan
