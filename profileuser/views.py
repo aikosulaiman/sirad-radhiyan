@@ -5,7 +5,7 @@ from django.conf import settings
 # from ..profileuser.forms import UserForm
 from .models import User, Customer, Hewan
 from django.db import IntegrityError, connection
-from .forms import CustomerForm, FormPendaftaranHewan
+from .forms import FormPendaftaranHewan
 
 def index(request):
     return HttpResponseRedirect("/")
@@ -67,27 +67,6 @@ def update_profile_handler(request, user_id):
         
     cursor.close()
     return HttpResponseRedirect('/profile')
-
-def customer_registration(request) :
-    cursor = connection.cursor()
-    if request.method == 'POST':
-        form = CustomerForm(request.POST)
-        if form.is_valid():
-            id = uuid.uuid4()
-            username = form.cleaned_data['username']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            role = "Customer"
-            email = form.cleaned_data['email']
-            no_telepon = form.cleaned_data['no_telepon']
-            password = form.cleaned_data['password']
-            cursor.execute("SET search_path TO public")
-            cursor.execute('INSERT INTO user_user VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', [id, username, first_name, last_name, role, email, no_telepon, password])
-            return redirect('/')
-    else:
-        form = CustomerForm()
-    return render(request, 'customer_registration.html', {'form': form})
-
 
 def form_pendaftaran_hewan(request) :
     cursor = connection.cursor()
