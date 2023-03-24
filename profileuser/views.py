@@ -21,6 +21,7 @@ def read_profile(request, username):
     user = cursor.fetchall()
         
     response = {
+            'user_id':user[0][0],
             'username':username,
             'user_first_name':user[0][2],
             'user_last_name':user[0][3],
@@ -31,6 +32,9 @@ def read_profile(request, username):
     cursor.close()
     print(user)
     return render(request, 'read_profile.html', response)
+
+def vip_form(request):
+    return render(request, 'vip_form.html')
 
 def update_profile(request, user_id):
     cursor = connection.cursor()
