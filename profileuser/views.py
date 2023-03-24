@@ -8,6 +8,30 @@ from django.db import IntegrityError, connection
 def index(request):
     return HttpResponseRedirect("/")
 
+def read_profile(request, username):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM user_user
+    WHERE username = '{0}' ;
+    """.format(username))
+    user = cursor.fetchall()
+        
+    response = {
+            'username':username,
+            'user_first_name':user[0][2],
+            'user_last_name':user[0][3],
+            'user_role':user[0][4],
+            'user_email':user[0][5],
+            'user_no_telepon':user[0][6],
+            'user':user}
+    cursor.close()
+    print(user)
+    return render(request, 'read_profile.html', response)
+
 def update_profile(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
