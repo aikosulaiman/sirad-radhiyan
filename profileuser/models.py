@@ -33,3 +33,9 @@ class Hewan(models.Model):
     umur = models.IntegerField()
     note = models.CharField(max_length=200)
     pemilik = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+class VipValidation(models.Model):
+    vip_validation_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    metode_pembayaran = models.CharField(max_length=50)
+    bukti_pembayaran = models.ImageField(null=True, blank=True, upload_to="images/")

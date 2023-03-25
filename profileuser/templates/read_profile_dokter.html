@@ -1,5 +1,5 @@
 {% extends 'static.html' %} {% block content %}
-<title>Update Profile</title>
+<title>Halaman Profile</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> {% if request.session.Role == 'Karyawan' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
@@ -200,6 +200,7 @@
     </div>
 </nav>
 {% endif %}
+<br>
 <main id="main">
     <section>
         <div class="container-fluid">
@@ -207,73 +208,51 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header" style="color:#080808;
-                font-family: 'Poppins', sans-serif;
-                font-size: 20px; font-weight: bold;">
-                            VIP Form
+                        <div class="card-header">
+                            Profil Anda
                         </div>
                         <div class="card-body">
-                            <form method="POST" enctype="multipart/form-data">
-                                {% csrf_token %} {% if form.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form.non_field_errors }}
+                            <div class="row">
+                                <label class="col-sm-4">Username:</label>
+                                <div class="col-sm-8">
+                                    <p class="card-text">{{ username }}</p>
                                 </div>
-                                {% endif %}
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Silakan transfer ke salah satu rekening berikut:
-                                </h6>
-                                <br>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Gopay :
-                                </h6>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    OVO :
-                                </h6>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    DANA :
-                                </h6>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    ShopeePay :
-                                </h6>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Total:</label>
-                                        <div class="col-sm-8">
-                                            <p class="card-text">Rp50.000,00</p>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Nama Lengkap:</label>
+                                <div class="col-sm-8">
+                                    <p class="card-text">{{ user_first_name }} {{ user_last_name }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Pilih Metode Pembayaran:</label>
-                                        <div class="col-sm-8">
-                                            <select id="metode_pembayaran" name="metode_pembayaran" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
-                                                <option selected value="">Pilih Metode Pembayaran</option>
-                                                <option value="Gopay">Gopay</option>
-                                                <option value="OVO">OVO</option>
-                                                <option value="DANA">DANA</option>
-                                                <option value="ShopeePay">ShopeePay</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Role:</label>
+                                <div class="col-sm-8">
+                                    <p class="card-text">{{ user_role }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Upload Bukti Pembayaran:</label>
-                                        <div class="col-sm-8">
-                                            <div class="custom-file">
-                                                <input type="file" id="image" name="image" required>
-                                                <!-- <label class="custom-file-label" for="image">Pilih Gambar</label> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="row mt-4">
-                                        <img src="" class="img-thumbnail">
-                                    </div> -->
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Email:</label>
+                                <div class="col-sm-8">
+                                    <p class="card-text">{{ user_email }}</p>
                                 </div>
-                                <button class="btn btn-success px-4" type="submit">Bayar</button>
-                                <button type="button" onclick="history.back()" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Kembali</button>
-                            </form>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Nomor Telepon:</label>
+                                <div class="col-sm-8">
+                                    <p class="card-text">{{ user_no_telepon }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Tarif:</label>
+                                <div class="col-sm-8">
+                                    <p class="card-text">{{ user_tarif }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">List Hewan:</label>
+                            </div>
+                            <a href="#" class="btn btn-success">Tambah Hewan</a>
+                            <a href="/profile/update-profile/{{ user_id }}" class="btn btn-secondary">Update Profile</a>
                         </div>
                     </div>
                 </div>
@@ -281,4 +260,19 @@
         </div>
     </section>
 </main>
+
+<!-- <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function(e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+</script> -->
+
+
 {% endblock %}

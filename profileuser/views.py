@@ -4,37 +4,82 @@ from django.conf import settings
 # from ..profileuser.forms import UserForm
 from .models import User, Hewan
 from django.db import IntegrityError, connection
+from .forms import VipValidationForm
 
 def index(request):
     return HttpResponseRedirect("/")
 
-def read_profile(request, username):
-    cursor = connection.cursor()
-    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+def is_authenticated(request):
+    try:
+        request.session['Username']
+        return True
+    except:
+        return False
 
-    # Mencari user
-    cursor.execute("""
-    SELECT *
-    FROM user_user
-    WHERE username = '{0}' ;
-    """.format(username))
-    user = cursor.fetchall()
-        
-    response = {
-            'user_id':user[0][0],
-            'username':username,
-            'user_first_name':user[0][2],
-            'user_last_name':user[0][3],
-            'user_role':user[0][4],
-            'user_email':user[0][5],
-            'user_no_telepon':user[0][6],
-            'user':user}
-    cursor.close()
-    print(user)
-    return render(request, 'read_profile.html', response)
+def read_profile(request, username):
+    if is_authenticated(request):
+        cursor = connection.cursor()
+        cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+        # Mencari user
+        cursor.execute("""
+        SELECT *
+        FROM user_user
+        WHERE username = '{0}' ;
+        """.format(username))
+        user = cursor.fetchall()
+            
+        response = {
+                'user_id':user[0][0],
+                'username':username,
+                'user_first_name':user[0][2],
+                'user_last_name':user[0][3],
+                'user_role':user[0][4],
+                'user_email':user[0][5],
+                'user_no_telepon':user[0][6],
+                'user':user}
+
+        if response['user_role'] == 'Customer':
+            cursor.execute("""
+            SELECT *
+            FROM user_customer
+            WHERE user_ptr_id = '{0}' ;
+            """.format(response['user_id']))
+            user = cursor.fetchall()
+
+            response['user_is_vip'] = user[0][1]
+            cursor.close()
+            return render(request, 'read_profile_customer.html', response)
+        elif response['user_role'] == 'Dokter':
+            cursor.execute("""
+            SELECT *
+            FROM user_dokter
+            WHERE user_ptr_id = '{0}' ;
+            """.format(response['user_id']))
+            user = cursor.fetchall()
+
+            response['user_tarif'] = user[0][1]
+            cursor.close()
+            return render(request, 'read_profile_dokter.html', response)
+        else:
+            cursor.close()
+            return render(request, 'read_profile.html', response)
+    else:
+        return HttpResponseRedirect("/login")
 
 def vip_form(request):
-    return render(request, 'vip_form.html')
+    form = VipValidationForm()
+    if request.method == 'POST':
+        form = VipValidationForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            success_message = 'Form Berhasi terkirim! Silakan tunggu!'
+            return render(request, 'vip_form_success.html', {'success_message':success_message})
+        else:
+            form.add_error(None, "Form gagal terkirim!")
+    response = {'form': form}
+    return render(request, 'vip_form.html', response)
+
 
 def update_profile(request, user_id):
     cursor = connection.cursor()
