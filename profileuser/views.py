@@ -4,7 +4,7 @@ from django.conf import settings
 # from ..profileuser.forms import UserForm
 from .models import User, Hewan
 from django.db import IntegrityError, connection
-from .forms import VipValidationForm
+from .forms import VipValidationForm, HewanForm
 
 def index(request):
     return HttpResponseRedirect("/")
@@ -134,6 +134,78 @@ def update_profile_handler(request, user_id):
             'user':user,
             'user_id': user_id}
         return render(request, 'update_profile.html', response)
+
+        
+    cursor.close()
+    return HttpResponseRedirect('/profile')
+
+# def tambah_hewan(request, user_id):
+#     form = HewanForm()
+#     if request.method == 'POST':
+#         form = HewanForm(request.POST or None)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/')
+#         else:
+#             print(form.errors)
+#             # form.add_error(None, "Username or email already exists, please choose another one!")
+#     response = {
+#         'form': form,
+#         'user_id':user_id
+#         }
+#     return render(request, 'tambah_hewan.html', response)
+
+def tambah_hewan(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM user_hewan
+    WHERE hewan_id = '{0}' ;
+    """.format(user_id))
+    user = cursor.fetchall()
+        
+    response = {
+            'user_id':user_id,
+            'user':user,}
+    cursor.close()
+    return render(request, 'tambah_hewan.html', response)
+
+def tambah_hewan_handler(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # get data dari form
+    nama = request.GET.get('nama')
+    jenis = request.GET.get('jenis')
+    umur = request.GET.get('umur')
+    note = request.GET.get('note')
+
+    try:
+        # update
+        cursor.execute("""
+        UPDATE user_hewan
+        SET nama = '{0}', jenis = '{1}', umur = '{2}', note = '{3}'
+        WHERE hewan_id = '{4}';
+        """.format(nama, jenis, umur, note, user_id))
+        success_message = 'Hewan updated successfully!'
+        return render(request, 'update_success.html', {'success_message': success_message})
+    except IntegrityError:
+        # If the field is not unique, return an error message
+        error_message = 'Username or email is already taken. Please choose another one.'
+        cursor.execute("""
+        SELECT *
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(user_id))
+        user = cursor.fetchall()
+        response = {
+            'error_message': error_message,
+            'user':user,
+            'user_id': user_id}
+        return render(request, 'update_hewan.html', response)
 
         
     cursor.close()
