@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, update_profile, update_profile_handler, update_hewan, update_hewan_handler, read_profile, vip_form, tambah_hewan
+from .views import index, update_profile, update_profile_handler, update_hewan, update_hewan_handler, read_profile, vip_form, tambah_hewan, tambah_hewan_handler
 
 urlpatterns = [
     path('', index, name='Index'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('read-profile/<str:username>', read_profile, name='read_profile'),
     path('vip-form/', vip_form, name='vip_form'),
     path('tambah-hewan/<uuid:user_id>', tambah_hewan, name='tambah_hewan'),
+    path('tambah-hewan-handler/<uuid:user_id>', tambah_hewan_handler, name='tambah_hewan_handler'),
 ]
