@@ -1,5 +1,6 @@
 {% extends 'static.html' %} {% block content %}
 <title>Tambah Hewan</title>
+<script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href='/' style="color:#20a9f8;
@@ -68,22 +69,23 @@
 <br><br>
 <main id="main">
     <section>
-        <div class="container-fluid">
-            <h1 style="color:#080808;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    font-weight: 600;" class="text-center">
-                SIRAD
-            </h1>
+        <div class="container-fluid text-center">
             <br>
+            <h2 style="color:#000000;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 600;">Tambah Hewan</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <a href="/" class="text-left">
+                        <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; Profile</p>
+                    </a>
+                </div>
+            </div>
+
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header" style="color:#080808;
-                font-family: 'Poppins', sans-serif;
-                font-size: 20px; font-weight: bold;">
-                            Tambah Hewan
-                        </div>
                         <div class="card-body">
                             <form action="{% url 'tambah_hewan_handler' user_id%}" method="POST">
                                 {% if error_message %}

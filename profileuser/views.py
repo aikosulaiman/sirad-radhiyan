@@ -48,6 +48,15 @@ def read_profile(request, username):
             user = cursor.fetchall()
 
             response['user_is_vip'] = user[0][1]
+
+            cursor.execute("""
+            SELECT *
+            FROM user_hewan
+            WHERE pemilik_id = '{0}' ;
+            """.format(response['user_id']))
+            list_hewan = cursor.fetchall()
+
+            response['list_hewan'] = list_hewan
             cursor.close()
             return render(request, 'read_profile_customer.html', response)
         elif response['user_role'] == 'Dokter':
@@ -191,7 +200,7 @@ def tambah_hewan_handler(request, user_id):
         ''', (nama, jenis, umur, note, user_id))
         success_message = 'Hewan Anda berhasil didaftarkan!'
         return render(request, 'tambah_hewan_success.html', {'success_message': success_message})
-    except IntegrityError:
+    except IntegrityError as e:
         # If the field is not unique, return an error message
         error_message = 'Hewan Anda gagal ditambahkan.'
         cursor.execute("""
@@ -201,7 +210,7 @@ def tambah_hewan_handler(request, user_id):
         """.format(user_id))
         user = cursor.fetchall()
         response = {
-            'error_message': error_message,
+            'error_message': e.__cause__,
             'user':user,
             'user_id': user_id}
         return render(request, 'tambah_hewan.html', response)

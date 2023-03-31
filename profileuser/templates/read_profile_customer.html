@@ -255,7 +255,13 @@
                             <div class="row">
                                 <label class="col-sm-4">List Hewan:</label>
                                 <div class="col-sm-8">
+                                    {% if list_hewan.length == 0 %}
                                     <p class="card-text">Anda belum mendaftarkan hewan apapun</p>
+                                    {% else %}
+                                        {% for hewan in list_hewan %}
+                                        <p class="card-text">{{ hewan.nama }}</p>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                             </div>
                             {% if not user_is_vip %}
