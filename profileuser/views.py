@@ -56,11 +56,9 @@ def read_profile(request, username):
             """.format(response['user_id']))
             list_hewan = cursor.fetchall()
             print(list_hewan)
-            
-            response['list_hewan'] = []
-            if response['list_hewan'].length > 0:
-                for hewan in list_hewan:
-                    response['list_hewan'].append(hewan[1]) 
+
+            response['list_hewan'] = list_hewan
+
             cursor.close()
             return render(request, 'read_profile_customer.html', response)
         elif response['user_role'] == 'Dokter':
@@ -325,32 +323,16 @@ def update_hewan_handler(request, user_id):
     cursor.close()
     return HttpResponseRedirect('/profile')
 
-# @login_required()  
-# def update_profile(request, id):
-#     response = {}
-#     user = get_user(request)
-    
-#     profile = get_object_or_404(User, id=id)
-#     if request.POST:
-#         form = UserForm(request.POST or None, instance=profile)
-#         if form.is_valid():
-#             temp = form.save(commit=False)
-#             temp.save()
-#             profile = temp
-#             return HttpResponseRedirect('/')
+def delete_hewan(request, hewan_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
-#     form = UserForm(
-#             initial={
-#                 "Nama Depan": profile.first_name,
-#                 "Nama Belakang": profile.last_name,
-#                 "Nomor Telepon": profile.no_telepon,
-#                 "E-mail": profile.email,
-#             }
-#         )
-#     response['form'] = form
-#     response['first_name'] = profile.first_name
-#     response['last_name'] = profile.last_name
-#     response['no_telepon'] = profile.no_telepon
-#     response['email'] = profile.email
-
-#     return render(request, 'update_profile.html', response)
+    # Mencari user
+    cursor.execute("""
+    DELETE
+    FROM user_hewan
+    WHERE hewan_id = '{0}' ;
+    """.format(hewan_id))
+    cursor.close()
+    success_message = 'Hewan ini berhasil dihapus!'
+    return render(request, 'delete_success.html', {'success_message': success_message})

@@ -206,33 +206,27 @@
         <div class="container-fluid">
             <br>
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
                             Profil Anda
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <label class="col-sm-4">Username:</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-3">Username:</label>
+                                <div class="col-sm-9">
                                     <p class="card-text">{{ username }}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-4">Nama Lengkap:</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-3">Nama Lengkap:</label>
+                                <div class="col-sm-9">
                                     <p class="card-text">{{ user_first_name }} {{ user_last_name }}</p>
                                 </div>
                             </div>
-                            <!-- <div class="row">
-                                <label class="col-sm-4">Role:</label>
-                                <div class="col-sm-8">
-                                    <p class="card-text">{{ user_role }}</p>
-                                </div>
-                            </div> -->
                             <div class="row">
-                                <label class="col-sm-4">Status:</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-3">Status:</label>
+                                <div class="col-sm-9">
                                     {% if user_is_vip %}
                                     <p class="card-text">Customer VIP</p>
                                     {% else %}
@@ -241,26 +235,53 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-4">Email:</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-3">Email:</label>
+                                <div class="col-sm-9">
                                     <p class="card-text">{{ user_email }}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-4">Nomor Telepon:</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-3">Nomor Telepon:</label>
+                                <div class="col-sm-9">
                                     <p class="card-text">{{ user_no_telepon }}</p>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
-                                <label class="col-sm-4">List Hewan:</label>
-                                <div class="col-sm-8">
-                                    {% if list_hewan.length == 0 %}
+                                <label class="col-sm-12"><center>List Hewan:</center></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if not list_hewan %}
                                     <p class="card-text">Anda belum mendaftarkan hewan apapun</p>
                                     {% else %}
-                                        {% for hewan in list_hewan %}
-                                        <p class="card-text">{{ forloop.counter }}. {{ hewan }}</p>
-                                        {% endfor %}
+                                    <table class="table table-bordered border-dark">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Nama</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Jenis</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Umur</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Note</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for hewan in list_hewan %}
+                                            <tr>
+                                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.1 }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.2 }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.3 }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.4 }}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-info" href="/profile/update-hewan/{{ hewan.0 }}">Update</a>
+                                                    <a class="btn btn-danger" href="/profile/delete-hewan/{{ hewan.0 }}" onclick="return confirm('⚠️ Apakah Anda yakin ingin menghapus hewan ini?')">Delete</a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                     {% endif %}
                                 </div>
                             </div>
