@@ -55,8 +55,12 @@ def read_profile(request, username):
             WHERE pemilik_id = '{0}' ;
             """.format(response['user_id']))
             list_hewan = cursor.fetchall()
-
-            response['list_hewan'] = list_hewan
+            print(list_hewan)
+            
+            response['list_hewan'] = []
+            if response['list_hewan'].length > 0:
+                for hewan in list_hewan:
+                    response['list_hewan'].append(hewan[1]) 
             cursor.close()
             return render(request, 'read_profile_customer.html', response)
         elif response['user_role'] == 'Dokter':
@@ -76,19 +80,69 @@ def read_profile(request, username):
     else:
         return HttpResponseRedirect("/login")
 
-def vip_form(request):
-    form = VipValidationForm()
-    if request.method == 'POST':
-        form = VipValidationForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            success_message = 'Form Berhasi terkirim! Silakan tunggu!'
-            return render(request, 'vip_form_success.html', {'success_message':success_message})
-        else:
-            form.add_error(None, "Form gagal terkirim!")
-    response = {'form': form}
+# def vip_form(request):
+#     form = VipValidationForm()
+#     if request.method == 'POST':
+#         form = VipValidationForm(request.POST or None)
+#         if form.is_valid():
+#             form.save()
+#             success_message = 'Form Berhasi terkirim! Silakan tunggu!'
+#             return render(request, 'vip_form_success.html', {'success_message':success_message})
+#         else:
+#             form.add_error(None, "Form gagal terkirim!")
+#     response = {'form': form}
+#     return render(request, 'vip_form.html', response)
+
+def vip_form(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM user_user
+    WHERE id = '{0}' ;
+    """.format(user_id))
+    user = cursor.fetchall()
+        
+    response = {
+            'user_id':user_id,
+            'user':user,}
+    cursor.close()
     return render(request, 'vip_form.html', response)
 
+def vip_form_handler(request, user_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # get data dari form
+    nama = request.POST.get('nama')
+    jenis = request.POST.get('jenis')
+    umur = request.POST.get('umur')
+    note = request.POST.get('note')
+
+    try:
+        # update
+        cursor.execute('''
+        INSERT INTO user_hewan (nama, jenis, umur, note, pemilik_id)
+        VALUES (%s, %s, %s, %s, %s);
+        ''', (nama, jenis, umur, note, user_id))
+        success_message = 'Hewan Anda berhasil didaftarkan!'
+        return render(request, 'vip_form_success.html', {'success_message': success_message})
+    except IntegrityError as e:
+        # If the field is not unique, return an error message
+        error_message = 'Hewan Anda gagal ditambahkan.'
+        cursor.execute("""
+        SELECT *
+        FROM user_user
+        WHERE id = '{0}' ;
+        """.format(user_id))
+        user = cursor.fetchall()
+        response = {
+            'error_message': e.__cause__,
+            'user':user,
+            'user_id': user_id}
+        return render(request, 'vip_form.html', response)
 
 def update_profile(request, user_id):
     cursor = connection.cursor()

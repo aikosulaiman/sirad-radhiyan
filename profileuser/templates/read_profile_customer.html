@@ -259,7 +259,7 @@
                                     <p class="card-text">Anda belum mendaftarkan hewan apapun</p>
                                     {% else %}
                                         {% for hewan in list_hewan %}
-                                        <p class="card-text">{{ hewan.nama }}</p>
+                                        <p class="card-text">{{ forloop.counter }}. {{ hewan }}</p>
                                         {% endfor %}
                                     {% endif %}
                                 </div>
