@@ -286,7 +286,7 @@
                                 </div>
                             </div>
                             {% if not user_is_vip %}
-                            <a href="/profile/vip-form" class="btn btn-primary">Upgrade ke VIP</a>
+                            <a href="/profile/submit-vip-validation/{{ user_id }}" class="btn btn-primary">Upgrade ke VIP</a>
                             {% endif %}
                             <a href="/profile/tambah-hewan/{{ user_id }}" class="btn btn-success">Tambah Hewan</a>
                             <a href="/profile/update-profile/{{ user_id }}" class="btn btn-secondary">Update Profile</a>

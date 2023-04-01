@@ -142,3 +142,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SUPABASE_URL = "https://dorgkkroxkevhodmfggz.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvcmdra3JveGtldmhvZG1mZ2d6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg0MzcwOTEsImV4cCI6MTk5NDAxMzA5MX0.ZgJmacQKQJhIWjeo1lqtjAVAo3xywCRLCOLojpYew6E"

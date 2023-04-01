@@ -1,10 +1,17 @@
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
 from django.conf import settings
-# from ..profileuser.forms import UserForm
-from .models import User, Hewan
 from django.db import IntegrityError, connection
-from .forms import VipValidationForm, HewanForm
+from django.db import connection
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.http import HttpResponse
+import io
+from PIL import Image
+from supabase.client import Client
+
+SUPABASE_URL = settings.SUPABASE_URL
+SUPABASE_KEY = settings.SUPABASE_KEY
 
 def index(request):
     return HttpResponseRedirect("/")
@@ -78,20 +85,7 @@ def read_profile(request, username):
     else:
         return HttpResponseRedirect("/login")
 
-# def vip_form(request):
-#     form = VipValidationForm()
-#     if request.method == 'POST':
-#         form = VipValidationForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             success_message = 'Form Berhasi terkirim! Silakan tunggu!'
-#             return render(request, 'vip_form_success.html', {'success_message':success_message})
-#         else:
-#             form.add_error(None, "Form gagal terkirim!")
-#     response = {'form': form}
-#     return render(request, 'vip_form.html', response)
-
-def vip_form(request, user_id):
+def submit_vip_validation(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
@@ -107,40 +101,7 @@ def vip_form(request, user_id):
             'user_id':user_id,
             'user':user,}
     cursor.close()
-    return render(request, 'vip_form.html', response)
-
-def vip_form_handler(request, user_id):
-    cursor = connection.cursor()
-    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-
-    # get data dari form
-    nama = request.POST.get('nama')
-    jenis = request.POST.get('jenis')
-    umur = request.POST.get('umur')
-    note = request.POST.get('note')
-
-    try:
-        # update
-        cursor.execute('''
-        INSERT INTO user_hewan (nama, jenis, umur, note, pemilik_id)
-        VALUES (%s, %s, %s, %s, %s);
-        ''', (nama, jenis, umur, note, user_id))
-        success_message = 'Hewan Anda berhasil didaftarkan!'
-        return render(request, 'vip_form_success.html', {'success_message': success_message})
-    except IntegrityError as e:
-        # If the field is not unique, return an error message
-        error_message = 'Hewan Anda gagal ditambahkan.'
-        cursor.execute("""
-        SELECT *
-        FROM user_user
-        WHERE id = '{0}' ;
-        """.format(user_id))
-        user = cursor.fetchall()
-        response = {
-            'error_message': e.__cause__,
-            'user':user,
-            'user_id': user_id}
-        return render(request, 'vip_form.html', response)
+    return render(request, 'submit_vip_validation.html', response)
 
 def update_profile(request, user_id):
     cursor = connection.cursor()

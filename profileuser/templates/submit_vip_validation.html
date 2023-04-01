@@ -209,23 +209,17 @@
             font-family: 'Poppins', sans-serif;
             font-size: 24px;
             font-weight: 600;"><center>VIP Form</center></h2>
-            <!-- <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <a href="/" class="text-left">
-                        <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; Profile</p>
-                    </a>
-                </div>
-            </div> -->
 
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <form method="POST" enctype="multipart/form-data">
-                                {% csrf_token %} {% if form.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form.non_field_errors }}
-                                </div>
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.non_field_errors }}
+                                    </div>
                                 {% endif %}
                                 <h6 class="card-subtitle mb-2 text-muted">
                                     Silakan transfer ke salah satu rekening berikut:
@@ -243,6 +237,9 @@
                                 <h6 class="card-subtitle mb-2 text-muted">
                                     ShopeePay :
                                 </h6>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    Kirimkan buktinya melalui nomor WA berikut :
+                                </h6>
                                 <div class="form-group">
                                     <div class="row mt-4">
                                         <label class="col-sm-4">Total:</label>
@@ -251,7 +248,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="row mt-4">
                                         <label class="col-sm-4">Pilih Metode Pembayaran:</label>
                                         <div class="col-sm-8">
@@ -267,17 +264,16 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row mt-4">
-                                        <label class="col-sm-4">Upload Bukti Pembayaran:</label>
+                                        <label class="col-sm-4" for="bukti_pembayaran">Upload Bukti Pembayaran:</label>
                                         <div class="col-sm-8">
-                                            <div class="custom-file">
-                                                <input type="file" id="image" name="image" required>
-                                            </div>
+                                            <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" required>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-success px-4" type="submit">Bayar</button>
+                                <input type="hidden" name="user_id" class="form-control" id="user_id" value="{{ user_id }}">
+                                <button class="btn btn-success px-4" type="submit" value="submit">Bayar</button> -->
                                 <button type="button" onclick="history.back()" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Kembali</button>
-                            </form>
+                            </form>                                                        
                         </div>
                     </div>
                 </div>
