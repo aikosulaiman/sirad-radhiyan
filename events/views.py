@@ -5,6 +5,7 @@ from .forms import EventForm
 from .models import Event
 from datetime import datetime, timedelta, timezone
 from django.contrib import messages
+from django.db import connection
 
 def is_authenticated(request):
     try:
@@ -27,13 +28,11 @@ def create_event(request):
             return render(request, 'create_event.html', {'form': form})
         else:
             context = {
-            'error_message': 'Access denied!'}
+            'error_message': 'Akses Ditolak!'}
             return render(request, 'error_page.html', context)
     else:
         return HttpResponseRedirect("/login")
 
-    
-    
 
 def list_event(request):
     # Filter Event Today
@@ -63,4 +62,53 @@ def list_event(request):
     
     return render(request, 'list_event.html', context)
 
+def read_event(request, event_id):
+        cursor = connection.cursor()
+        
+        if request.method != "POST":
+                cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+                if len(request.session.keys()) == 0:
+                        return redirect('/')
+                if request.session['Role'] == 'Customer':
+                    uname = request.session['Username']
+                    cursor.execute("SET search_path TO public")
+                    cursor.execute("""
+                    SELECT user_customer.is_vip FROM user_customer
+                    INNER JOIN user_user ON user_user.id = user_customer.user_ptr_id
+                    WHERE user_user.username = %s;
+                    """, [uname])
+                    isvip_cust = cursor.fetchall()
+
+                cursor.execute("""
+                SET SEARCH_PATH TO PUBLIC;
+                SELECT * 
+                FROM events_event  
+                WHERE ID= '{0}';
+                """.format(event_id))
+                event = cursor.fetchall()
+    
+                response = {'event': event, 
+                            'event_id': event_id,
+                            'isvip_cust': isvip_cust}
+                cursor.close()
+                return render(request, 'read_event.html', response)
+       
+def register_event(request):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Customer':
+            form = EventForm()
+            if request.method == 'POST':
+                form = EventForm(request.POST or None)
+                if form.is_valid():
+                    form.save()
+                    success_message = 'Event created successfully!'
+                    return render(request, 'success_page.html', {'success_message': success_message})
+
+            return render(request, 'create_event.html', {'form': form})
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
 # Create your views here.
