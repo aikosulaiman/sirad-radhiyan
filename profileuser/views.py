@@ -1,9 +1,11 @@
+import uuid
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 # from ..profileuser.forms import UserForm
-from .models import User, Hewan
+from .models import User, Customer, Hewan
 from django.db import IntegrityError, connection
+from .forms import FormPendaftaranHewan
 
 def index(request):
     return HttpResponseRedirect("/")
@@ -66,6 +68,32 @@ def update_profile_handler(request, user_id):
     cursor.close()
     return HttpResponseRedirect('/profile')
 
+def form_pendaftaran_hewan(request) :
+    cursor = connection.cursor()
+    if request.method == 'POST':
+        form = FormPendaftaranHewan(request.POST)
+        if form.is_valid():
+            hewan_id = uuid.uuid4()
+            nama = form.cleaned_data['nama']
+            jenis = form.cleaned_data['jenis']
+            umur = form.cleaned_data['umur']
+            note = form.cleaned_data['note']
+            cursor.execute("SET search_path TO public")
+            cursor.execute('INSERT INTO profileuser_hewan VALUES (%s, %s, %s, %s, %s)', [hewan_id, nama, jenis, umur, note])
+            return redirect('/profile')
+    else:
+        form = FormPendaftaranHewan()
+    return render(request, 'form_pendaftaran_hewan.html', {'form': form})
+
+# def delete_hewan(request, id):
+#     hewan_by_id = Hewan.objects.get(id=id)
+#     hewan_by_id.delete()
+#     return HttpResponseRedirect('/profile')
+
+def payment_form(request):
+    context = {}
+    return render(request, 'payment_form.html', context)
+
 def update_hewan(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
@@ -121,33 +149,3 @@ def update_hewan_handler(request, user_id):
         
     cursor.close()
     return HttpResponseRedirect('/profile')
-
-# @login_required()  
-# def update_profile(request, id):
-#     response = {}
-#     user = get_user(request)
-    
-#     profile = get_object_or_404(User, id=id)
-#     if request.POST:
-#         form = UserForm(request.POST or None, instance=profile)
-#         if form.is_valid():
-#             temp = form.save(commit=False)
-#             temp.save()
-#             profile = temp
-#             return HttpResponseRedirect('/')
-
-#     form = UserForm(
-#             initial={
-#                 "Nama Depan": profile.first_name,
-#                 "Nama Belakang": profile.last_name,
-#                 "Nomor Telepon": profile.no_telepon,
-#                 "E-mail": profile.email,
-#             }
-#         )
-#     response['form'] = form
-#     response['first_name'] = profile.first_name
-#     response['last_name'] = profile.last_name
-#     response['no_telepon'] = profile.no_telepon
-#     response['email'] = profile.email
-
-#     return render(request, 'update_profile.html', response)

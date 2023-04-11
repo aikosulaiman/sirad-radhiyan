@@ -1,0 +1,77 @@
+{% extends 'static.html' %} {% block content %}
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#20a9f8;
+                font-family: 'Poppins', sans-serif;
+                font-size: 48px;
+                font-weight: 600;">SIRAD</h2>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Form Pendaftaran Hewan
+                            </div>
+                            <div class="card-body">
+                                <form class="user" method="POST">
+                                    {% csrf_token %} {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Nama:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.nama.name }}" class="form-control" id="nama" placeholder="Nama" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Jenis:</label>
+                                            <div class="col-sm-8">
+                                                <select id="jenis" name="{{ form.jenis.name }}" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                    <option selected>Jenis</option>
+                                                    <option value="Anjing">Anjing</option>
+                                                    <option value="Kucing">Kucing</option>
+                                                    <option value="Burung">Burung</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Umur:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.umur.name }}" class="form-control" id="umur" placeholder="Umur" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Note:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="{{ form.note.name }}" class="form-control" id="note" placeholder="Note" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <button class="btn btn-primary px-4" type="submit" value="Sign In">Sign In</button>
+                                    </div>
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+</section>
+</main>
+</div>
+{% endblock content %}
