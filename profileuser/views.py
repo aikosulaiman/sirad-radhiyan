@@ -1,3 +1,4 @@
+import uuid
 from django.http.response import HttpResponseRedirect
 from django.conf import settings
 from django.db import IntegrityError, connection

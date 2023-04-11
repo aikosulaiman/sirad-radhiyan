@@ -1,3 +1,4 @@
+import uuid
 from django import forms
 from .models import User, VipValidation, Hewan
 
