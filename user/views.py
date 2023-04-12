@@ -1,7 +1,8 @@
+import uuid
 from django.shortcuts import render
 from .models import User
-from .forms import UserForm
-from django.http import HttpResponseRedirect
+from .forms import UserForm, CustomerForm
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError, connection
 
 # Create your views here.
@@ -25,7 +26,7 @@ def add_user(request):
                     form.save()
                     return HttpResponseRedirect('/user/list-user')
                 else:
-                    form.add_error(None, "Username already exists")
+                    form.add_error(None, "Username or email already exists, please choose another one!")
             response = {'form': form}
             return render(request, 'user_add.html', response)
         else:
@@ -138,3 +139,14 @@ def update_user_handler(request, user_id):
     else:
         return HttpResponseRedirect("/login")
 
+def customer_registration(request):
+    form = CustomerForm()
+    if request.method == 'POST':
+        form = CustomerForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/login')
+        else:
+            form.add_error(None, "Username or email already exists, please choose another one!")
+    response = {'form': form}
+    return render(request, 'customer_registration.html', response)
