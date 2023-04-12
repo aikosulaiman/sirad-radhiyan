@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 import io
 from PIL import Image
-from supabase.client import Client
+# from supabase.client import Client
 
 SUPABASE_URL = settings.SUPABASE_URL
 SUPABASE_KEY = settings.SUPABASE_KEY
