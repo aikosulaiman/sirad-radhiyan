@@ -1,6 +1,6 @@
 import uuid
 from django.shortcuts import render
-from .models import User
+from .models import User, Produk
 from .forms import UserForm, CustomerForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError, connection
@@ -150,3 +150,17 @@ def customer_registration(request):
             form.add_error(None, "Username or email already exists, please choose another one!")
     response = {'form': form}
     return render(request, 'customer_registration.html', response)
+
+def list_produk(request):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Admin':
+            produk = Produk.objects.all().values()
+
+            response = {'produk':produk}
+            return render(request, 'produk_list.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
