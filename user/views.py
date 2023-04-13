@@ -185,7 +185,7 @@ def add_produk(request):
     else:
         return HttpResponseRedirect("/login")
     
-def delete_produk(id):
+def delete_produk(request, id):
     produk_by_id = Produk.objects.get(id=id)
     produk_by_id.delete()
     return HttpResponseRedirect('/user/list-produk')

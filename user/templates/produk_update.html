@@ -35,7 +35,7 @@
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Layanan Master Data</a>
+                    <a class="dropdown-item" href="/user/list-produk">Layanan Master Data</a>
                     <a class="dropdown-item" href="#">List Appointment</a>
                 </div>
             </li>
@@ -77,7 +77,7 @@
         </ul>
     </div>
 </nav>
-<title>Edit User</title>
+<title>Edit Master Data</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 <br><br>
@@ -100,7 +100,7 @@
                             Edit Master Data
                         </div>
                         <div class="card-body">
-                            <form action="{% url 'update_user_handler' user_id%}" method="GET">
+                            <form action="{% url 'update_produk_handler' produk_id%}" method="GET">
                                 {% if error_message %}
                                 <div class="alert alert-danger">{{ error_message }}</div>
                                 {% endif %} {% csrf_token %}
@@ -123,9 +123,12 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row mt-4">
-                                        <label for="status" class="col-sm-4">Available?</label>
+                                        <label for="status" class="col-sm-4">Ketersediaan:</label>
                                         <div class="col-sm-8">
-                                            <input type="checkbox" id="status" name="status" value="{{ produk.0.3 }}" class="form-control" required>
+                                            <select id="status" name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                                <option selected value="False">Tidak tersedia</option>
+                                                <option value="True">Tersedia</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

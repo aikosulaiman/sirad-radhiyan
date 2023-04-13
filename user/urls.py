@@ -11,7 +11,7 @@ urlpatterns = [
     path('update-user-handler/<uuid:user_id>', views.update_user_handler, name='update_user_handler'),
     path('list-produk', views.list_produk, name='list_produk'),
     path('add-produk', views.add_produk, name='add_produk'),
-    path('delete-produk/<uuid:id>', views.delete_produk),
-    path('update-produk/<uuid:produk_id>', views.update_produk, name='update_produk'),
-    path('update-produk-handler/<uuid:produk_id>', views.update_produk_handler, name='update_produk_handler'),
+    path('delete-produk/<int:id>', views.delete_produk),
+    path('update-produk/<int:produk_id>', views.update_produk, name='update_produk'),
+    path('update-produk-handler/<int:produk_id>', views.update_produk_handler, name='update_produk_handler'),
 ]

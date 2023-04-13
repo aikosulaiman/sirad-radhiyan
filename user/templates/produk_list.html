@@ -36,7 +36,7 @@
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Layanan Master Data</a>
+                    <a class="dropdown-item" href="/user/list-produk">Layanan Master Data</a>
                     <a class="dropdown-item" href="#">List Appointment</a>
                 </div>
             </li>
@@ -122,9 +122,9 @@
                                 <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ produk.nama }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ produk.harga }}</td>
-                                <td style="font-family: 'Poppins', sans-serif;">{{ produk.status }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{% if produk.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info" href="update-produk/{{ produk.id }}">Update</a>
+                                    <a class="btn btn-info" href="/user/update-produk/{{ produk.id }}">Update</a>
                                     <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
                                 </td>
                             </tr>
