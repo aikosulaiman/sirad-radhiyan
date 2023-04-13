@@ -89,7 +89,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Nama Event:</label>
                                             <div class="col-sm-8">
-                                                <input type="text" name="{{ form.title.name }}" class="form-control" id="title" placeholder="e.g. Vaksin Kucing" required>
+                                                <input type="text" name="{{ form.title.name }}" class="form-control" id="title" placeholder="e.g. Vaksin Kucing" maxlength="25" required>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Lokasi Event (General):</label>
                                             <div class="col-sm-8">
-                                                <input type="text" name="{{ form.general_location.name }}" class="form-control" id="general_location" placeholder="e.g. Jakarta Selatan" required>
+                                                <input type="text" name="{{ form.general_location.name }}" class="form-control" id="general_location" placeholder="e.g. Jakarta Selatan" maxlength="20" required>
                                             </div>
                                         </div>
                                     </div>
@@ -157,6 +157,33 @@
                 </div>
 
             </div>
+
+            <script>
+                // Get the next day date and time
+                const now = new Date();
+                now.setDate(now.getDate() + 1);
+                const year = now.getFullYear();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+                const hour = now.getHours().toString().padStart(2, '0');
+                const minute = now.getMinutes().toString().padStart(2, '0');
+              
+                // Set the min and max attributes of the datetime-local inputs
+                const startInput = document.getElementById('start_time');
+                startInput.min = `${year}-${month}-${day}T${hour}:${minute}`;
+                startInput.max = `${year + 100}-${month}-${day}T23:59`;
+                const endInput = document.getElementById('end_time');
+                endInput.min = `${year}-${month}-${day}T${hour}:${minute}`;
+                endInput.max = `${year + 100}-${month}-${day}T23:59`;
+              
+                // Add event listener to start time input to prevent selecting end time before start time
+                startInput.addEventListener('input', function() {
+                  endInput.min = startInput.value;
+                });
+              </script>
+              
+              
+
         </section>
     </main>
 </div>

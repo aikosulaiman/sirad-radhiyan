@@ -61,7 +61,7 @@
 </style>
 
 <head>
-    <title>Detail Event</title>
+    <title>Tiket Event</title>
     <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
 </head>
 <div class="container">
@@ -73,39 +73,92 @@
                 <h2 style="color:#000000;
                 font-family: 'Poppins', sans-serif;
                 font-size: 24px;
-                font-weight: 600;">Detail Event</h2>
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
+                font-weight: 600;">Tiket Event</h2>
+                <div class="col-md-8">
                         <a href="/event" class="text-left">
                             <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List Event</p>
                         </a>
                     </div>
-                </div>
 
-
+                <div class="card" style="padding: 20px;">
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="card" style="padding-left: 50px;">
                             <div class="card-body">
-                                    {% csrf_token %} 
-                                    {% if request.session.Role == 'Karyawan' %}
-                                        {% if reg_event %} 
-                                        <div class="d-grid d-md-flex justify-content-md-end">
-                                            <a href="/event/update-event/{{event_id}}">
-                                                <button class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            </a>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <h4 class="col-sm-6 text-left" style="display: inline-block; background-color: #17177e; padding: 2px 5px; border-radius: 5px; color: white;">ID Tiket: {{tiket_event.0.0}}</h4>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label class="col-sm-4 text-left">Waktu Registrasi:</label>
+                                        <div class="col-sm-8 text-left">
+                                            <label for="title">{{tiket_event.0.1}}</label>
                                         </div>
-                                        {% else %}
-                                        <div class="d-grid d-md-flex justify-content-md-end">
-                                            <a href="/event/update-event/{{event_id}}">
-                                                <button class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            </a> &nbsp;&nbsp;
-                                            <a href="/event/delete-event/{{event_id}}">
-                                                <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin menghapus Event ini secara permanen?')"><i class="fa-solid fa-trash"></i></button>
-                                            </a>
-                                        </div>
-                                        {% endif %}
-                                    {% endif %} 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="padding-left: 50px;">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                            <h4 for="title" class="text-left">Data Pendaftar</h4>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mt-8">
+                                        <label class="col-sm-8 text-left"><span class="fa-regular fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{customer.first_name}} {{customer.last_name}}</label>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mt-8">
+                                        <label class="col-sm-8 text-left"><i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{customer.email}}</label>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mt-8">
+                                        <label class="col-sm-8 text-left"><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{customer.no_telepon}}</label>
+                                        
+                                    </div>
+                                </div>
+                                {% if customer.is_vip == 1 %} 
+                                    <div class="form-group">
+                                      <div class="row mt-8">
+                                          <label class="col-sm-8 text-left"><i class="fa-solid fa-crown"></i>&nbsp;&nbsp;&nbsp;&nbsp;Member VIP</label>
+                                          
+                                      </div>
+                                  </div>
+                                  {% else %}
+                                  <div class="form-group">
+                                    <div class="row mt-8">
+                                        <label class="col-sm-8 text-left"><i class="fa-solid fa-file-user"></i>&nbsp;&nbsp;&nbsp;Member Biasa</label>
+                                        
+                                    </div>
+                                    
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="row mt-8">
+                                <i class="col-sm-12 text-left" style="color: #17177e;"><i class="fa-solid fa-circle-info"></i>&nbsp;&nbsp;NOTE:</i>
+                                
+                            </div>
+                            <div class="row mt-8">
+                                <i class="col-sm-12 text-left" style="color: #17177e;">Mohon membawa tiket ini pada hari H dan dapat ditunjukkan kepada petugas.</i>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="padding-left: 50px;">
+                            <div class="card-body">
                                     <div class="form-group">
                                         <div class="row mt-4">
                                                 <h2 for="title" class="text-left">{{event.0.1}}</h2>
@@ -113,9 +166,11 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4 text-left"><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;Lokasi Event:</label>
+                                            <label class="col-sm-4 text-left"><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;Lokasi:</label>
                                             <div class="col-sm-8 text-left">
                                                 <label for="title">{{event.0.2}}</label>
+                                                <br>
+                                                <label for="title">{{event.0.3}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +198,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                     {% if event.0.7 == 1 %} 
                                     <div class="form-group">
                                         <div class="row mt-4">
@@ -154,72 +208,13 @@
                                         </div>
                                     </div>    
                                     {% endif %}
-
-                                    
-                                    {% if role == 'Karyawan' %}
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4 text-left"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;&nbsp;List Pendaftar:</label>  
-                                    </div>
-                                        {% if reg_event %}                              
-                                            <table class="table table-bordered">
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
-                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">ID Tiket</th>                                                   
-                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
-                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
-                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Tanggal Terdaftar</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for i in reg_event %}
-                                                    <tr>
-                                                        <td style="font-family: 'Poppins', sans-serif;">{{ forloop.counter }}</td>
-                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.id }}</td>
-                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.email }}</td>
-                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.no_telepon }}</td>
-                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.date }}</td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        {% else %}
-                                        <div class="row mt-4">
-                                            <label class="col-sm-4 text-left" style="font-style: italic; color: #107bef;">Belum ada pendaftar.</label>
-                                        </div>
-                                            
-                                        {% endif %}
-                                    {% endif %}
-
-                                    {% if role == 'Customer' %}
-                                        {% if button_bool == 0 %}
-                                            {% if event.0.7 == 1 %}
-                                                {% if isvip_cust.0.0 == 1 %}
-                                                    <div class="mt-5 text-center">
-                                                        <a href="/event/register-event/{{ event.0.0 }}">
-                                                            <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
-                                                                <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;Daftar Event VIP</button>     
-                                                        </a>
-                                                    </div>
-                                                    <br>
-                                                {% endif %}
-                                            {% elif event.0.7 == 0 %}
-                                                <div class="mt-5 text-center">
-                                                    <a href="/event/register-event/{{ event.0.0 }}">
-                                                        <button class="btn btn-primary px-4" type="submit">Daftar Event</button>
-                                                    </a>
-                                                </div>
-                                                <br>
-                                            {% endif %}
-                                        {% else %}
-                                        <label style="color: #107bef;">✅ Anda sudah mendaftar pada Event ini.</label>
-                                        {% endif %}
-                                    {% endif %}
+                            
 
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
             </div>

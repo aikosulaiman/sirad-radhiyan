@@ -1,6 +1,5 @@
 import uuid
 from django.db import models
-from events.models import Event
 
 # Create your models here.
 ROLE_CHOICES = [
@@ -23,8 +22,7 @@ class User(models.Model):
 
 class Customer(User):
     is_vip = models.BooleanField(default=False)
-    # events_attended = models.ManyToManyField(Event, related_name='attendees')
-
+    
 class Dokter(User):
     tarif = models.IntegerField()
 
