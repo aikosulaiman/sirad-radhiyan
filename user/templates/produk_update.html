@@ -1,5 +1,4 @@
 {% extends 'static_user.html' %} {% block content %}
-<title>Manajemen Master Data</title>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
@@ -73,69 +72,74 @@
                 <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="logout">Logout</a>
             </li>
         </ul>
     </div>
 </nav>
-<style>
-    .containers {
-        padding: 16px 16px;
-        width: 300px;
-        height: 300px;
-    }
-    
-    .custom-table {
-        background-color: #ebf2f5;
-    }
-</style>
+<title>Edit User</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
-<body style="background-color: rgb(255, 255, 255);">
-    <br>
-    <div class="container">
-        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600;">Manajemen Master Data SIRAD</h2>
+<br><br>
+<main id="main">
+    <section>
+        <div class="container-fluid">
+            <h1 style="color:#080808;
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;" class="text-center">
+                Manajemen Master Data SIRAD
+            </h1>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header" style="color:#080808;
+                font-family: 'Poppins', sans-serif;
+                font-size: 20px; font-weight: bold;">
+                            Edit Master Data
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'update_user_handler' user_id%}" method="GET">
+                                {% if error_message %}
+                                <div class="alert alert-danger">{{ error_message }}</div>
+                                {% endif %} {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="nama" class="col-sm-4">Nama:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="nama" name="nama" value="{{ produk.0.1 }}" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="harga" class="col-sm-4">Harga:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="harga" name="harga" value="{{ produk.0.2 }}" class="form-control" required>
+                                        </div>
 
-        <div class="d-grid d-md-flex justify-content-md-end">
-            <a href="/user/add-produk">
-                <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">+ Create Master Data</button>
-            </a>
-        </div>
-
-        <br>
-        <br>
-        <div class="tab-content">
-            <div id="all" class="tab-pane fade show active">
-                <div class="wrap">
-                    <table class="table table-bordered border-dark">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
-                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Nama</th>
-                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Harga</th>
-                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Status</th>
-                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for produk in produk %}
-                            <tr>
-                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
-                                <td style="font-family: 'Poppins', sans-serif;">{{ produk.nama }}</td>
-                                <td style="font-family: 'Poppins', sans-serif;">{{ produk.harga }}</td>
-                                <td style="font-family: 'Poppins', sans-serif;">{{ produk.status }}</td>
-                                <td class="text-center">
-                                    <a class="btn btn-info" href="update-produk/{{ produk.id }}">Update</a>
-                                    <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label for="status" class="col-sm-4">Available?</label>
+                                        <div class="col-sm-8">
+                                            <input type="checkbox" id="status" name="status" value="{{ produk.0.3 }}" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-primary px-4" type="submit" onclick="return confirm('⚠️ Are you sure you want to UPDATE this product?')">Edit Produk</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </section>
+</main>
 
 
 {% endblock %}

@@ -1,7 +1,7 @@
 import uuid
 from django.shortcuts import render
 from .models import User, Produk
-from .forms import UserForm, CustomerForm
+from .forms import UserForm, CustomerForm, ProdukForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError, connection
 
@@ -158,6 +158,100 @@ def list_produk(request):
 
             response = {'produk':produk}
             return render(request, 'produk_list.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+    
+def add_produk(request):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Admin':
+            form = ProdukForm()
+            if request.method == 'POST':
+                form = ProdukForm(request.POST or None)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect('/user/list-produk')
+                else:
+                    form.add_error(None, "Nama produk sudah ada, silakan memilih nama lain!")
+            response = {'form': form}
+            return render(request, 'produk_add.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+    
+def delete_produk(id):
+    produk_by_id = Produk.objects.get(id=id)
+    produk_by_id.delete()
+    return HttpResponseRedirect('/user/list-produk')
+
+def update_produk(request, produk_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Admin':
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            # Mencari produk
+            cursor.execute("""
+            SELECT *
+            FROM user_produk
+            WHERE id = '{0}' ;
+            """.format(produk_id))
+            produk = cursor.fetchall()
+                
+            response = {
+                    'produk_id':produk_id,
+                    'produk':produk,}
+            cursor.close()
+            return render(request, 'produk_update.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def update_produk_handler(request, produk_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Admin':
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            # get data dari form
+            nama = request.GET.get('nama')
+            harga = request.GET.get('harga')
+            status = request.GET.get('status')
+
+            try:
+                # update
+                cursor.execute("""
+                UPDATE user_produk
+                SET nama = '{0}', harga = '{1}', status = '{2}'
+                WHERE id = '{3}';
+                """.format(nama, harga, status, produk_id))
+                success_message = 'Produk berhasil diupdate!'
+                cursor.close()
+                return render(request, 'success_page_produk.html', {'success_message': success_message})
+            except IntegrityError:
+                # If the field is not unique, return an error message
+                error_message = 'Nama produk sudah ada, silakan memilih nama lain!'
+                cursor.execute("""
+                SELECT *
+                FROM user_produk
+                WHERE id = '{0}' ;
+                """.format(produk_id))
+                produk = cursor.fetchall()
+                response = {
+                    'error_message': error_message,
+                    'produk':produk,
+                    'produk_id': produk_id}
+                cursor.close()
+                return render(request, 'produk_update.html', response)
         else:
             context = {
             'error_message': 'Access denied!'}
