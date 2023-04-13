@@ -1,6 +1,4 @@
 {% extends 'static_user.html' %} {% block content %}
-<title>Manajemen User</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
@@ -74,11 +72,14 @@
                 <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="logout">Logout</a>
             </li>
         </ul>
     </div>
 </nav>
+<title>Edit Master Data</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
 <br><br>
 <main id="main">
     <section>
@@ -87,7 +88,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 40px;
     font-weight: 600;" class="text-center">
-                Manajemen User SIRAD
+                Manajemen Master Data SIRAD
             </h1>
             <br>
             <div class="row justify-content-center">
@@ -96,85 +97,44 @@
                         <div class="card-header" style="color:#080808;
                 font-family: 'Poppins', sans-serif;
                 font-size: 20px; font-weight: bold;">
-                            Create New User
+                            Edit Master Data
                         </div>
                         <div class="card-body">
-                            <form class="user" method="POST">
-                                {% csrf_token %} {% if form.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form.non_field_errors }}
-                                </div>
-                                {% endif %}
+                            <form action="{% url 'update_produk_handler' produk_id%}" method="GET">
+                                {% if error_message %}
+                                <div class="alert alert-danger">{{ error_message }}</div>
+                                {% endif %} {% csrf_token %}
                                 <div class="form-group">
                                     <div class="row mt-4">
-                                        <label class="col-sm-4">Username:</label>
+                                        <label for="nama" class="col-sm-4">Nama:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" name="{{ form.username.name }}" class="form-control" id="username" required>
+                                            <input type="text" id="nama" name="nama" value="{{ produk.0.1 }}" class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row mt-4">
-                                        <label class="col-sm-4">First Name:</label>
+                                        <label for="harga" class="col-sm-4">Harga:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" name="{{ form.first_name.name }}" class="form-control" id="first_name" required>
+                                            <input type="text" id="harga" name="harga" value="{{ produk.0.2 }}" class="form-control" required>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Last Name:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="{{ form.last_name.name }}" class="form-control" id="last_name" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Email:</label>
-                                        <div class="col-sm-8">
-                                            <input type="email" name="{{ form.email.name }}" class="form-control" id="email" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Nomor Telepon:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" name="{{ form.no_telepon.name }}" class="form-control" id="no_telepon" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label class="col-sm-4">Role:</label>
-                                        <div class="col-sm-8">
-                                            <select id="role" name="{{ form.role.name }}" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
-                                        <option selected value="">Pilih Role</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Dokter">Dokter</option>
-                                        <option value="Groomer">Groomer</option>
-                                        <option value="Karyawan">Karyawan</option>
-                    
-                                    </select>
-                                            <!-- <input type="text" name="{{ form.role.name }}" class="form-control" id="role" required> -->
 
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row mt-4">
-                                        <label class="col-sm-4">Password:</label>
-
+                                        <label for="status" class="col-sm-4">Ketersediaan:</label>
                                         <div class="col-sm-8">
-                                            <input type="password" name="{{ form.password.name }}" class="form-control" id="password" style="position:relative;" required>
-                                            <span class="far fa-eye" id="togglePassword" style="position:absolute; right:30px;top:11px; cursor: pointer;"></span>
-                                            <!-- </label> -->
+                                            <select id="status" name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                                <option selected value="False">Tidak tersedia</option>
+                                                <option value="True">Tersedia</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary px-4" type="submit">Create</button>
-                                <button type="button" onclick="history.back()" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
+                                <div class="mt-5 text-center">
+                                    <button class="btn btn-primary px-4" type="submit" onclick="return confirm('⚠️ Are you sure you want to UPDATE this product?')">Edit Produk</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -184,16 +144,5 @@
     </section>
 </main>
 
-<script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
 
-    togglePassword.addEventListener('click', function(e) {
-        // toggle the type attribute
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        // toggle the eye slash icon
-        this.classList.toggle('fa-eye-slash');
-    });
-</script>
 {% endblock %}
