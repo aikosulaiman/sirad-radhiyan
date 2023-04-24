@@ -33,3 +33,9 @@ class Hewan(models.Model):
     umur = models.IntegerField()
     note = models.CharField(max_length=200)
     pemilik = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+class Produk(models.Model):
+    id = models.AutoField(primary_key=True)
+    nama = models.CharField(max_length=50)
+    harga = models.CharField(max_length=50)
+    status = models.BooleanField(default=False)

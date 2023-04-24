@@ -1,101 +1,5 @@
-<<<<<<< HEAD
-{% extends 'static.html' %}
-{% block content %}
-<title>Update Profile</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-
-<br><br>
-<main id="main">
-    <section>
-<div class="container-fluid">
-    <h1 style="color:#080808;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    font-weight: 600;" class="text-center">
-        SIRAD
-    </h1>
-    <br>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header" style="color:#080808;
-                font-family: 'Poppins', sans-serif;
-                font-size: 20px; font-weight: bold;">
-                    Update Profile
-                </div>
-                <div class="card-body">
-                    <form action="{% url 'update_profile_handler' user_id%}" method="GET">
-                        {% if error_message %}
-                            <div class="alert alert-danger">{{ error_message }}</div>
-                        {% endif %}
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="username" class="col-sm-4">Username:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="username" name="username" value="{{ user.0.1 }}" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="first_name" class="col-sm-4">First Name:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="first_name" name="first_name" value="{{ user.0.2 }}" class="form-control" required>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="last_name" class="col-sm-4">Last Name:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="last_name" name="last_name" value="{{ user.0.3 }}" class="form-control" required>
-                                </div>
-                               
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="email" class="col-sm-4">Email:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="email" name="email" value="{{ user.0.5 }}" class="form-control" required>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="no_telepon" class="col-sm-4">Nomor Telepon:</label>
-                                <div class="col-sm-8">
-                                    <input type="number" id="no_telepon" name="no_telepon" value="{{ user.0.6 }}" class="form-control" required>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <label for="password" class="col-sm-4">Password:</label>
-                                <div class="col-sm-8">
-                                    <input type="password" id="password" name="password" value="{{ user.0.7 }}" class="form-control" required>
-                                    <span class="far fa-eye" id="togglePassword" style="position:absolute; right:30px;top:11px; cursor: pointer;"></span>
-                                </div>
-                                
-                            </div>  
-                        </div>
-                        <div class="mt-5 text-center">
-                            <button class="btn btn-primary px-4" type="submit">Update</button>
-                        </div>
-                        
-                      </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-=======
 {% extends 'static.html' %} {% block content %}
-<title>Update Profile</title>
+<title>Halaman Profile</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> {% if request.session.Role == 'Karyawan' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
@@ -143,7 +47,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+                <a class="nav-link" href="#">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -287,7 +191,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -296,111 +200,106 @@
     </div>
 </nav>
 {% endif %}
-<br><br>
+<br>
 <main id="main">
     <section>
         <div class="container-fluid">
-            <h1 style="color:#080808;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    font-weight: 600;" class="text-center">
-                SIRAD
-            </h1>
             <br>
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header" style="color:#080808;
-                font-family: 'Poppins', sans-serif;
-                font-size: 20px; font-weight: bold;">
-                            Update Profile
+                        <div class="card-header">
+                            Profil Anda
                         </div>
                         <div class="card-body">
-                            <form action="{% url 'update_profile_handler' user_id%}" method="GET">
-                                {% if error_message %}
-                                <div class="alert alert-danger">{{ error_message }}</div>
-                                {% endif %} {% csrf_token %}
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label for="username" class="col-sm-4">Username:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="username" name="username" value="{{ user.0.1 }}" class="form-control" required>
-                                        </div>
-                                    </div>
+                            <div class="row">
+                                <label class="col-sm-3">Username:</label>
+                                <div class="col-sm-9">
+                                    <p class="card-text">{{ username }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label for="first_name" class="col-sm-4">First Name:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="first_name" name="first_name" value="{{ user.0.2 }}" class="form-control" required>
-                                        </div>
-
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3">Nama Lengkap:</label>
+                                <div class="col-sm-9">
+                                    <p class="card-text">{{ user_first_name }} {{ user_last_name }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label for="last_name" class="col-sm-4">Last Name:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="last_name" name="last_name" value="{{ user.0.3 }}" class="form-control" required>
-                                        </div>
-
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3">Status:</label>
+                                <div class="col-sm-9">
+                                    {% if user_is_vip %}
+                                    <p class="card-text">Customer VIP</p>
+                                    {% else %}
+                                    <p class="card-text">Customer Reguler</p>
+                                    {% endif %}
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label for="email" class="col-sm-4">Email:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="email" name="email" value="{{ user.0.5 }}" class="form-control" required>
-                                        </div>
-
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3">Email:</label>
+                                <div class="col-sm-9">
+                                    <p class="card-text">{{ user_email }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label for="no_telepon" class="col-sm-4">Nomor Telepon:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" id="no_telepon" name="no_telepon" value="{{ user.0.6 }}" class="form-control" required>
-                                        </div>
-
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3">Nomor Telepon:</label>
+                                <div class="col-sm-9">
+                                    <p class="card-text">{{ user_no_telepon }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row mt-4">
-                                        <label for="password" class="col-sm-4">Password:</label>
-                                        <div class="col-sm-8">
-                                            <input type="password" id="password" name="password" value="{{ user.0.7 }}" class="form-control" required>
-                                            <span class="far fa-eye" id="togglePassword" style="position:absolute; right:30px;top:11px; cursor: pointer;"></span>
-                                        </div>
-
-                                    </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <label class="col-sm-12"><center>List Hewan:</center></label>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if not list_hewan %}
+                                    <p class="card-text">Anda belum mendaftarkan hewan apapun</p>
+                                    {% else %}
+                                    <table class="table table-bordered border-dark">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Nama</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Jenis</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Umur</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Note</th>
+                                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for hewan in list_hewan %}
+                                            <tr>
+                                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.1 }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.2 }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.3 }}</td>
+                                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.4 }}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-info" href="/profile/update-hewan/{{ hewan.0 }}">Update</a>
+                                                    <a class="btn btn-danger" href="/profile/delete-hewan/{{ hewan.0 }}" onclick="return confirm('⚠️ Apakah Anda yakin ingin menghapus hewan ini?')">Delete</a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% endif %}
                                 </div>
-                                <div class="mt-5 text-center">
-                                    <button class="btn btn-primary px-4" type="submit">Update</button>
-                                </div>
-
-                            </form>
+                            </div>
+                            {% if not user_is_vip %}
+                            <a href="/profile/submit-vip-validation/{{ user_id }}" class="btn btn-primary">Upgrade ke VIP</a>
+                            {% endif %}
+                            <a href="/profile/tambah-hewan/{{ user_id }}" class="btn btn-success">Tambah Hewan</a>
+                            <a href="/profile/update-profile/{{ user_id }}" class="btn btn-secondary">Update Profile</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
->>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
     </section>
 </main>
 
-<script>
+<!-- <script>
     const togglePassword = document.querySelector('#togglePassword');
-<<<<<<< HEAD
-  const password = document.querySelector('#password');
-
-  togglePassword.addEventListener('click', function (e) {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
-});
-=======
     const password = document.querySelector('#password');
 
     togglePassword.addEventListener('click', function(e) {
@@ -410,8 +309,7 @@
         // toggle the eye slash icon
         this.classList.toggle('fa-eye-slash');
     });
->>>>>>> 20adbe49d1164b3cdaa7dba2724d3ce4c546b6a8
-</script>
+</script> -->
 
 
 {% endblock %}
