@@ -1,13 +1,5 @@
 import uuid
 from django.http.response import HttpResponseRedirect
-<<<<<<< HEAD
-from django.shortcuts import render, redirect
-from django.conf import settings
-# from ..profileuser.forms import UserForm
-from .models import User, Customer, Hewan
-from django.db import IntegrityError, connection
-from .forms import FormPendaftaranHewan
-=======
 from django.conf import settings
 from django.db import IntegrityError, connection
 from django.db import connection
@@ -20,7 +12,6 @@ from PIL import Image
 
 SUPABASE_URL = settings.SUPABASE_URL
 SUPABASE_KEY = settings.SUPABASE_KEY
->>>>>>> 4062d8683f7c4d944e5edae0a2c70ede8f6c4efc
 
 def index(request):
     return HttpResponseRedirect("/")
@@ -170,49 +161,6 @@ def update_profile_handler(request, user_id):
     cursor.close()
     return HttpResponseRedirect('/profile')
 
-<<<<<<< HEAD
-def form_pendaftaran_hewan(request) :
-    cursor = connection.cursor()
-    if request.method == 'POST':
-        form = FormPendaftaranHewan(request.POST)
-        if form.is_valid():
-            hewan_id = uuid.uuid4()
-            nama = form.cleaned_data['nama']
-            jenis = form.cleaned_data['jenis']
-            umur = form.cleaned_data['umur']
-            note = form.cleaned_data['note']
-            cursor.execute("SET search_path TO public")
-            cursor.execute('INSERT INTO profileuser_hewan VALUES (%s, %s, %s, %s, %s)', [hewan_id, nama, jenis, umur, note])
-            return redirect('/profile')
-    else:
-        form = FormPendaftaranHewan()
-    return render(request, 'form_pendaftaran_hewan.html', {'form': form})
-
-# def delete_hewan(request, id):
-#     hewan_by_id = Hewan.objects.get(id=id)
-#     hewan_by_id.delete()
-#     return HttpResponseRedirect('/profile')
-
-def payment_form(request):
-    context = {}
-    return render(request, 'payment_form.html', context)
-=======
-# def tambah_hewan(request, user_id):
-#     form = HewanForm()
-#     if request.method == 'POST':
-#         form = HewanForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/')
-#         else:
-#             print(form.errors)
-#             # form.add_error(None, "Username or email already exists, please choose another one!")
-#     response = {
-#         'form': form,
-#         'user_id':user_id
-#         }
-#     return render(request, 'tambah_hewan.html', response)
-
 def tambah_hewan(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
@@ -263,7 +211,6 @@ def tambah_hewan_handler(request, user_id):
             'user':user,
             'user_id': user_id}
         return render(request, 'tambah_hewan.html', response)
->>>>>>> 4062d8683f7c4d944e5edae0a2c70ede8f6c4efc
 
 def update_hewan(request, user_id):
     cursor = connection.cursor()
@@ -320,8 +267,6 @@ def update_hewan_handler(request, user_id):
         
     cursor.close()
     return HttpResponseRedirect('/profile')
-<<<<<<< HEAD
-=======
 
 def delete_hewan(request, hewan_id):
     cursor = connection.cursor()
@@ -336,4 +281,3 @@ def delete_hewan(request, hewan_id):
     cursor.close()
     success_message = 'Hewan ini berhasil dihapus!'
     return render(request, 'delete_success.html', {'success_message': success_message})
->>>>>>> 4062d8683f7c4d944e5edae0a2c70ede8f6c4efc
