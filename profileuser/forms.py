@@ -1,5 +1,5 @@
 from django import forms
-from ..update_profile.models import User
+from .models import User
 
 
 class UserForm(forms.ModelForm):
