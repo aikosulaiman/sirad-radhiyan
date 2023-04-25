@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from django.contrib import messages
 from django.db import connection
 
-from user.models import Customer, Dokter, Hewan
+from user.models import User, Customer, Dokter, Hewan
 from .forms import AppointmentDokterForm
 from .models import AppointmentDokter
 
@@ -20,7 +20,7 @@ def create_appointmentdokter(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Customer':
             my_uuid = str(request.session['UUID'])
-            list_dokter = Dokter.objects.all()
+            list_dokter = User.objects.filter(role='Dokter')
             list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
 
             print(list_dokter)
@@ -67,8 +67,20 @@ def create_appointmentdokter(request):
 
 def list_appointmentdokter(request):
     if is_authenticated(request):
+        my_uuid = str(request.session['UUID'])
         if request.session['Role'] == 'Customer':
-            return render(request, 'listappointmentdokter_customer.html')
+            list_appointmentdokter = AppointmentDokter.objects.filter(pemilik_id=my_uuid)
+
+            context = {
+                'listAppointmentDokter': list_appointmentdokter,
+            }
+            return render(request, 'listappointmentdok_customer.html', context)
         elif request.session['Role'] == 'Dokter':
-            return render(request, 'listappointmentdokter_dokter.html')
+            list_appointmentdokter = AppointmentDokter.objects.filter(dokter_id=my_uuid)
+            
+            context = {
+                'listAppointmentDokter': list_appointmentdokter,
+            }
+            
+            return render(request, 'listappointmentdokter_dokter.html', context)
 
