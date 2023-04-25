@@ -19,6 +19,7 @@ def is_authenticated(request):
 def create_appointmentdokter(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Customer':
+            my_username = request.session['Username']
             my_uuid = str(request.session['UUID'])
             list_dokter = User.objects.filter(role='Dokter')
             list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
@@ -60,6 +61,7 @@ def create_appointmentdokter(request):
                     'listHewan': list_hewan,
                     'form': form,
                     'user_id': my_uuid,
+                    'username': my_username,
             }
             return render(request, 'create_appointmentdokter.html', context)
     else:
@@ -67,12 +69,14 @@ def create_appointmentdokter(request):
 
 def list_appointmentdokter(request):
     if is_authenticated(request):
+        my_username = request.session['Username']
         my_uuid = str(request.session['UUID'])
         if request.session['Role'] == 'Customer':
             list_appointmentdokter = AppointmentDokter.objects.filter(pemilik_id=my_uuid)
 
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
+                'username': my_username,
             }
             return render(request, 'listappointmentdok_customer.html', context)
         elif request.session['Role'] == 'Dokter':
@@ -80,6 +84,7 @@ def list_appointmentdokter(request):
             
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
+                'username': my_username,
             }
             
             return render(request, 'listappointmentdokter_dokter.html', context)

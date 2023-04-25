@@ -18,7 +18,7 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
                 </div>
             </li>
         </ul>
@@ -36,78 +36,79 @@
 <br>
 
 <style>
-
-/* content styling */
-.content-text {
-    text-align: center;
-    color: #fff;
-    font-size: 15px;
-}
-
-/* button styling */
-.card-button {
-    font-size: 15px;
-    text-align: center;
-    cursor: pointer;
-    color: #fff;
-    border-style: solid;
-    border-color:#fff;
-    border-radius: 10px;
-    display: block;
-    width: 50%;
-    margin: 0 auto;
-    background-color: #eb4640;
-}
-
-.card-button:hover {
-    box-shadow:  4px 4px 4px 4px rgba(0,0,0,0.2);
-    background-color: #f86c67;
-}
-
-/* issues styling */
-.doctor-card {
-    border-style: solid;
-    border-color:#fff;
-    border-radius: 10px;
-    align-self: center;
-    transition: 0.3s;
-}
-
-.doctor-card:hover {
-    box-shadow:  8px 8px 8px 8px rgba(0,0,0,0.2);
-}
-
-.doctor-card {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/veterinarian-check-ing-puppy-s-health_23-2148728396.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=sph");
-    background-position: left;
-}
-
-.card-text, .card-title {
-    text-align: center;
-    color: #fff;
-}
+    /* content styling */
+    
+    .content-text {
+        text-align: center;
+        color: #fff;
+        font-size: 15px;
+    }
+    /* button styling */
+    
+    .card-button {
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 10px;
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        background-color: #eb4640;
+    }
+    
+    .card-button:hover {
+        box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
+        background-color: #f86c67;
+    }
+    /* issues styling */
+    
+    .doctor-card {
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 10px;
+        align-self: center;
+        transition: 0.3s;
+    }
+    
+    .doctor-card:hover {
+        box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .doctor-card {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/veterinarian-check-ing-puppy-s-health_23-2148728396.jpg?size=626&ext=jpg&ga=GA1.1.203679071.1675664112&semt=sph");
+        background-position: left;
+    }
+    
+    .card-text,
+    .card-title {
+        text-align: center;
+        color: #fff;
+    }
 </style>
 
 <div class="cocontainer-fluid text-center">
 
-	<!-- hero image -->
+    <!-- hero image -->
     <div class="jumbotron jumbotron-fluid header" style="background-color: #c3d8ea">
-		<div class="container">
+        <div class="container">
             <h2>Selamat Datang di SIRAD,</h2>
             <h2>{{username}}!</h2>
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<!-- issues in card format -->
-	<div class="card-deck" style="margin: 10px;">
-		<div class="card doctor-card">
-			<div class="card-body">
-			<h5 class="card-title">Dokter</h5>
-			<p class="card-text">Cek appointment Anda disini!</p>
-			<button onclick="window.location.href='/'" class="btn card-button">Daftar Appointment</button>
-			</div>
-		</div>
-	</div>
+    <!-- issues in card format -->
+    <div class="card-deck" style="margin: 10px;">
+        <div class="card doctor-card">
+            <div class="card-body">
+                <h5 class="card-title">Dokter</h5>
+                <p class="card-text">Cek appointment Anda disini!</p>
+                <button onclick="window.location.href='/appointmentdokter'" class="btn card-button">Daftar Appointment</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>

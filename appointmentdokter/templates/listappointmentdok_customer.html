@@ -24,8 +24,8 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -59,7 +59,7 @@
                 <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -106,7 +106,35 @@
                     <td>{{ appointment.hewan.nama }}</td>
                     <td>{{ appointment.dokter.first_name }} {{ appoint.dokter.last_name }}</td>
                     <td>{{ appointment.appointment_time }}</td>
-                    <td>{{ appointment.status }}</td>
+                    {% if appointment.status == 'Menunggu Konfirmasi' %}
+                    <td>
+                        <p style="text-align: center; 
+                        font-weight: bold; 
+                        background-color:orange; 
+                        border: 1px solid orange; 
+                        padding: 3px; 
+                        border-radius: 10px;">{{appointment.status}}</p>
+                    </td>
+                    {% elif appointment.status == 'Disetujui' %}
+                    <td>
+                        <p style="text-align: center; 
+                        font-weight: bold; 
+                        background-color:greenyellow; 
+                        border: 1px solid greenyellow; 
+                        padding: 3px; 
+                        border-radius: 10px;">{{appointment.status}}</p>
+                    </td>
+                    {% else %}
+                    <td>
+                        <p style="text-align: center; 
+                        font-weight: bold; 
+                        color: white;
+                        background-color:red; 
+                        border: 1px solid red; 
+                        padding: 3px; 
+                        border-radius: 10px;">{{appointment.status}}</p>
+                    </td>
+                    {% endif %}
                     <td>
                         <button type="button" class="btn btn-outline-primary" ">Detail Appointment</button>
                     </td>
