@@ -2,14 +2,21 @@ from django.db import models
 from user.models import User, Dokter, Customer, Hewan
 import uuid
 
+STATUS_CHOICES = [
+    ('Menunggu Konfirmasi', 'Menunggu Konfirmasi'),
+    ('Disetujui', 'Disetujui'),
+    ('Ditolak', 'Ditolak'),
+]
+
 class AppointmentDokter(models.Model):
     appointment_id = models.CharField(max_length=10, unique=True)
     dokter = models.ForeignKey(Dokter, on_delete=models.CASCADE)
     hewan = models.ForeignKey(Hewan, on_delete=models.CASCADE)
     pemilik = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    appointment_date = models.DateTimeField()
-    
-    def save(self, *args, **kwargs):
+    appointment_time = models.DateTimeField()
+    status = models.CharField(choices=STATUS_CHOICES, max_length=40, blank=False, null=False, default='Menunggu Konfirmasi')
+    keluhan = models.TextField(blank=True, null=True)
+    def save(self, *args, **kwargs):   
         # check if appointment_id has been set, otherwise generate it
         if not self.appointment_id:
             # get the last appointment with the APTDOC prefix
