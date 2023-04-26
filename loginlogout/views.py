@@ -34,9 +34,11 @@ def login(request) :
             user = cursor.fetchall()
             print(user)
             if len(user) > 0:
+                request.session["UUID"] = str(user[0][0])
                 request.session["Username"] = user[0][1]
                 request.session["Email"] = user[0][5]
                 request.session["Role"] = user[0][4]
+                print(request.session["UUID"])
                 return redirect('/')
             else:
                 form.add_error(None, "Invalid username or password")
