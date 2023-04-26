@@ -49,7 +49,9 @@ def create_appointmentdokter(request):
                     appointment.pemilik = cust_instance
                     appointment.status = 'Menunggu Konfirmasi'
                     appointment.save()
-                    return redirect('/appointmentdokter')
+                    success_message = 'Appointment kamu berhasil terbuat!'
+                    return render(request, 'success_page_appt.html', {'success_message': success_message})
+                    # return redirect('/appointmentdokter')
                 else:
                     print("FORM ERROR:\n")
                     print(form.errors)
