@@ -26,4 +26,5 @@ urlpatterns = [
     path('event/', include('events.urls')),
     path('', include('user.urls')),
     path('profile/', include('profileuser.urls')),
+    path('adopsi/', include('adopsi.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
