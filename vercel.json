@@ -4,7 +4,7 @@
         "src": "propensid02/wsgi.py",
         "use": "@vercel/python",
         "config": {
-          "maxLambdaSize": "50mb",
+          "maxLambdaSize": "15mb",
           "runtime": "python3.9"
         }
       }
@@ -14,5 +14,10 @@
         "src": "/(.*)",
         "dest": "propensid02/wsgi.py"
       }
-    ]
+    ],
+    "functions": {
+    "api/**/*.py": {
+      "excludeFiles": "**/*.html"
+    }
+  }
   }
