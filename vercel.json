@@ -14,5 +14,12 @@
         "src": "/(.*)",
         "dest": "propensid02/wsgi.py"
       }
+    ],
+    "functions": [
+      {
+        "api/**/*.py": {
+          "excludeFiles": "**/*.html"
+        }
+      }
     ]
   }
