@@ -23,10 +23,13 @@ def create_adopsi(request):
                 if form.is_valid():
                     hewan = form.save(commit=False)
                     hewan.status = 'Belum diadopsi'
-                    form.save()
+                    hewan.save()
                     success_message = 'Hewan adopsi berhasil ditambah!'
                     return render(request, 'adopt_success.html', {'success_message': success_message})
-
+                else:
+                    print("FORM ERROR:\n")
+                    print(form.errors)
+                    print("\nItu errornya di atas")
             return render(request, 'create_adopsi.html', {'form': form})
         else:
             context = {
