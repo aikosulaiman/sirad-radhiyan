@@ -7,7 +7,7 @@ from .forms import EventForm
 from .models import Event, Register_Event
 from datetime import datetime, timedelta, timezone
 from django.contrib import messages
-from django.db import connection
+from django.db import IntegrityError, connection
 import shortuuid
 
 def is_authenticated(request):
@@ -261,4 +261,74 @@ def delete_event(request, event_id):
     else:
         return HttpResponseRedirect("/login")
     
+
+def update_event(request, event_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM events_event
+    WHERE id = '{0}' ;
+    """.format(event_id))
+    event = cursor.fetchall()
+        
+    response = {
+            'event_id':event_id,
+            'event':event,}
+    cursor.close()
+    return render(request, 'update_event.html', response)
+
+def update_event_handler(request, event_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Karyawan':
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            # get data dari form
+            title = request.GET.get('title')
+            general_location = request.GET.get('general_location')
+            specific_location = request.GET.get('specific_location')
+            start_time = request.GET.get('start_time')
+            end_time = request.GET.get('end_time')
+            description = request.GET.get('description')
+            # isVIP = request.GET.get('isVIP')
+
+            try:
+                # update
+                cursor.execute("""
+                UPDATE events_event
+                SET title = '{0}', general_location = '{1}', specific_location = '{2}', start_time = '{3}', end_time = '{4}', description = '{5}'
+                WHERE id = '{6}';
+                """.format(title, general_location, specific_location, start_time, end_time, description, event_id))                
+                success_message = 'Data Event berhasil diubah!'
+                cursor.close()
+                return render(request, 'success_page.html', {'success_message': success_message})
+            except IntegrityError:
+                # If the field is not unique, return an error message
+                error_message = 'Event sudah ada. Pilih nama lain.'
+                cursor.execute("""
+                SELECT *
+                FROM events_event
+                WHERE id = '{0}' ;
+                """.format(event_id))
+                event = cursor.fetchall()
+                response = {
+                    'error_message': error_message,
+                    'event':event,
+                    'event_id': event_id}
+                cursor.close()
+                
+                return render(request, 'update_event.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+   
+
+   
+
         
