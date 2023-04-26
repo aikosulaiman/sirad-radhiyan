@@ -9,3 +9,4 @@ class Adopsi(models.Model):
     ras = models.CharField(max_length=1000)
     warna = models.CharField(max_length=1000)
     deskripsi =  models.CharField(max_length=1000)
+    status =  models.CharField(max_length=50)

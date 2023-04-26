@@ -238,6 +238,7 @@
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Ras</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Warna</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Deskripsi</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Status</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -250,16 +251,21 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.ras }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.warna }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.deskripsi }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.status }}</td>
                                 <td class="text-center">
                                     {% if request.session.Role == 'Karyawan' %}
-                                        <a class="btn btn-primary" href="#">Detail</a>
-                                        <a class="btn btn-info" href="/adopsi/update-adopsi/{{ hewan.hewan_id }}">Update</a>
-                                        <a class="btn btn-danger" href="#" onclick="return confirm('⚠️ Yakin mau HAPUS hewan ini?')">Hapus</a>
+                                        <a class="btn btn-primary mt-1" href="#">Detail</a>
+                                        {% if hewan.status == 'Belum diadopsi' %}
+                                            <a class="btn btn-info mt-1" href="/adopsi/update-adopsi/{{ hewan.hewan_id }}">Update</a>
+                                            <a class="btn btn-danger mt-1" href="/adopsi/delete-adopsi/{{ hewan.hewan_id }}" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENGHAPUS hewan ini?')">Hapus</a>
+                                        {% endif %}
                                     {% endif %}
                                     {% if request.session.Role == 'Customer' %}
-                                    <!-- add if else to change button between 'adopsi' and 'detail' -->
-                                        <a class="btn btn-primary" href="#">Adopsi</a>
-                                        <a class="btn btn-primary" href="#">Detail</a>
+                                        {% if hewan.status == 'Diadopsi' %}
+                                            <a class="btn btn-info" href="#">Detail</a>
+                                        {% else %}
+                                            <a class="btn btn-primary" href="#">Adopsi</a>
+                                        {% endif %}
                                     {% endif %}
                                     {% if request.session.Role == 'Admin' %}
                                     <a class="btn btn-primary" href="#">Detail</a>

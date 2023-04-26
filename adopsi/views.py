@@ -21,8 +21,10 @@ def create_adopsi(request):
             if request.method == 'POST':
                 form = AdopsiForm(request.POST or None)
                 if form.is_valid():
+                    hewan = form.save(commit=False)
+                    hewan.status = 'Belum diadopsi'
                     form.save()
-                    success_message = 'hewan adopsi berhasil ditambah!'
+                    success_message = 'Hewan adopsi berhasil ditambah!'
                     return render(request, 'adopt_success.html', {'success_message': success_message})
 
             return render(request, 'create_adopsi.html', {'form': form})
@@ -98,3 +100,17 @@ def update_adopsi_handler(request, user_id):
         
     cursor.close()
     return HttpResponseRedirect('/adopsi')
+
+def delete_adopsi(request, hewan_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Karyawan':
+            hewan_adopsi = Adopsi.objects.get(hewan_id=hewan_id)
+
+            hewan_adopsi.delete()
+            return HttpResponseRedirect('/adopsi')
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/adopsi")
