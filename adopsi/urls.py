@@ -6,5 +6,7 @@ urlpatterns = [
     path('create-adopsi', create_adopsi, name='create_adopsi'),
     path('update-adopsi/<uuid:user_id>', update_adopsi, name='update_adopsi'),
     path('update-adopsi-handler/<uuid:user_id>', update_adopsi_handler, name='update_adopsi_handler'),
-    path('delete-adopsi/<uuid:hewan_id>', delete_adopsi, name='delete_adopsi')
+    path('delete-adopsi/<uuid:hewan_id>', delete_adopsi, name='delete_adopsi'),
+    path('read-adopsi/<uuid:hewan_id>', read_adopsi, name='read_adopsi'),
+    path('register-adopsi/<uuid:hewan_id>', register_adopsi, name='register_adopsi'),
 ]

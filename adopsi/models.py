@@ -1,4 +1,4 @@
-import uuid
+import uuid, shortuuid
 from django.db import models
 
 from user.models import Customer
@@ -16,3 +16,9 @@ class Adopsi(models.Model):
     deskripsi =  models.CharField(max_length=1000)
     # status =  models.CharField(max_length=50, default="Belum diadopsi")
     status = models.CharField(choices=STATUS_CHOICES, max_length=50, blank=False, null=False, default='Belum diadopsi')
+
+class Register_Adopsi(models.Model):
+    id = models.CharField(max_length=6, primary_key=True, editable=False, unique=True, default=shortuuid.uuid()[:6])
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    hewan = models.ForeignKey(Adopsi, on_delete=models.CASCADE)
+    date = models.DateTimeField()

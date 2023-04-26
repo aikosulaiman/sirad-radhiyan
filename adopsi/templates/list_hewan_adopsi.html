@@ -254,17 +254,17 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.status }}</td>
                                 <td class="text-center">
                                     {% if request.session.Role == 'Karyawan' %}
-                                        <a class="btn btn-primary mt-1" href="#">Detail</a>
+                                        <a class="btn btn-primary mt-1" href="/adopsi/read-adopsi/{{ hewan.hewan_id }}">Detail</a>
                                         {% if hewan.status == 'Belum diadopsi' %}
                                             <a class="btn btn-info mt-1" href="/adopsi/update-adopsi/{{ hewan.hewan_id }}">Update</a>
                                             <a class="btn btn-danger mt-1" href="/adopsi/delete-adopsi/{{ hewan.hewan_id }}" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENGHAPUS hewan ini?')">Hapus</a>
                                         {% endif %}
                                     {% endif %}
                                     {% if request.session.Role == 'Customer' %}
-                                        {% if hewan.status == 'Diadopsi' %}
-                                            <a class="btn btn-info" href="#">Detail</a>
+                                        {% if hewan.status == 'Diadopsi' %} 
+                                            <a disabled class="btn btn-info" href="#">Tidak Tersedia</a>
                                         {% else %}
-                                            <a class="btn btn-primary" href="#">Adopsi</a>
+                                            <a class="btn btn-primary" href="/adopsi/read-adopsi/{{ hewan.hewan_id }}">Detail</a>
                                         {% endif %}
                                     {% endif %}
                                     {% if request.session.Role == 'Admin' %}
