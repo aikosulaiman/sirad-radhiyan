@@ -161,22 +161,6 @@ def update_profile_handler(request, user_id):
     cursor.close()
     return HttpResponseRedirect('/profile')
 
-# def tambah_hewan(request, user_id):
-#     form = HewanForm()
-#     if request.method == 'POST':
-#         form = HewanForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/')
-#         else:
-#             print(form.errors)
-#             # form.add_error(None, "Username or email already exists, please choose another one!")
-#     response = {
-#         'form': form,
-#         'user_id':user_id
-#         }
-#     return render(request, 'tambah_hewan.html', response)
-
 def tambah_hewan(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
