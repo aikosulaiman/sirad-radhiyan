@@ -28,7 +28,7 @@ def create_adopsi(request):
             return render(request, 'create_adopsi.html', {'form': form})
         else:
             context = {
-            'error_message': 'Access denied!'}
+            'error_message': 'Akses ditolak!'}
             return render(request, 'adopt_error.html', context)
     else:
         return HttpResponseRedirect("/adopsi")
@@ -41,6 +41,31 @@ def list_hewan_adopsi(request):
     }
 
     return render(request, 'list_hewan_adopsi.html', context)
+
+def read_adopsi(request, hewan_id):
+        cursor = connection.cursor()
+        
+        if request.method != "POST":
+                cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+                if len(request.session.keys()) == 0:
+                        return redirect('/')
+                
+                # Fetch object Adopsi
+                cursor.execute("""
+                SET SEARCH_PATH TO PUBLIC;
+                SELECT * 
+                FROM adopsi_adopsi  
+                WHERE hewan_id= '{0}';
+                """.format(hewan_id))
+                adopsi = cursor.fetchall()
+    
+                response = {'adopsi': adopsi, 
+                            'hewan_id': hewan_id}
+                cursor.close()
+                return render(request, 'read_adopsi.html', response)
+
+
+    
 
 def update_adopsi(request, user_id):
     cursor = connection.cursor()

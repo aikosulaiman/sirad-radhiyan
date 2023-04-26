@@ -27,8 +27,8 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Adopsi</a>
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -113,7 +113,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Waktu Mulai:</label>
                                             <div class="col-sm-8">
-                                                <input type="datetime-local" id="start_time" name="start_time" value="{{ event.0.4 }}" class="form-control" required>
+                                                <input type="datetime-local" id="start_time" name="start_time" value="{{ event.0.4|date:'Y-m-d\TH:i'}}" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Waktu Selesai:</label>
                                             <div class="col-sm-8">
-                                                <input type="datetime-local" id="end_time" name="end_time" value="{{ event.0.5 }}" class="form-control" required>
+                                                <input type="datetime-local" id="end_time" name="end_time" value="{{ event.0.5|date:'Y-m-d\TH:i'}}" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
@@ -130,20 +130,22 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Deskripsi:</label>
                                             <div class="col-sm-8">
+                                                <!-- <textarea name="description" rows="5" cols="48" id="description" value="{{ event.0.6 }}" class="form-control" required></textarea> -->
                                                 <input type="text" name="description" rows="5" cols="48" id="description" value="{{ event.0.6 }}" class="form-control" required>
                                             </div>
                                         </div>
-                                        <!-- <div class="row mt-4">
+                                        <div class="row mt-4">
                                             <label class="col-sm-4">Pendaftar Event:</label>
                                             <div class="col-sm-8 text-left">
                                                 <label for="isVIP"> 
-                                                    <input type="checkbox" id="isVIP" name="isVIP" value="{{ event.0.7 }}" style="width: 20px; height: 20px;">
+                                                    <input type="checkbox" id="isVIP" name="isVIP" {% if event.0.7 %}checked{% endif %} value="{{ event.0.7 }}">
+                                                    <!-- <input type="checkbox" id="isVIP" name="isVIP" style="width: 20px; height: 20px;"> -->
                                                     &nbsp;&nbsp;<span class="fa-solid fa-crown"></span>&nbsp;&nbsp;
                                                     Khusus member VIP
                                                   </label>
                                             </div>
 
-                                        </div> -->
+                                        </div>
                                         <div class="mt-5 text-center">
                                             <button class="btn btn-primary px-4" type="submit" onclick="return confirm('⚠️ Are you sure you want to UPDATE this event?')">Edit Event</button>
                                         </div>

@@ -252,14 +252,14 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.deskripsi }}</td>
                                 <td class="text-center">
                                     {% if request.session.Role == 'Karyawan' %}
-                                        <a class="btn btn-primary" href="#">Detail</a>
+                                        <a class="btn btn-primary" href="/adopsi/read-adopsi/{{ hewan.hewan_id }}">Detail</a>
                                         <a class="btn btn-info" href="/adopsi/update-adopsi/{{ hewan.hewan_id }}">Update</a>
                                         <a class="btn btn-danger" href="#" onclick="return confirm('⚠️ Yakin mau HAPUS hewan ini?')">Hapus</a>
                                     {% endif %}
                                     {% if request.session.Role == 'Customer' %}
                                     <!-- add if else to change button between 'adopsi' and 'detail' -->
                                         <a class="btn btn-primary" href="#">Adopsi</a>
-                                        <a class="btn btn-primary" href="#">Detail</a>
+                                        <a class="btn btn-primary" href="/adopsi/read-adopsi/{{ hewan.hewan_id }}">Detail</a>
                                     {% endif %}
                                     {% if request.session.Role == 'Admin' %}
                                     <a class="btn btn-primary" href="#">Detail</a>
