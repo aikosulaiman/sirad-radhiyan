@@ -1,6 +1,6 @@
 import uuid
 from django.shortcuts import render
-from .models import User, Produk
+from .models import User, Produk, Customer
 from .forms import UserForm, CustomerForm, ProdukForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError, connection
@@ -138,6 +138,30 @@ def update_user_handler(request, user_id):
             return render(request, 'error_page.html', context)
     else:
         return HttpResponseRedirect("/login")
+
+def list_customer(request):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Karyawan':
+            
+            customer = Customer.objects.all().values()
+
+            response = {
+                        'customer':customer,
+                        }
+            return render(request, 'customer_list.html', response)
+        else:
+            context = {
+            'error_message': 'Access denied!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def customer_approval(request, id):
+    customer_by_id = Customer.objects.get(id=id)
+    customer_by_id.is_vip = True
+    customer_by_id.save()
+    return HttpResponseRedirect('/user/list-customer')
+
 
 def customer_registration(request):
     form = CustomerForm()
