@@ -13,35 +13,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='User',
-            fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('username', models.CharField(max_length=40, unique=True)),
-                ('first_name', models.CharField(max_length=50)),
-                ('last_name', models.CharField(max_length=50)),
-                ('role', models.CharField(choices=[('Admin', 'Admin'), ('Customer', 'Customer'), ('Karyawan', 'Karyawan'), ('Dokter', 'Dokter'), ('Groomer', 'Groomer')], max_length=40)),
-                ('email', models.EmailField(blank=True, max_length=70, unique=True)),
-                ('no_telepon', models.CharField(max_length=12)),
-                ('password', models.CharField(max_length=50)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Customer',
-            fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='sirad.user')),
-                ('is_vip', models.BooleanField(default=False)),
-            ],
-            bases=('sirad.user',),
-        ),
-        migrations.CreateModel(
-            name='Dokter',
-            fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='sirad.user')),
-                ('tarif', models.IntegerField()),
-            ],
-            bases=('sirad.user',),
-        ),
+        
+       
+       
         migrations.CreateModel(
             name='Hewan',
             fields=[
@@ -50,7 +24,7 @@ class Migration(migrations.Migration):
                 ('jenis', models.CharField(max_length=50)),
                 ('umur', models.IntegerField()),
                 ('note', models.CharField(max_length=200)),
-                ('pemilik', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sirad.customer')),
+                
             ],
         ),
     ]

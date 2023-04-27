@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db import IntegrityError, connection
 from django.db import connection
 from datetime import datetime
+import shortuuid
 
 # Create your views here.
 def is_authenticated(request):
@@ -157,10 +158,13 @@ def read_adopsi(request, hewan_id):
                     uname = request.session['Username']
                     user = User.objects.get(username=uname)
                     customer = Customer.objects.get(user_ptr=user)
-                    # for i in reg_adopsi_filtered:
-                    #      if i.customer == customer: # Restrict button daftar event untuk Customer yang telah mendaftar????
-                    #         button_bool = 1 
+                    for i in reg_adopsi_filtered:                         
+                         if i.customer == customer: # Restrict button daftar adopsi untuk Customer yang telah mendaftar????
+                            button_bool = 1 
+                        
 
+                for i in reg_adopsi_filtered:  
+                    print(i.id)
                 response['reg_adopsi'] = reg_adopsi_filtered
                 response['button_bool'] = button_bool
                 return render(request, 'read_adopsi.html', response)
@@ -180,9 +184,9 @@ def register_adopsi(request, hewan_id):
             customer = Customer.objects.get(user_ptr=user)
             
             regist_bool = 0
-            # for i in reg_adopsi_filtered:
-            #     if i.customer == customer: # Restrict fungsi daftar event untuk Customer yang telah mendaftar???
-            #         regist_bool = 1 
+            for i in reg_adopsi_filtered:
+                if i.customer == customer: # Restrict fungsi daftar adopsi untuk Customer yang telah mendaftar???
+                    regist_bool = 1 
 
             if regist_bool == 0:
                 try:
@@ -196,9 +200,19 @@ def register_adopsi(request, hewan_id):
                 }
                 if request.method == 'POST':
                     date = datetime.now()
+                    status = "Menunggu konfirmasi"
+                    id = shortuuid.uuid()[:6]
 
                     register_adopsi = Register_Adopsi(customer=customer, hewan=adopsi, date=date)
-                    register_adopsi.save()
+                    # register_adopsi.save()
+                    cursor = connection.cursor()
+                    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+                    cursor.execute("""
+                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status)
+                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}');
+                        """.format(id, date, customer.id, hewan_id, status)) 
+
                     
                     success_message = 'Berhasil mengajukan Adopsi!'
                     return render(request, 'adopt_success.html', {'success_message': success_message})
@@ -214,3 +228,93 @@ def register_adopsi(request, hewan_id):
             return render(request, 'adopt_error.html', context)
     else:
         return HttpResponseRedirect("/adopsi")
+
+
+def list_adopsi_customer(request):
+    uname = request.session['Username']
+    user = User.objects.get(username=uname)
+    customer = Customer.objects.get(user_ptr=user)
+    
+    reg_adopsi_filtered = Register_Adopsi.objects.filter(customer_id=customer.id)
+    # list_adopsi_status = []
+    # list_adopsi_customer = []
+    # for i in reg_adopsi_filtered:
+    #     hewan = Adopsi.objects.get(hewan_id=i.hewan_id) 
+    #     list_adopsi_customer.append(hewan)
+    #     list_adopsi_status.append(i.status)
+
+    
+    context = {
+        # 'list_adopsi_customer': list_adopsi_customer,
+        'reg_adopsi': reg_adopsi_filtered
+    }
+
+    return render(request, 'list_adopsi_customer.html', context)
+
+def approve_adopsi(request, hewan_id, id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Karyawan':
+            hewan = Adopsi.objects.get(hewan_id=hewan_id)
+            reg_adopsi_filtered = Register_Adopsi.objects.filter(hewan_id=hewan_id)
+
+            status = "Diadopsi"
+            status_registeradopsi = "Disetujui"
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            cursor.execute("""
+                UPDATE adopsi_adopsi
+                SET status = '{0}'
+                WHERE hewan_id = '{1}';
+                """.format(status, hewan_id)) 
+
+            cursor.execute("""
+                UPDATE adopsi_register_adopsi
+                SET status = '{0}'
+                WHERE id = '{1}';
+                """.format(status_registeradopsi, id))  
+            
+            for i in reg_adopsi_filtered:
+                if i.status == "Menunggu konfirmasi":
+                    status_registeradopsi = "Tidak Disetujui"
+                    cursor.execute("""
+                    UPDATE adopsi_register_adopsi
+                    SET status = '{0}'
+                    WHERE id = '{1}';
+                    """.format(status_registeradopsi, i.id))
+                          
+            success_message = 'Berhasil menyetujui Adopsi!'
+            cursor.close()
+            return render(request, 'adopt_success.html', {'success_message': success_message})
+                     
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def disapprove_adopsi(request, hewan_id, id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Karyawan':
+            
+            status_registeradopsi = "Tidak disetujui"
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            cursor.execute("""
+                UPDATE adopsi_register_adopsi
+                SET status = '{0}'
+                WHERE id = '{1}';
+                """.format(status_registeradopsi, id))  
+                          
+            success_message = 'Berhasil menolak Adopsi!'
+            cursor.close()
+            return render(request, 'adopt_success.html', {'success_message': success_message})
+                     
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page.html', context)
+    else:
+        return HttpResponseRedirect("/login")

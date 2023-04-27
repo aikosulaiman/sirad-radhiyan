@@ -22,3 +22,4 @@ class Register_Adopsi(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     hewan = models.ForeignKey(Adopsi, on_delete=models.CASCADE)
     date = models.DateTimeField()
+    status = models.CharField(max_length=50, blank=False, null=False, default='Menunggu konfirmasi')
