@@ -22,7 +22,7 @@ class User(models.Model):
 
 class Customer(User):
     is_vip = models.BooleanField(default=False)
-
+    
 class Dokter(User):
     tarif = models.IntegerField()
 

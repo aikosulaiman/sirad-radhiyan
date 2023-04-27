@@ -1,0 +1,177 @@
+{% extends 'static_event.html' %} {% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;">RAD</span>
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Event
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/create-event">Create Event</a>
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Adopsi
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Statistik
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Statistik Dokter</a>
+                    <a class="dropdown-item" href="#">Statistik Grooming</a>
+                    <a class="dropdown-item" href="#">Statistik Event</a>
+                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<head>
+    <title>Edit Event</title>
+    <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
+</head>
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#000000;
+                font-family: 'Poppins', sans-serif;
+                font-size: 24px;
+                font-weight: 600;">Update Event</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <a href="/event" class="text-left">
+                            <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List Event</p>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="{% url 'update_event_handler' event_id%}" method="GET">
+                                    {% if error_message %}
+                                    <div class="alert alert-danger">{{ error_message }}</div>
+                                    {% endif %} {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Nama Event:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="title" name="title" value="{{ event.0.1 }}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Lokasi Event (General):</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="general_location" name="general_location" value="{{ event.0.2 }}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Lokasi Event (Spesifik):</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="specific_location" name="specific_location" value="{{ event.0.3 }}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Waktu Mulai:</label>
+                                            <div class="col-sm-8">
+                                                <input type="datetime-local" id="start_time" name="start_time" value="{{ event.0.4|date:'Y-m-d\TH:i'}}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Waktu Selesai:</label>
+                                            <div class="col-sm-8">
+                                                <input type="datetime-local" id="end_time" name="end_time" value="{{ event.0.5|date:'Y-m-d\TH:i'}}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Deskripsi:</label>
+                                            <div class="col-sm-8">
+                                                <!-- <textarea name="description" rows="5" cols="48" id="description" value="{{ event.0.6 }}" class="form-control" required></textarea> -->
+                                                <input type="text" name="description" rows="5" cols="48" id="description" value="{{ event.0.6 }}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="mt-5 text-center">
+                                            <button class="btn btn-primary px-4" type="submit" onclick="return confirm('⚠️ Apakah Anda yakin ingin mengubah data Event ini?')">Edit Event</button>
+                                        </div>
+                                        <br>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    // Get the next day date and time
+    const now = new Date();
+    now.setDate(now.getDate() + 1);
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hour = now.getHours().toString().padStart(2, '0');
+    const minute = now.getMinutes().toString().padStart(2, '0');
+  
+    // Set the min and max attributes of the datetime-local inputs
+    const startInput = document.getElementById('start_time');
+    startInput.min = `${year}-${month}-${day}T${hour}:${minute}`;
+    startInput.max = `${year + 100}-${month}-${day}T23:59`;
+    const endInput = document.getElementById('end_time');
+    endInput.min = `${year}-${month}-${day}T${hour}:${minute}`;
+    endInput.max = `${year + 100}-${month}-${day}T23:59`;
+  
+    // Add event listener to start time input to prevent selecting end time before start time
+    startInput.addEventListener('input', function() {
+      endInput.min = startInput.value;
+    });
+  </script>
+
+{% endblock content %}

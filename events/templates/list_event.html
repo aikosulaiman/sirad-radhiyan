@@ -83,8 +83,8 @@
           Adopsi
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Adopsi</a>
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -101,7 +101,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -138,7 +138,7 @@
           Dokter
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -163,7 +163,7 @@
           Adopsi
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -180,7 +180,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -213,8 +213,8 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -239,7 +239,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -267,25 +267,31 @@
                 {% if request.session.Role == 'Karyawan' %}
                 <div class="d-grid d-md-flex justify-content-md-end">
                     <a href="/event/create-event">
-                        <button class="btn btn-primary px-4">+ Create Event</button>
+                        <button class="btn btn-primary px-4">+ Tambah Event</button>
                     </a>
                 </div>
                 {% endif %}
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#all">All Events</a>
+                      <a class="nav-link active" data-toggle="tab" href="#all">All Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#past">Past Events</a>
+                      <a class="nav-link" data-toggle="tab" href="#past">Past Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#today">Today's Events</a>
+                      <a class="nav-link" data-toggle="tab" href="#today">Today's Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#future">Upcoming Events</a>
+                      <a class="nav-link" data-toggle="tab" href="#future">Upcoming Events</a>
                     </li>
+                    {% if request.session.Role == 'Customer' %}
+                    <li class="nav-item">
+                      <a class="nav-link" data-toggle="tab" href="#registered">My Events</a>
+                    </li>
+                    {% endif %}
                 </ul>
+                  
 
                 <div class="tab-content">
                     <div id="all" class="tab-pane fade show active">
@@ -293,7 +299,7 @@
                         <div class="wrap">
                             {% for event in all_events %}
                             <div class="card">
-                                <div class="containers">
+                                <div class="containers" style="height: 6cm;">
                                     <h3>{{ event.title }}</h3>
                                     <h6><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;{{ event.start_time.date }}</h6>
                                     <h6><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{ event.general_location }}</h6>
@@ -301,10 +307,9 @@
                                     {% if event.isVIP %}
                                     <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
                         <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;VIP Only</button> {% endif %}
-                                    <br>
-                                    <div class="mt-5 text-center">
-                                        <a href="">Detail</a>
-                                    </div>
+                                </div>
+                                <div class="mt-5 text-center" style="padding-bottom: 50px;">
+                                    <a href="/event/read-event/{{ event.id }}">Detail</a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -312,7 +317,7 @@
                         {% else %}
                         <br>
                         <br>
-                        <p>No events.</p>
+                        <p>Tidak ada Event yang terdaftar.</p>
                         {% endif %}
                     </div>
                     <div id="past" class="tab-pane fade">
@@ -320,7 +325,7 @@
                         <div class="wrap">
                             {% for event in past_events %}
                             <div class="card">
-                                <div class="containers">
+                                <div class="containers" style="height: 6cm;">
                                     <h3>{{ event.title }}</h3>
                                     <h6><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;{{ event.start_time.date }}</h6>
                                     <h6><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{ event.general_location }}</h6>
@@ -328,17 +333,16 @@
                                     {% if event.isVIP %}
                                     <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
                         <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;VIP Only</button> {% endif %}
-                                    <br>
-                                    <div class="mt-5 text-center">
-                                        <a href="">Detail</a>
-                                    </div>
+                                </div>
+                                <div class="mt-5 text-center" style="padding-bottom: 50px;">
+                                    <a href="/event/read-event/{{ event.id }}">Detail</a>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
                         {% else %}
                         <br>
-                        <p>No past events.</p>
+                        <p>Tidak ada Event yang sudah lampau.</p>
                         {% endif %}
                     </div>
                     <div id="today" class="tab-pane fade">
@@ -346,7 +350,7 @@
                         <div class="wrap">
                             {% for event in today_events %}
                             <div class="card">
-                                <div class="containers">
+                                <div class="containers" style="height: 6cm;">
                                     <h3>{{ event.title }}</h3>
                                     <h6><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;{{ event.start_time.date }}</h6>
                                     <h6><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{ event.general_location }}</h6>
@@ -354,18 +358,16 @@
                                     {% if event.isVIP %}
                                     <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
                         <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;VIP Only</button> {% endif %}
-                                    <br>
-                                    <div class="mt-5 text-center">
-                                        <a href="">Detail</a>
-                                    </div>
-
+                                </div>
+                                <div class="mt-5 text-center" style="padding-bottom: 50px;">
+                                    <a href="/event/read-event/{{ event.id }}">Detail</a>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
                         {% else %}
                         <br>
-                        <p>No today's events.</p>
+                        <p>Tidak ada Event hari ini.</p>
                         {% endif %}
                     </div>
                     <div id="future" class="tab-pane fade">
@@ -373,7 +375,7 @@
                         <div class="wrap">
                             {% for event in upcoming_events %}
                             <div class="card">
-                                <div class="containers">
+                                <div class="containers" style="height: 6cm;">
                                     <h3>{{ event.title }}</h3>
                                     <h6><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;{{ event.start_time.date }}</h6>
                                     <h6><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{ event.general_location }}</h6>
@@ -381,19 +383,48 @@
                                     {% if event.isVIP %}
                                     <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
                         <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;VIP Only</button> {% endif %}
-                                    <br>
-                                    <div class="mt-5 text-center">
-                                        <a href="">Detail</a>
-                                    </div>
+                                </div>
+                                <div class="mt-5 text-center" style="padding-bottom: 50px;">
+                                    <a href="/event/read-event/{{ event.id }}">Detail</a>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
                         {% else %}
                         <br>
-                        <p>No upcoming events.</p>
+                        <p>Tidak ada Event yang akan datang.</p>
                         {% endif %}
                     </div>
+                    {% if request.session.Role == 'Customer' %}
+                    <div id="registered" class="tab-pane fade">
+                        {% if registered_events %}
+                        <div class="wrap">
+                            {% for i in registered_events %}
+                            <div class="card">
+                                <div class="containers" style="height: 6cm;">
+                                    <h6 style="display: inline-block; background-color: #17177e; padding: 2px 5px; border-radius: 5px; color: white;">ID Tiket: {{ i.id }}</h6>
+                                    <h3>{{ i.event.title }}</h3>
+                                    <h6><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;{{ i.event.start_time.date }}</h6>
+                                    <h6><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{ i.event.general_location }}</h6>
+                                    <h6><span class="fa-regular fa-clock"></span>&nbsp;&nbsp;&nbsp;{{ i.event.start_time.time }} - {{ i.event.end_time.time }}</h6>
+                                    {% if i.event.isVIP %}
+                                    <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
+                        <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;VIP Only</button> 
+                                    {% endif %}
+                                </div>
+                                <div class="mt-5 text-center" style="padding-bottom: 50px;">
+                                    <a href="/event/tiket-event/{{ i.id }}/{{ customer_id }}">Lihat Tiket</a>
+                                    <br>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <br>
+                        <p>Anda belum pernah mendaftar Event.</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
                 <!-- jQuery and Bootstrap JS -->
                 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

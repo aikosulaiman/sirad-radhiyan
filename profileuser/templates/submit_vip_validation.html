@@ -1,7 +1,8 @@
 {% extends 'static.html' %} {% block content %}
 <title>VIP Form</title>
 <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> {% if request.session.Role == 'Karyawan' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+{% if request.session.Role == 'Karyawan' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
   font-family: 'Poppins', sans-serif;
@@ -30,8 +31,8 @@
           Adopsi
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Adopsi</a>
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -48,7 +49,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -85,7 +86,7 @@
           Dokter
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -110,7 +111,7 @@
           Adopsi
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -127,7 +128,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -160,8 +161,8 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -186,7 +187,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
         </ul>

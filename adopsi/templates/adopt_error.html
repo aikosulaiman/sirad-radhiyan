@@ -1,0 +1,14 @@
+{% extends 'static.html' %} {% block content %}
+<title>Error Page</title>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>{{ error_message }}</h2>
+                <br>
+                <a class="btn btn-primary px-4" href="/">Kembali ke Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

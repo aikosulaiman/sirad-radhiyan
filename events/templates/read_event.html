@@ -1,0 +1,378 @@
+{% extends 'static_event.html' %} {% block content %}
+{% if request.session.Role == 'Karyawan' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;">RAD</span>
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Event
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/create-event">Create Event</a>
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Adopsi
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Statistik
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Statistik Dokter</a>
+                    <a class="dropdown-item" href="#">Statistik Grooming</a>
+                    <a class="dropdown-item" href="#">Statistik Event</a>
+                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %} {% if request.session.Role == 'Admin' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;">RAD</span>
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Users
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/user/add-user">Create User</a>
+                    <a class="dropdown-item" href="/user/list-user">List User</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dokter
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Grooming
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Layanan Master Data</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Event
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Adopsi
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Statistik
+        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Statistik Dokter</a>
+                    <a class="dropdown-item" href="#">Statistik Grooming</a>
+                    <a class="dropdown-item" href="#">Statistik Event</a>
+                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %} {% if request.session.Role == 'Customer' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Create Appointment</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %}
+<br>
+
+<style>
+    .table-label {
+      background-color: #20a9f8;
+    }
+</style>
+
+<head>
+    <title>Detail Event</title>
+    <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
+</head>
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#000000;
+                font-family: 'Poppins', sans-serif;
+                font-size: 24px;
+                font-weight: 600;">Detail Event</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <a href="/event" class="text-left">
+                            <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List Event</p>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card" style="padding-left: 50px;">
+                            <div class="card-body">
+                                    {% csrf_token %} 
+                                    {% if request.session.Role == 'Karyawan' %}
+                                        {% if reg_event %} 
+                                        <div class="d-grid d-md-flex justify-content-md-end">
+                                            <a href="/event/update-event/{{event_id}}">
+                                                <button class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            </a>
+                                        </div>
+                                        {% else %}
+                                        <div class="d-grid d-md-flex justify-content-md-end">
+                                            <a href="/event/update-event/{{event_id}}">
+                                                <button class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            </a> &nbsp;&nbsp;
+                                            <a href="/event/delete-event/{{event_id}}">
+                                                <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin menghapus Event ini secara permanen?')"><i class="fa-solid fa-trash"></i></button>
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    {% endif %} 
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                                <h2 for="title" class="text-left">{{event.0.1}}</h2>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><span class="fa-solid fa-location-dot"></span>&nbsp;&nbsp;&nbsp;&nbsp;Lokasi Event:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{event.0.2}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;Tanggal:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{event.0.4.date}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><span class="fa-regular fa-clock"></span>&nbsp;&nbsp;&nbsp;Waktu:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{event.0.4.time}} - {{event.0.5.time}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><i class="fa-regular fa-note-sticky"></i>&nbsp;&nbsp;&nbsp;Deskripsi:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{event.0.6}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if event.0.7 == 1 %} 
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><i class="fa-regular fa-user"></i>&nbsp;&nbsp;&nbsp;Pendaftar Event:</label>                                   
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title"><span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;Khusus Member VIP</label>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                    {% endif %}
+
+                                    
+                                    {% if role == 'Karyawan' %}
+                                    <div class="row mt-4">
+                                        <label class="col-sm-4 text-left"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;&nbsp;List Pendaftar:</label>  
+                                    </div>
+                                        {% if reg_event %}                              
+                                            <table class="table table-bordered">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">ID Tiket</th>                                                   
+                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Phone Number</th>
+                                                        <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Tanggal Terdaftar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for i in reg_event %}
+                                                    <tr>
+                                                        <td style="font-family: 'Poppins', sans-serif;">{{ forloop.counter }}</td>
+                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.id }}</td>
+                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.email }}</td>
+                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.no_telepon }}</td>
+                                                        <td style="font-family: 'Poppins', sans-serif;">{{ i.date }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left" style="font-style: italic; color: #107bef;">Belum ada pendaftar.</label>
+                                        </div>
+                                            
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if role == 'Customer' %}
+                                        {% if button_bool == 0 %}
+                                            {% if event.0.7 == 1 %}
+                                                {% if isvip_cust.0.0 == 1 %}
+                                                    <div class="mt-5 text-center">
+                                                        <a href="/event/register-event/{{ event.0.0 }}">
+                                                            <button class="btn btn-primary px-4" style="background-color:gold; border-color: gold; color: black;"> 
+                                                                <span class="fa-solid fa-crown"></span>&nbsp;&nbsp;&nbsp;Daftar Event VIP</button>     
+                                                        </a>
+                                                    </div>
+                                                    <br>
+                                                {% endif %}
+                                            {% elif event.0.7 == 0 %}
+                                                <div class="mt-5 text-center">
+                                                    <a href="/event/register-event/{{ event.0.0 }}">
+                                                        <button class="btn btn-primary px-4" type="submit">Daftar Event</button>
+                                                    </a>
+                                                </div>
+                                                <br>
+                                            {% endif %}
+                                        {% else %}
+                                        <label style="color: #107bef;">✅ Anda sudah mendaftar pada Event ini.</label>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+</div>
+
+
+{% endblock content %}
