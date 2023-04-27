@@ -1,6 +1,6 @@
 {% extends 'static.html' %} {% block content %}
 <title>Halaman Profile</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> {% if request.session.Role == 'Karyawan' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
@@ -20,7 +20,7 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
                 </div>
             </li>
         </ul>
@@ -82,10 +82,6 @@
                                     <p class="card-text">{{ user_tarif }}</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-sm-4">List Hewan:</label>
-                            </div>
-                            <a href="#" class="btn btn-success">Tambah Hewan</a>
                             <a href="/profile/update-profile/{{ user_id }}" class="btn btn-secondary">Update Profile</a>
                         </div>
                     </div>
