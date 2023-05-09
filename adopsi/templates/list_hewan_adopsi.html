@@ -217,11 +217,18 @@
 <body style="background-color: rgb(255, 255, 255);">
     <br>
     <div class="container">
-        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600;">Daftar Hewan Adopsi</h2>
+        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600;">Daftar Hewan Adopsi </h2>
         {% if request.session.Role == 'Karyawan' %}
             <div class="d-grid d-md-flex justify-content-md-end">
                 <a href="/adopsi/create-adopsi">
                     <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">+ Tambah Hewan</button>
+                </a>
+            </div>
+        {% endif %}
+        {% if request.session.Role == 'Customer' %}
+            <div class="d-grid d-md-flex justify-content-md-end">
+                <a href="/adopsi/list-adopsi-customer">
+                    <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Daftar Adopsi Anda 🐈‍⬛🐈🐕‍🦺</button>
                 </a>
             </div>
         {% endif %}
@@ -237,7 +244,6 @@
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Jenis</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Ras</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Warna</th>
-                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Deskripsi</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Status</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Aksi</th>
                             </tr>
@@ -250,7 +256,6 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.jenis }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.ras }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.warna }}</td>
-                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.deskripsi }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.status }}</td>
                                 <td class="text-center">
                                     {% if request.session.Role == 'Karyawan' %}

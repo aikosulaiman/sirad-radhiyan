@@ -140,11 +140,13 @@ def update_profile_handler(request, user_id):
         SET username = '{0}', first_name = '{1}', last_name = '{2}', email = '{3}', no_telepon = '{4}', password = '{5}'
         WHERE id = '{6}';
         """.format(username, first_name, last_name, email, no_telepon, password, user_id))
-        success_message = 'Profile updated successfully!'
-        return render(request, 'update_success.html', {'success_message': success_message})
+        response = {
+            'success_message': 'Profil berhasil diperbarui!',
+            'username':username}
+        return render(request, 'update_success.html', response)
     except IntegrityError:
         # If the field is not unique, return an error message
-        error_message = 'Username or email is already taken. Please choose another one.'
+        error_message = 'Username atau email sudah digunakan. Silahkan pilih yang lain.'
         cursor.execute("""
         SELECT *
         FROM user_user
@@ -154,7 +156,8 @@ def update_profile_handler(request, user_id):
         response = {
             'error_message': error_message,
             'user':user,
-            'user_id': user_id}
+            'user_id': user_id,
+            'username' : username}
         return render(request, 'update_profile.html', response)
 
         

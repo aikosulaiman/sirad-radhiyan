@@ -150,7 +150,41 @@
                     <div class="col-md-8">
                         <div class="card" style="padding-left: 50px;">
                             <div class="card-body">
-                                    {% csrf_token %} 
+                                    {% csrf_token %}
+                                    
+                                        <div class="row justify-content-center">                                                          
+                                            <div class="col-md-6 text-right">   
+                                            </div>
+                                            {% if button_bool == 1 %} 
+                                            <div class="col-md-6 text-right">
+                                                {% if reg_adopsi.0.status == 'Menunggu konfirmasi' %}                                                                  
+                                                    <p style="text-align: center; 
+                                                    font-weight: bold; 
+                                                    background-color:orange; 
+                                                    border: 1px solid orange; 
+                                                    padding: 3px; 
+                                                    border-radius: 10px;">{{reg_adopsi.0.status}}</p>                          
+                                                
+                                                {% elif reg_adopsi.0.status == 'Disetujui' %}
+                                                    <p style="text-align: center; 
+                                                    font-weight: bold; 
+                                                    background-color:greenyellow; 
+                                                    border: 1px solid greenyellow; 
+                                                    padding: 3px; 
+                                                    border-radius: 10px;">{{reg_adopsi.0.status}}</p>
+                                                {% else %}
+                                                    <p style="text-align: center; 
+                                                    font-weight: bold; 
+                                                    color: white;
+                                                    background-color:red; 
+                                                    border: 1px solid red; 
+                                                    padding: 3px; 
+                                                    border-radius: 10px;">{{reg_adopsi.0.status}}</p>               
+                                                {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
                                     <div class="form-group">
                                         <div class="row mt-4">
                                                 <h2 for="title" class="text-left">{{adopsi.0.1}}</h2>
@@ -188,45 +222,88 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
-                                    {% if request.session.Role == 'Customer' %}                                   
+                                    
+                                    <!-- {% if request.session.Role == 'Customer' %}                                   
                                         <a class="btn btn-primary" href="/adopsi/register-adopsi/{{ adopsi.0.0 }}"> Ajukan Adopsi</a>                                      
+                                    {% endif %} -->
+                
+                                    {% if role == 'Customer' %}
+                                        {% if button_bool == 0 %}
+                                            <div class="mt-5 text-center">
+                                                <a href="/adopsi/register-adopsi/{{ adopsi.0.0 }}">
+                                                    <button class="btn btn-primary px-4" type="submit">Ajukan Adopsi</button>
+                                                </a>
+                                            </div>
+                                            <br>
+                                        {% else %}
+                                        <label style="color: #107bef;">✅ Anda sudah mengajukan adopsi untuk hewan ini.</label>
+                                        {% endif %}
                                     {% endif %}
+
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <br><br>
+                    <!-- Tabel List Pendaftar Adopsi untuk Karyawan -->
+                    {% if request.session.Role == 'Karyawan' %}
+                    <div class="row justify-content-center">
+                        <!-- <div class="col-md-8"> -->
+                            <div class="card" style="padding-left: 50px;">
+                                <div class="card-body">
+                                <div class="row mt-4">
+                                    <label class="col-sm-4 text-left"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;&nbsp;List Pendaftar:</label>  
+                                </div>
+                                    {% if reg_adopsi %}                           
+                                        <table class="table table-bordered">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">ID</th>
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Nama</th>                                                   
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Email</th>
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">No Telepon</th>
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Tanggal Terdaftar</th>
+                                                    <th class="table-label" scope="col" style="font-family: 'Poppins', sans-serif;">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in reg_adopsi %}
+                                                <tr>
+                                                    <td style="font-family: 'Poppins', sans-serif;">{{ forloop.counter }}</td>
+                                                    <td style="font-family: 'Poppins', sans-serif;">{{ i.id }}</td>
+                                                    <td style="font-family: 'Poppins', sans-serif;">{{i.customer.first_name}} {{i.customer.last_name}}</td>
+                                                    <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.email }}</td>
+                                                    <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.no_telepon }}</td>
+                                                    <td style="font-family: 'Poppins', sans-serif;">{{ i.date }}</td>
+                                                    <td class="text-center">
+                                                        {% if i.status == 'Menunggu konfirmasi' and  i.hewan.status == 'Belum diadopsi' %}
+                                                            <a href="/adopsi/approve-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
+                                                                <button class="btn btn-info" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI adopsi hewan ini?')">Setujui</button>
+                                                            </a>
+                                                            <a href="/adopsi/disapprove-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
+                                                                <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI adopsi hewan ini?')">Tidak Setujui</button>
+                                                            </a>
+                                                        {% elif i.status == 'Disetujui' %}
+                                                            <label style="font-style: italic; color: #107bef;">Sudah disetujui.</label>
+                                                        {% else %}
+                                                            <label style="font-style: italic; color: #ef1017;">Tidak disetujui.</label>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                    <div class="row mt-4">
+                                        <label class="col-sm-4 text-left" style="font-style: italic; color: #107bef;">Belum ada pendaftar.</label>
+                                    </div>
+                            
+                        {% endif %} {% endif %}
+                        </div></div></div>
                 </div>
                 <br>
-                <!-- Tabel List Adopter untuk Karyawan -->
-                <!-- <div class="row justify-content-center">
-                    <div class="card" style="padding-left: 50px;">
-                        <div class="card-body">
-                            {% if request.session.Role == 'Karyawan' %}
-                            <table class="table table-bordered border-dark">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
-                                        <th scope="col" style="font-family: 'Poppins', sans-serif;">Nama Adopter</th>
-                                        <th scope="col" style="font-family: 'Poppins', sans-serif;">Nomor Telepon</th>
-                                        <th scope="col" style="font-family: 'Poppins', sans-serif;">Alasan Mengadopsi</th>
-                                        <th scope="col" style="font-family: 'Poppins', sans-serif;">Pengalaman Pelihara Hewan</th>
-                                        <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   
-                                    <tr>
-                                        
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                            {% endif %}
-                            
-                        </div>
-                    </div>
-                </div> -->
+
             
             </div>
         </section>

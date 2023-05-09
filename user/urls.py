@@ -8,7 +8,7 @@ urlpatterns = [
     path('list-customer', views.list_customer, name='list_customer'),
     path('delete-user/<uuid:id>', views.delete_user),
     path('update-user/<uuid:user_id>', views.update_user, name='update_user'),
-    path('customer-registration/', views.customer_registration, name="customer_registration"),
+    path('customer-registration', views.customer_registration, name="customer_registration"),
     path('update-user-handler/<uuid:user_id>', views.update_user_handler, name='update_user_handler'),
     path('list-produk', views.list_produk, name='list_produk'),
     path('add-produk', views.add_produk, name='add_produk'),
