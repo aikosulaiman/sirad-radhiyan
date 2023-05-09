@@ -228,9 +228,12 @@ def update_produk(request, produk_id):
             """.format(produk_id))
             produk = cursor.fetchall()
                 
+            status = produk[0][3]
+
             response = {
                     'produk_id':produk_id,
-                    'produk':produk,}
+                    'produk':produk,
+                    'status':status}
             cursor.close()
             return render(request, 'produk_update.html', response)
         else:

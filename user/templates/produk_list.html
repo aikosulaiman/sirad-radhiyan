@@ -125,7 +125,7 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{% if produk.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
                                 <td class="text-center">
                                     <a class="btn btn-info" href="/user/update-produk/{{ produk.id }}">Update</a>
-                                    <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Are you sure you want to PERMANENTLY DELETE this user?')">Delete</a>
+                                    <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
