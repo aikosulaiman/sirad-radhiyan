@@ -178,9 +178,10 @@ def customer_registration(request):
 def list_produk(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Admin':
-            produk = Produk.objects.all().values()
+            layanan = Produk.objects.filter(jenis="Layanan")
+            produk = Produk.objects.filter(jenis="Produk") 
 
-            response = {'produk':produk}
+            response = {'layanan':layanan, 'produk':produk}
             return render(request, 'produk_list.html', response)
         else:
             context = {

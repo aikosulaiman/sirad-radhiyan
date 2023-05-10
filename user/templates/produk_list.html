@@ -102,9 +102,18 @@
         </div>
 
         <br>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#produk">Produk</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#layanan">Layanan</a>
+            </li>
+        </ul>
         <br>
         <div class="tab-content">
-            <div id="all" class="tab-pane fade show active">
+            <div id="produk" class="tab-pane fade show active">
+                {% if produk %}
                 <div class="wrap">
                     <table class="table table-bordered border-dark">
                         <thead class="table-dark">
@@ -132,6 +141,38 @@
                         </tbody>
                     </table>
                 </div>
+                {% endif %}
+            </div>
+            <div id="layanan" class="tab-pane fade">
+                {% if layanan %}
+                <div class="wrap">
+                    <table class="table table-bordered border-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">No</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Nama</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Harga</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Status</th>
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for layanan in layanan %}
+                            <tr>
+                                <td style="font-family: 'Poppins', sans-serif; font-weight: bold;">{{ forloop.counter }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ layanan.nama }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{{ layanan.harga }}</td>
+                                <td style="font-family: 'Poppins', sans-serif;">{% if layanan.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" href="/user/update-produk/{{ layanan.id }}">Update</a>
+                                    <a class="btn btn-danger" href="/user/delete-produk/{{ layanan.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus layanan ini?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
