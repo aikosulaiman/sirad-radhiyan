@@ -31,6 +31,9 @@ class Customer(User):
 class Dokter(User):
     tarif = models.IntegerField()
 
+class Groomer(User):
+    pass
+
 class Hewan(models.Model):
     hewan_id = models.AutoField(primary_key=True)
     nama = models.CharField(max_length=50)
