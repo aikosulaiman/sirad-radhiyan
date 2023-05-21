@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "profileuser",
     "adopsi",
     "appointmentdokter",
+    "statistik",
 ]
 
 MIDDLEWARE = [
