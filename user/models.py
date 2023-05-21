@@ -10,6 +10,11 @@ ROLE_CHOICES = [
     ('Groomer', 'Groomer'),
 ]
 
+JENIS_CHOICES = [
+    ('Layanan', 'Layanan'),
+    ('Produk', 'Produk'),
+]
+
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=40, unique=True)
@@ -26,6 +31,9 @@ class Customer(User):
 class Dokter(User):
     tarif = models.IntegerField()
 
+class Groomer(User):
+    pass
+
 class Hewan(models.Model):
     hewan_id = models.AutoField(primary_key=True)
     nama = models.CharField(max_length=50)
@@ -39,3 +47,4 @@ class Produk(models.Model):
     nama = models.CharField(max_length=50)
     harga = models.CharField(max_length=50)
     status = models.BooleanField(default=False)
+    jenis = models.CharField(choices= JENIS_CHOICES, max_length=40)

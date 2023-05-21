@@ -237,11 +237,7 @@
                                     {% csrf_token %} 
                                     {% if request.session.Role == 'Karyawan' %}
                                         {% if reg_event %} 
-                                        <div class="d-grid d-md-flex justify-content-md-end">
-                                            <a href="/event/update-event/{{event_id}}">
-                                                <button class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            </a>
-                                        </div>
+                                        <div class="d-grid d-md-flex justify-content-md-end"></div>
                                         {% else %}
                                         <div class="d-grid d-md-flex justify-content-md-end">
                                             <a href="/event/update-event/{{event_id}}">

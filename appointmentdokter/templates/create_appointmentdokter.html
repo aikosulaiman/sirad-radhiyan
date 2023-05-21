@@ -176,12 +176,22 @@
 
                 // Set the min and max attributes of the datetime-local inputs
                 const startInput = document.getElementById('appointment_time');
-                startInput.min = `${year}-${month}-${day}T${hour}:${minute}`;
-                startInput.max = `${year + 100}-${month}-${day}T23:59`;
+                startInput.min = `${year}-${month}-${day}T08:00`;
+                startInput.max = `${year + 100}-${month}-${day}T20:00`;
 
                 // Add event listener to start time input to prevent selecting end time before start time
                 startInput.addEventListener('input', function() {
-                    endInput.min = startInput.value;
+                    const selectedTime = new Date(this.value);
+                    const selectedHour = selectedTime.getHours();
+
+                    // Check if the selected time is outside the allowed range
+                    if (selectedHour < 8) {
+                        this.value = `${year}-${month}-${day}T08:00`; // Set the selected time to the minimum time (08:00)
+                    } else if (selectedHour >= 20) {
+                        this.value = `${year}-${month}-${day}T20:00`; // Set the selected time to the maximum time (20:00)
+                    }
+
+                    startInput.min = this.value;
                 });
 
                 const dokterInput = document.getElementById('dokter-input');
