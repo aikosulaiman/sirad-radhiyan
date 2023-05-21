@@ -29,4 +29,5 @@ urlpatterns = [
     path('adopsi/', include('adopsi.urls')),
     path('appointmentgrooming/', include('appointmentgrooming.urls')),
     path('appointmentdokter/', include('appointmentdokter.urls')),
+    path('statistik/', include('statistik.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

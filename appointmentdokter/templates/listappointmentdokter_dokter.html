@@ -62,8 +62,8 @@
         </div> -->
 
         <br>
-        <table class="table">
-            <thead>
+        <table class="table table-striped">
+            <thead class="thead-light">
                 <tr>
                     <th>No.</th>
                     <th>Kode Appointment</th>
@@ -84,7 +84,7 @@
                     <td>{{ appointment.appointment_time }}</td>
                     <td>{{ appointment.keluhan }}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-primary" ">Detail Appointment</button>
+                        <a href="/appointmentdokter/read-appointmentdokter/{{ appointment.appointment_id }}" class="btn btn-light">Detail Appointment</a>
                     </td>
                 </tr>
                 {% empty %}
