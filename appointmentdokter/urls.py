@@ -11,3 +11,4 @@ urlpatterns = [
     path('approve-appointmentdokter/<str:apptdokter_id>', approve_appointmentdokter, name='approve_appointmentdokter'),
     path('disapprove-appointmentdokter/<str:apptdokter_id>', disapprove_appointmentdokter, name='disapprove_appointmentdokter'),
     path('delete-appointmentdokter/<str:apptdokter_id>', delete_appointmentdokter, name='delete_appointmentdokter'),
+]
