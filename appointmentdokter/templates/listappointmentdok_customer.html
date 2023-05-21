@@ -88,9 +88,9 @@
         </div>
 
         <br>
-        <table class="table">
+        <table class="table table-striped table-bordered table-hover">
             <thead>
-                <tr>
+                <tr class="table-light">
                     <th>No.</th>
                     <th>Nama Hewan</th>
                     <th>Dokter</th>
@@ -136,7 +136,7 @@
                     </td>
                     {% endif %}
                     <td>
-                        <button type="button" class="btn btn-outline-primary" ">Detail Appointment</button>
+                        <a href="/appointmentdokter/read-appointmentdokter/{{ appointment.appointment_id }}" class="btn btn-light">Detail Appointment</a>
                     </td>
                 </tr>
                 {% empty %}
