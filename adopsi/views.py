@@ -90,7 +90,7 @@ def update_adopsi_handler(request, user_id):
        return render(request, 'adopt_success.html', {'success_message': success_message})
     except IntegrityError:
         # If the field is not unique, return an error message
-        error_message = 'There was and error.'
+        error_message = 'There was an error.'
         cursor.execute("""
         SELECT *
         FROM user_user

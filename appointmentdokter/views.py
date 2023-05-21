@@ -1,3 +1,4 @@
+from sqlite3 import IntegrityError
 from django.shortcuts import render, redirect
 import datetime
 from django.http import HttpResponseRedirect
@@ -91,3 +92,63 @@ def list_appointmentdokter(request):
             
             return render(request, 'listappointmentdokter_dokter.html', context)
 
+def update_appointment(request, id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM appointmentdokter_appointmentdokter
+    WHERE id = '{0}' ;
+    """.format(id))
+    appointmentdokter = cursor.fetchall()
+    my_uuid = str(request.session['UUID'])
+    list_dokter = User.objects.filter(role='Dokter')
+    list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
+        
+    response = {
+            'id':id,
+            'appointmentdokter':appointmentdokter,
+            'listDokter': list_dokter,
+            'listHewan': list_hewan,
+            'user_id': my_uuid,}
+    cursor.close()
+    return render(request, 'update_appointmentdokter.html', response)
+
+def update_appointment_handler(request, id):
+    if is_authenticated(request):
+        cursor = connection.cursor()
+        cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+        # get data dari form
+        dokter = request.GET.get('dokter')
+        hewan = request.GET.get('hewan')
+        appointment_time = request.GET.get('appointment_time')
+        keluhan = request.GET.get('keluhan')
+
+        try:
+            cursor.execute("""
+            UPDATE appointmentdokter_appointmentdokter
+            SET dokter_id = '{0}', hewan_id = '{1}', appointment_time = '{2}', keluhan = '{3}'
+            WHERE id = '{4}';
+            """.format(dokter, hewan, appointment_time, keluhan, id))                
+            success_message = 'Data Appointment berhasil diubah!'
+            cursor.close()
+            return render(request, 'success_page_appt.html', {'success_message': success_message})
+        except IntegrityError:
+            # If the field is not unique, return an error message
+            error_message = 'Error updating appointment.'
+            cursor.execute("""
+            SELECT *
+            FROM appointmentdokter_appointmentdokter
+            WHERE id = '{0}' ;
+            """.format(id))
+            appointmentdokter = cursor.fetchall()
+            response = {
+                'error_message': error_message,
+                'appointmentdokter':appointmentdokter,
+                'id': id}
+            cursor.close()
+                
+            return render(request, 'update_appointmentdokter.html', response)
