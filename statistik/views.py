@@ -7,6 +7,7 @@ from django.db import connection
 from django.db.models import Count
 from django.core import serializers
 import json
+from events.models import Event, Register_Event
 
 from user.models import User, Customer, Dokter, Hewan
 from appointmentdokter.models import AppointmentDokter
@@ -90,3 +91,28 @@ def statistik_dokter(request):
         return render(request, 'statistik_dokter.html', context)
     else:
         return HttpResponseRedirect("/login")
+
+def statistik_event(request):
+    cursor = connection.cursor()
+    if is_authenticated(request):
+        cursor.execute("""
+        SELECT *
+        FROM events_event
+        """)
+        event = cursor.fetchall()
+
+        
+        event_name = event[1]
+        event_jenis = event[8]
+        event_time = event[4]
+        reg_event_filtered = Register_Event.objects.filter(event_id=event_id)
+        # jumlah_pendaftar = 
+        print(reg_event_filtered)
+
+        for i in event:
+            print(i)
+            
+        response = {
+                'event':event,}
+        cursor.close()
+        return render(request, 'statistik_event.html', response)
