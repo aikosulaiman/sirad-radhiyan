@@ -91,3 +91,110 @@ def list_appointmentdokter(request):
             
             return render(request, 'listappointmentdokter_dokter.html', context)
 
+def read_appointmentdokter(request, apptdokter_id):
+    response = {}
+    if is_authenticated(request):
+        appointment_dokter = AppointmentDokter.objects.get(appointment_id=apptdokter_id)
+        print(appointment_dokter.appointment_id)
+        print(appointment_dokter.pemilik_id)
+
+        response['apptdokter'] = appointment_dokter
+
+        customer = Customer.objects.get(id=appointment_dokter.pemilik_id)
+
+        response['customer'] = customer
+        
+        customer_login = Customer
+        if request.session['Role'] == 'Customer':
+            # Fetch object Customer login
+            uname = request.session['Username']
+            user = User.objects.get(username=uname)
+            customer_login = Customer.objects.get(user_ptr=user)
+        if customer_login.id == appointment_dokter.pemilik_id or request.session['Role'] == 'Dokter': 
+            # Fetch object Hewan
+            hewan = Hewan.objects.get(hewan_id=appointment_dokter.hewan_id)
+
+            response['hewan'] = hewan
+            role = request.session['Role']
+            response['role'] = role
+
+            return render(request, 'read_appointmentdokter.html', response)
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+        return render(request, 'error_page_apptdokter.html', context)
+
+    else:
+        return HttpResponseRedirect("/login")
+
+
+def approve_appointmentdokter(request, apptdokter_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Dokter':
+
+            status = "Disetujui"
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            cursor.execute("""
+                UPDATE appointmentdokter_appointmentdokter
+                SET status = '{0}'
+                WHERE appointment_id = '{1}';
+                """.format(status, apptdokter_id)) 
+            
+            success_message = 'Berhasil menyetujui Appointment Dokter!'
+            cursor.close()
+            return render(request, 'success_page_appt.html', {'success_message': success_message})
+                     
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page_apptdokter.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def disapprove_appointmentdokter(request, apptdokter_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Groomer':
+
+            status = "Ditolak"
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            cursor.execute("""
+                UPDATE appointmentdokter_appointmentdokter
+                SET status = '{0}'
+                WHERE appointment_id = '{1}';
+                """.format(status, apptdokter_id)) 
+            
+        
+            success_message = 'Berhasil menolak Appointment Dokter!'
+            cursor.close()
+            return render(request, 'success_page_appt.html', {'success_message': success_message})
+                     
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page_apptdokter.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def delete_appointmentdokter(request, apptdokter_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Customer':
+            apptdokter = AppointmentDokter.objects.get(appointment_id=apptdokter_id)
+            
+            if apptdokter.status == "Menunggu Konfirmasi":
+                apptdokter.delete()
+                success_message = 'Berhasil membatalkan Appointment Dokter!'
+                return render(request, 'success_page_appt.html', {'success_message': success_message})
+            else:
+                context = {
+                    'error_message': 'Tidak bisa membatalkan Appointment Grooming yang telah disetujui/ditolak.'}
+                return render(request, 'error_page_apptdokter.html', context)
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page_apptdokter.html', context)
+    else:
+        return HttpResponseRedirect("/login")
