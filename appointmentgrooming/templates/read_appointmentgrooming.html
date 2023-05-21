@@ -277,7 +277,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4 text-left"><i class="fa-solid fa-shower"></i>&nbsp;&nbsp;&nbsp;Paket Grooming:</label>
                                             <div class="col-sm-8 text-left">
-                                                <label for="title"><b>{{paket.nama}}</b></label>&nbsp;<label>. . . . . Rp{{paket.harga}}</label>
+                                                <label for="title"><b>{{paket.nama}}</b></label><br><label>Rp{{paket.harga}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -290,7 +290,7 @@
                                                         <label class="col-sm-4 text-left"></label>
                                                     {% endif %}
                                                 <div class="col-sm-8 text-left">
-                                                    <label for="title"><b>{{i.nama}}</b></label>&nbsp;<label>. . . . . Rp{{i.harga}}</label>
+                                                    <label for="title"><b>{{ forloop.counter }}. {{i.nama}}</b></label><br><label>Rp{{i.harga}}</label>
                                                 </div>
                                                 {% endfor %}
                                             {% else %}
@@ -379,7 +379,7 @@
                                             <button class="btn btn-primary mr-3">Ubah Appointment</button>
                                         </a>
                                         <a href="/appointmentgrooming/delete-appointmentgrooming/{{ apptgrooming.0.0 }}">
-                                            <button class="btn btn-danger">Batalkan Appointment</button>
+                                            <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin MEMBATALKAN appointment grooming hewan ini?')">Batalkan Appointment</button>
                                         </a>
                                     
                                 
@@ -387,7 +387,7 @@
                                     <a href="/appointmentgrooming/approve-appointmentgrooming/{{ apptgrooming.0.0 }}">
                                         <button class="btn btn-primary mr-3" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI appointment grooming hewan ini?')">Setujui</button>
                                     </a>
-                                    <a href="/appointmentgrooming/approve-appointmentgrooming/{{ apptgrooming.0.0 }}">
+                                    <a href="/appointmentgrooming/disapprove-appointmentgrooming/{{ apptgrooming.0.0 }}">
                                         <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment grooming hewan ini?')">Tidak Setujui</button>
                                     </a>
                                 

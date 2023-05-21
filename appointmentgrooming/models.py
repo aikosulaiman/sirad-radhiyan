@@ -15,7 +15,7 @@ class AppointmentGrooming(models.Model):
     appointment_time = models.DateTimeField()
     status = models.CharField(choices=STATUS_CHOICES, max_length=40, blank=False, null=False, default='Menunggu Konfirmasi')
     paket = models.ForeignKey(Produk, on_delete=models.CASCADE, related_name='paket_appointmentgrooming')
-    layanan_tambahan = models.ManyToManyField(Produk, related_name='layanan_tambahan_appointmentgrooming')
+    layanan_tambahan = models.ManyToManyField(Produk, related_name='layanan_tambahan_appointmentgrooming', blank=True)
     total_biaya = models.IntegerField()
 
     def save(self, *args, **kwargs):   
