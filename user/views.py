@@ -178,9 +178,10 @@ def customer_registration(request):
 def list_produk(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Admin':
-            produk = Produk.objects.all().values()
+            layanan = Produk.objects.filter(jenis="Layanan")
+            produk = Produk.objects.filter(jenis="Produk") 
 
-            response = {'produk':produk}
+            response = {'layanan':layanan, 'produk':produk}
             return render(request, 'produk_list.html', response)
         else:
             context = {
@@ -228,9 +229,12 @@ def update_produk(request, produk_id):
             """.format(produk_id))
             produk = cursor.fetchall()
                 
+            status = produk[0][3]
+
             response = {
                     'produk_id':produk_id,
-                    'produk':produk,}
+                    'produk':produk,
+                    'status':status}
             cursor.close()
             return render(request, 'produk_update.html', response)
         else:

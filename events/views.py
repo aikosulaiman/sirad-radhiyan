@@ -266,19 +266,27 @@ def update_event(request, event_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
-    # Mencari user
-    cursor.execute("""
-    SELECT *
-    FROM events_event
-    WHERE id = '{0}' ;
-    """.format(event_id))
-    event = cursor.fetchall()
-        
-    response = {
-            'event_id':event_id,
-            'event':event,}
-    cursor.close()
-    return render(request, 'update_event.html', response)
+    reg_event_filtered = Register_Event.objects.filter(event_id=event_id)
+    if reg_event_filtered:
+        context = {
+            'error_message': 'Tidak bisa mengubah Event yang telah memiliki pendaftar.'}
+        return render(request, 'error_page.html', context)
+    else:
+        # Mencari user
+        cursor.execute("""
+        SELECT *
+        FROM events_event
+        WHERE id = '{0}' ;
+        """.format(event_id))
+        event = cursor.fetchall()
+            
+        response = {
+                'event_id':event_id,
+                'event':event,}
+        cursor.close()
+        return render(request, 'update_event.html', response)
+    
+    
 
 def update_event_handler(request, event_id):
     if is_authenticated(request):
@@ -323,7 +331,7 @@ def update_event_handler(request, event_id):
                 return render(request, 'update_event.html', response)
         else:
             context = {
-            'error_message': 'Access denied!'}
+            'error_message': 'Akses Ditolak!'}
             return render(request, 'error_page.html', context)
     else:
         return HttpResponseRedirect("/login")
