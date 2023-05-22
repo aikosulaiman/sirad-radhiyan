@@ -6,4 +6,5 @@ urlpatterns = [
     path('statistik-dokter', statistik_dokter, name='statistik_dokter'),
     path('statistik-event', statistik_event, name='statistik_event'),
     path('statistik-adopsi', statistik_adopsi, name='statistik_adopsi'),
+    path('statistik-grooming', statistik_grooming, name='statistik_grooming'),
 ]
