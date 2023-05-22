@@ -136,9 +136,8 @@
                     </td>
                     {% endif %}
                     <td>
-                        <button type="button" class="btn btn-outline-primary">Detail Appointment</button>
+                        <a class="btn btn-primary mt-1" href="/appointmentdokter/read-appointmentdokter/{{ appointment.appointment_id }}" class="btn btn-light">Detail Appointment</a>
                         <a class="btn btn-info mt-1" href="/appointmentdokter/update-appointmentdokter/{{ appointment.id }}">Update</a>
-                        <a href="/appointmentdokter/read-appointmentdokter/{{ appointment.appointment_id }}" class="btn btn-light">Detail Appointment</a>
                     </td>
                 </tr>
                 {% empty %}
