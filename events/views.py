@@ -166,6 +166,15 @@ def register_event(request, event_id):
                     register_event.save()
                     
                     success_message = 'Berhasil mendaftar Event!'
+                    reg_event_filtered = Register_Event.objects.filter(event_id=event_id)
+                    jumlah_pendaftar= reg_event_filtered.count()
+                    
+                    cursor = connection.cursor()
+                    cursor.execute("""
+                    UPDATE events_event
+                    SET quantity = '{0}'
+                    WHERE id = '{1}';
+                    """.format(jumlah_pendaftar+1, event_id))
                     return render(request, 'success_page.html', {'success_message': success_message})
 
                 return render(request, 'registration_event.html', response)
