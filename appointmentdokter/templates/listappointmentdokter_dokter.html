@@ -39,10 +39,17 @@
     </div>
 </nav>
 <style>
-    .containers {
-        padding: 16px 16px;
-        width: 300px;
-        height: 300px;
+    tr {
+        background-color: rgb(255, 255, 255);
+    }
+    
+    td {
+        background-color: rgb(244, 249, 255);
+    }
+    
+    .btn-light:hover {
+        background-color: #90c6ff;
+        /* Desired hover color */
     }
     
     .custom-table {
@@ -52,25 +59,30 @@
 
 <body style="background-color: rgb(255, 255, 255);">
     <br>
-    <div class="container">
-        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600;">List Appointment Dokter</h2>
+    <div class="container" style="
+    position: absolute;
+        padding: 16px 16px;
+        left: 100px;
 
-        <!-- <div class="d-grid d-md-flex justify-content-md-end">
-            <a href="/appointmentdokter/create-appointmentdokter">
-                <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">+ Create Appointment Dokter</button>
-            </a>
-        </div> -->
-
+    ">
+        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600; left: -10px;">List Appointment Dokter</h2>
+        <br><br>
+        <div class="text-center mb-4">
+            <a class="btn btn-success" href="/appointmentdokter/">Semua</a>
+            <a class="btn btn-light" href="/appointmentdokter/disetujui">Disetujui</a>
+            <a class="btn btn-light" href="/appointmentdokter/konfirmasi">Menunggu Konfirmasi</a>
+            <a class="btn btn-light" href="/appointmentdokter/ditolak">Ditolak</a>
+        </div>
         <br>
-        <table class="table table-striped">
-            <thead class="thead-light">
+        <table id="bootstrapdatatable" class="table table-striped table-bordered table-hover" width="100%">
+            <thead>
                 <tr>
                     <th>No.</th>
                     <th>Kode Appointment</th>
                     <th>Nama Hewan</th>
                     <th>Nama Pemilik</th>
                     <th>Waktu Appointment</th>
-                    <th>Keluhan</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -82,9 +94,37 @@
                     <td>{{ appointment.hewan.nama }}</td>
                     <td>{{ appointment.pemilik.first_name }} {{ appointment.pemilik.last_name }}</td>
                     <td>{{ appointment.appointment_time }}</td>
-                    <td>{{ appointment.keluhan }}</td>
+                    {% if appointment.status == 'Menunggu Konfirmasi' %}
                     <td>
-                        <a href="/appointmentdokter/read-appointmentdokter/{{ appointment.appointment_id }}" class="btn btn-light">Detail Appointment</a>
+                        <p style="text-align: center; 
+                        font-weight: bold; 
+                        background-color:orange; 
+                        border: 1px solid orange; 
+                        padding: 3px; 
+                        border-radius: 10px;">{{appointment.status}}</p>
+                    </td>
+                    {% elif appointment.status == 'Disetujui' %}
+                    <td>
+                        <p style="text-align: center; 
+                        font-weight: bold; 
+                        background-color:greenyellow; 
+                        border: 1px solid greenyellow; 
+                        padding: 3px; 
+                        border-radius: 10px;">{{appointment.status}}</p>
+                    </td>
+                    {% else %}
+                    <td>
+                        <p style="text-align: center; 
+                        font-weight: bold; 
+                        color: white;
+                        background-color:red; 
+                        border: 1px solid red; 
+                        padding: 3px; 
+                        border-radius: 10px;">{{appointment.status}}</p>
+                    </td>
+                    {% endif %}
+                    <td>
+                        <a href="/appointmentdokter/read-appointmentdokter/{{ appointment.appointment_id }}" class="btn btn-primary">Detail Appointment</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -94,6 +134,21 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#bootstrapdatatable').DataTable({
+                    "aLengthMenu": [
+                        [3, 5, 10, 25, -1],
+                        [3, 5, 10, 25, "All"]
+                    ],
+                    "iDisplayLength": 3
+                });
+            });
+        </script>
 
 
     </div>

@@ -98,7 +98,7 @@
                                 Update Appointment Dokter
                             </div>
                             <div class="card-body">
-                                <form action="{% url 'update_appointment_handler' id%}" method="GET">
+                                <form action="{% url 'update_appointment_handler' apptdokter_id %}" method="GET">
                                     {% if error_message %}
                                     <div class="alert alert-danger">{{ error_message }}</div>
                                     {% endif %} {% csrf_token %}
@@ -106,13 +106,11 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Dokter Hewan:</label>
                                             <div class="col-sm-8">
-                                                <input type="text" list="dokterlist" Placeholder="Pilih Dokter.." class="form-control" id="dokter-input" autocomplete="off">
-                                                <datalist id="dokterlist">
-                                                {% for dokter in listDokter %}
-                                                <option value="{{ dokter.first_name }}" data-dokter-id="{{ dokter.id }}">{{ dokter.first_name }} {{ dokter.last_name }}</option>
-                                                {% endfor %}
-                                            </datalist>
-                                                <input type="text" name="dokter" id="dokter-id" value="{{ appointmentdokter.0.5 }}" required>
+                                                <select name="dokter" class="form-control" id="dokter-input" required>
+                                                    {% for dokter in listDokter %}
+                                                    <option value="{{ dokter.id }}" {% if dokter.id == appointmentdokter.0.5 %}selected{% endif %}>{{ dokter.first_name }} {{ dokter.last_name }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -120,13 +118,11 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4" for="hewan">Hewan:</label>
                                             <div class="col-sm-8">
-                                                <input type="text" list="hewanlist" Placeholder="Pilih Hewan Peliharaan.." class="form-control" id="hewan-input" autocomplete="off">
-                                                <datalist id="hewanlist">
-                                                {% for hewan in listHewan %}
-                                                <option value="{{ hewan.nama }}" data-hewan-id="{{ hewan.hewan_id }}"></option>
-                                                {% endfor %}
-                                            </datalist>
-                                                <input type="text" name="hewan" id="hewan-id" value="{{ appointment.keluhan }}" required>
+                                                <select name="hewan" class="form-control" id="hewan-input" required>
+                                                    {% for hewan in listHewan %}
+                                                    <option value="{{ hewan.hewan_id }}" {% if hewan.hewan_id == appointmentdokter.0.6 %}selected{% endif %}>{{ hewan.nama }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +130,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4">Waktu Appointment:</label>
                                             <div class="col-sm-8">
-                                                <input type="datetime-local" name="{{ form.appointment_time.name }}" class="form-control" id="appointment_time" value="{{ appointmentdokter.0.2|date:'Y-m-d\TH:i' }}" placeholder="appointment_time" required>
+                                                <input type="datetime-local" name="appointment_time" class="form-control" id="appointment_time" value="{{ appointmentdokter.0.2|date:'Y-m-d\TH:i' }}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -142,12 +138,12 @@
                                         <div class="row mt-4">
                                             <label for="keluhan" class="col-sm-4">Keluhan:</label>
                                             <div class="col-sm-8">
-                                                <input type="text" id="keluhan" name="keluhan" value="{{ appointmentdokter.0.8 }}" class="form-control" required>
+                                                <input type="text" id="keluhan" name="keluhan" value="{{ appointmentdokter.0.4 }}" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mt-5 text-center">
-                                        <button class="btn btn-primary px-4" type="submit">Update</button>
+                                        <button class="btn btn-primary px-4" type="submit" onclick="return confirm('⚠️ Apakah Anda yakin ingin mengubah data Appointment Dokter ini?')">Update</button>
                                     </div>
     
                                 </form>
@@ -158,43 +154,38 @@
             </div>
 
             <script>
-                // Get the next day date and time
+                // Get the next day's date
                 const now = new Date();
                 now.setDate(now.getDate() + 1);
                 const year = now.getFullYear();
                 const month = (now.getMonth() + 1).toString().padStart(2, '0');
                 const day = now.getDate().toString().padStart(2, '0');
-                const hour = now.getHours().toString().padStart(2, '0');
-                const minute = now.getMinutes().toString().padStart(2, '0');
-
+              
                 // Set the min and max attributes of the datetime-local inputs
                 const startInput = document.getElementById('appointment_time');
-                startInput.min = `${year}-${month}-${day}T${hour}:${minute}`;
-                startInput.max = `${year + 100}-${month}-${day}T23:59`;
-
+                startInput.min = `${year}-${month}-${day}T08:00`;
+                startInput.max = `${year + 100}-${month}-${day}T20:00`;
+              
                 // Add event listener to start time input to prevent selecting end time before start time
                 startInput.addEventListener('input', function() {
-                    endInput.min = startInput.value;
+                  const selectedTime = new Date(this.value);
+                  const selectedHour = selectedTime.getHours();
+              
+                  // Save the current date, month, and year
+                  const currentDate = selectedTime.getDate().toString().padStart(2, '0');
+                  const currentMonth = (selectedTime.getMonth() + 1).toString().padStart(2, '0');
+                  const currentYear = selectedTime.getFullYear();
+              
+                  // Check if the selected time is outside the allowed range
+                  if (selectedHour < 8) {
+                    this.value = `${currentYear}-${currentMonth}-${currentDate}T08:00`; // Set the selected time to the minimum time (08:00)
+                  } else if (selectedHour >= 20) {
+                    this.value = `${currentYear}-${currentMonth}-${currentDate}T20:00`; // Set the selected time to the maximum time (20:00)
+                  }
+              
+                  startInput.min = this.value;
                 });
-
-                const dokterInput = document.getElementById('dokter-input');
-                const dokterIdInput = document.getElementById('dokter-id');
-
-                dokterInput.addEventListener('change', (event) => {
-                    const selectedOption = document.querySelector(`#dokterlist option[value="${event.target.value}"]`);
-                    const dokterId = selectedOption.getAttribute('data-dokter-id');
-                    dokterIdInput.value = dokterId;
-                });
-
-                const hewanInput = document.getElementById('hewan-input');
-                const hewanIdInput = document.getElementById('hewan-id');
-
-                hewanInput.addEventListener('change', (event) => {
-                    const selectedOption = document.querySelector(`#hewanlist option[value="${event.target.value}"]`);
-                    const hewanId = selectedOption.getAttribute('data-hewan-id');
-                    hewanIdInput.value = hewanId;
-                });
-            </script>
+              </script>
 
         </section>
     </main>
