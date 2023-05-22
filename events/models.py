@@ -23,7 +23,7 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     description = models.TextField()
     isVIP = models.BooleanField(default=False)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=0)
 
 class Register_Event(models.Model):
     id = models.CharField(max_length=6, primary_key=True, editable=False, unique=True, default=shortuuid.uuid()[:6])
