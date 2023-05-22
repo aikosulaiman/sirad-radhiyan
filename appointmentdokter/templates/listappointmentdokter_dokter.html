@@ -73,7 +73,16 @@
 
     ">
         <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600; left: -10px;">List Appointment Dokter</h2>
-
+        <br><br>
+        <div class="text-center mb-4">
+            <!-- <br>
+            <h5><strong>Filter Appointment Berdasarkan Status:</strong></h5>
+            <br> -->
+            <a class="btn btn-success" href="/appointmentdokter/">Semua</a>
+            <a class="btn btn-light" href="/appointmentdokter/disetujui">Disetujui</a>
+            <a class="btn btn-light" href="/appointmentdokter/konfirmasi">Menunggu Konfirmasi</a>
+            <a class="btn btn-light" href="/appointmentdokter/ditolak">Ditolak</a>
+        </div>
         <!-- <div class="d-grid d-md-flex justify-content-md-end">
             <a href="/appointmentdokter/create-appointmentdokter">
                 <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">+ Create Appointment Dokter</button>
@@ -189,20 +198,7 @@
                     });
                 });
 
-                $('#bootstrapdatatabledisetujui').DataTable({
-                    "aLengthMenu": [
-                        [3, 5, 10, 25, -1],
-                        [3, 5, 10, 25, "All"]
-                    ],
-                    "iDisplayLength": 3
-                });
-                $('#bootstrapdatatablekonfirmasi').DataTable({
-                    "aLengthMenu": [
-                        [3, 5, 10, 25, -1],
-                        [3, 5, 10, 25, "All"]
-                    ],
-                    "iDisplayLength": 3
-                });
+
             });
         </script>
 

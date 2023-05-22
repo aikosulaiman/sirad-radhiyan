@@ -109,6 +109,57 @@ def list_appointmentdokter(request):
             }
             
             return render(request, 'listappointmentdokter_dokter.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def list_disetujui(request):
+    if is_authenticated(request):
+        my_username = request.session['Username']
+        my_uuid = str(request.session['UUID'])
+        
+        list_disetujui_customer = AppointmentDokter.objects.filter(status='Disetujui', pemilik_id=my_uuid)
+        list_disetujui_dokter = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
+        context = {
+            'username': my_username,
+            'listDisetujuiCustomer': list_disetujui_customer,
+            'listDisetujuiDokter': list_disetujui_dokter,
+        }
+        return render(request, 'listdisetujui.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def list_konfirmasi(request):
+    if is_authenticated(request):
+        my_username = request.session['Username']
+        my_uuid = str(request.session['UUID'])
+        
+        list_konfirmasi_customer = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', pemilik_id=my_uuid)
+        list_konfirmasi_dokter = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
+        context = {
+            'username': my_username,
+            'listKonfirmasiCustomer': list_konfirmasi_customer,
+            'listKonfirmasiDokter': list_konfirmasi_dokter,
+        }
+        return render(request, 'listkonfirmasi.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def list_ditolak(request):
+    if is_authenticated(request):
+        my_username = request.session['Username']
+        my_uuid = str(request.session['UUID'])
+        
+        list_ditolak_customer = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
+        list_ditolak_dokter = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
+        context = {
+            'username': my_username,
+            'listDitolakCustomer': list_ditolak_customer,
+            'listDitolakDokter': list_ditolak_dokter,
+        }
+        return render(request, 'listditolak.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
 
 def read_appointmentdokter(request, apptdokter_id):
     response = {}
