@@ -75,40 +75,26 @@ def list_appointmentdokter(request):
         my_uuid = str(request.session['UUID'])
         if request.session['Role'] == 'Customer':
             list_appointmentdokter = AppointmentDokter.objects.filter(pemilik_id=my_uuid)
-
-            list_disetujui = AppointmentDokter.objects.filter(status='Disetujui', pemilik_id=my_uuid)
-
-            list_konfirmasi = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', pemilik_id=my_uuid)
-
-            list_ditolak = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
-
-
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
                 'username': my_username,
-                'list_disetujui': list_disetujui,
-                'list_konfirmasi': list_konfirmasi,
-                'list_ditolak': list_ditolak,
             }
             return render(request, 'listappointmentdok_customer.html', context)
         elif request.session['Role'] == 'Dokter':
             list_appointmentdokter = AppointmentDokter.objects.filter(dokter_id=my_uuid)
-
-            list_disetujui = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
-
-            list_konfirmasi = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
-
-            list_ditolak = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
-            
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
                 'username': my_username,
-                'list_disetujui': list_disetujui,
-                'list_konfirmasi': list_konfirmasi,
-                'list_ditolak': list_ditolak,
+            }
+            return render(request, 'listappointmentdokter_dokter.html', context)
+        else:
+            list_appointmentdokter = AppointmentDokter.objects.all()
+            context = {
+                'listAppointmentDokter': list_appointmentdokter,
+                'username': my_username,
             }
             
-            return render(request, 'listappointmentdokter_dokter.html', context)
+            return render(request, 'listappointmentdokter.html', context)
     else:
         return HttpResponseRedirect("/login")
 
@@ -119,10 +105,12 @@ def list_disetujui(request):
         
         list_disetujui_customer = AppointmentDokter.objects.filter(status='Disetujui', pemilik_id=my_uuid)
         list_disetujui_dokter = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
+        list_disetujui = AppointmentDokter.objects.filter(status='Disetujui')
         context = {
             'username': my_username,
             'listDisetujuiCustomer': list_disetujui_customer,
             'listDisetujuiDokter': list_disetujui_dokter,
+            'listDisetujui': list_disetujui,
         }
         return render(request, 'listdisetujui.html', context)
     else:
@@ -135,10 +123,12 @@ def list_konfirmasi(request):
         
         list_konfirmasi_customer = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', pemilik_id=my_uuid)
         list_konfirmasi_dokter = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
+        list_konfirmasi = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi')
         context = {
             'username': my_username,
             'listKonfirmasiCustomer': list_konfirmasi_customer,
             'listKonfirmasiDokter': list_konfirmasi_dokter,
+            'listKonfirmasi': list_konfirmasi,
         }
         return render(request, 'listkonfirmasi.html', context)
     else:
@@ -151,10 +141,12 @@ def list_ditolak(request):
         
         list_ditolak_customer = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
         list_ditolak_dokter = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
+        list_ditolak = AppointmentDokter.objects.filter(status='Ditolak')
         context = {
             'username': my_username,
             'listDitolakCustomer': list_ditolak_customer,
             'listDitolakDokter': list_ditolak_dokter,
+            'listDitolak': list_ditolak,
         }
         return render(request, 'listditolak.html', context)
     else:
