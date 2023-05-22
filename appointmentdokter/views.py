@@ -3,7 +3,7 @@ import datetime
 from django.http import HttpResponseRedirect
 from datetime import datetime, timedelta, timezone
 from django.contrib import messages
-from django.db import connection
+from django.db import IntegrityError, connection
 
 from user.models import User, Customer, Dokter, Hewan
 from .forms import AppointmentDokterForm
@@ -76,20 +76,90 @@ def list_appointmentdokter(request):
         if request.session['Role'] == 'Customer':
             list_appointmentdokter = AppointmentDokter.objects.filter(pemilik_id=my_uuid)
 
+            list_disetujui = AppointmentDokter.objects.filter(status='Disetujui', pemilik_id=my_uuid)
+
+            list_konfirmasi = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', pemilik_id=my_uuid)
+
+            list_ditolak = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
+
+
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
                 'username': my_username,
+                'list_disetujui': list_disetujui,
+                'list_konfirmasi': list_konfirmasi,
+                'list_ditolak': list_ditolak,
             }
             return render(request, 'listappointmentdok_customer.html', context)
         elif request.session['Role'] == 'Dokter':
             list_appointmentdokter = AppointmentDokter.objects.filter(dokter_id=my_uuid)
+
+            list_disetujui = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
+
+            list_konfirmasi = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
+
+            list_ditolak = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
             
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
                 'username': my_username,
+                'list_disetujui': list_disetujui,
+                'list_konfirmasi': list_konfirmasi,
+                'list_ditolak': list_ditolak,
             }
             
             return render(request, 'listappointmentdokter_dokter.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def list_disetujui(request):
+    if is_authenticated(request):
+        my_username = request.session['Username']
+        my_uuid = str(request.session['UUID'])
+        
+        list_disetujui_customer = AppointmentDokter.objects.filter(status='Disetujui', pemilik_id=my_uuid)
+        list_disetujui_dokter = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
+        context = {
+            'username': my_username,
+            'listDisetujuiCustomer': list_disetujui_customer,
+            'listDisetujuiDokter': list_disetujui_dokter,
+        }
+        return render(request, 'listdisetujui.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def list_konfirmasi(request):
+    if is_authenticated(request):
+        my_username = request.session['Username']
+        my_uuid = str(request.session['UUID'])
+        
+        list_konfirmasi_customer = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', pemilik_id=my_uuid)
+        list_konfirmasi_dokter = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
+        context = {
+            'username': my_username,
+            'listKonfirmasiCustomer': list_konfirmasi_customer,
+            'listKonfirmasiDokter': list_konfirmasi_dokter,
+        }
+        return render(request, 'listkonfirmasi.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def list_ditolak(request):
+    if is_authenticated(request):
+        my_username = request.session['Username']
+        my_uuid = str(request.session['UUID'])
+        
+        list_ditolak_customer = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
+        list_ditolak_dokter = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
+        context = {
+            'username': my_username,
+            'listDitolakCustomer': list_ditolak_customer,
+            'listDitolakDokter': list_ditolak_dokter,
+        }
+        return render(request, 'listditolak.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
 
 def read_appointmentdokter(request, apptdokter_id):
     response = {}
@@ -155,7 +225,7 @@ def approve_appointmentdokter(request, apptdokter_id):
 
 def disapprove_appointmentdokter(request, apptdokter_id):
     if is_authenticated(request):
-        if request.session['Role'] == 'Groomer':
+        if request.session['Role'] == 'Dokter':
 
             status = "Ditolak"
             cursor = connection.cursor()
@@ -198,3 +268,64 @@ def delete_appointmentdokter(request, apptdokter_id):
             return render(request, 'error_page_apptdokter.html', context)
     else:
         return HttpResponseRedirect("/login")
+
+def update_appointmentdokter(request, apptdokter_id):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+    # Mencari user
+    cursor.execute("""
+    SELECT *
+    FROM appointmentdokter_appointmentdokter
+    WHERE appointment_id = '{0}' ;
+    """.format(apptdokter_id))
+    appointmentdokter = cursor.fetchall()
+    my_uuid = str(request.session['UUID'])
+    list_dokter = User.objects.filter(role='Dokter')
+    list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
+        
+    response = {
+            'apptdokter_id':apptdokter_id,
+            'appointmentdokter':appointmentdokter,
+            'listDokter': list_dokter,
+            'listHewan': list_hewan,
+            'user_id': my_uuid,}
+    cursor.close()
+    return render(request, 'update_appointmentdokter.html', response)
+
+def update_appointment_handler(request, apptdokter_id):
+    if is_authenticated(request):
+        cursor = connection.cursor()
+        cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+        # get data dari form
+        dokter = request.GET.get('dokter')
+        hewan = request.GET.get('hewan')
+        appointment_time = request.GET.get('appointment_time')
+        keluhan = request.GET.get('keluhan')
+
+        try:
+            cursor.execute("""
+            UPDATE appointmentdokter_appointmentdokter
+            SET dokter_id = '{0}', hewan_id = '{1}', appointment_time = '{2}', keluhan = '{3}'
+            WHERE appointment_id = '{4}';
+            """.format(dokter, hewan, appointment_time, keluhan, apptdokter_id))                
+            success_message = 'Data Appointment berhasil diubah!'
+            cursor.close()
+            return render(request, 'success_page_appt.html', {'success_message': success_message})
+        except IntegrityError:
+            # If the field is not unique, return an error message
+            error_message = 'Error updating appointment.'
+            cursor.execute("""
+            SELECT *
+            FROM appointmentdokter_appointmentdokter
+            WHERE appointment_id = '{0}' ;
+            """.format(apptdokter_id))
+            appointmentdokter = cursor.fetchall()
+            response = {
+                'error_message': error_message,
+                'appointmentdokter':appointmentdokter,
+                'apptdokter_id': apptdokter_id}
+            cursor.close()
+                
+            return render(request, 'update_appointmentdokter.html', response)

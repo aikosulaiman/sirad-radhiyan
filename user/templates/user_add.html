@@ -1,5 +1,4 @@
 {% extends 'static_user.html' %} {% block content %}
-<title>Manajemen User</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
@@ -46,7 +45,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -54,7 +53,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -80,23 +79,34 @@
     </div>
 </nav>
 <br><br>
+<head>
+    <title>Manajemen User</title>
+    <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
+</head>
 <main id="main">
     <section>
-        <div class="container-fluid">
+        <div class="container-fluid text-center">
             <h1 style="color:#080808;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    font-weight: 600;" class="text-center">
-                Manajemen User SIRAD
+            font-family: 'Poppins', sans-serif;
+            font-size: 40px;
+            font-weight: 600;" class="text-center">
+                        Manajemen User SIRAD
             </h1>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <a href="/user/list-user" class="text-left">
+                        <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List User</p>
+                    </a>
+                </div>
+            </div>
             <br>
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header" style="color:#080808;
-                font-family: 'Poppins', sans-serif;
-                font-size: 20px; font-weight: bold;">
-                            Create New User
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 20px; font-weight: bold;">
+                                    Create New User
                         </div>
                         <div class="card-body">
                             <form class="user" method="POST">
@@ -174,7 +184,6 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-primary px-4" type="submit">Create</button>
-                                <button type="button" onclick="history.back()" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
                             </form>
                         </div>
                     </div>
