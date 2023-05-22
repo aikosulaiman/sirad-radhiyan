@@ -118,10 +118,10 @@
           Statistik
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Statistik Dokter</a>
-                    <a class="dropdown-item" href="#">Statistik Grooming</a>
-                    <a class="dropdown-item" href="#">Statistik Event</a>
-                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -245,6 +245,9 @@
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Ras</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Warna</th>
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;">Status</th>
+                                {% if request.session.Role == 'Karyawan' %}
+                                <th scope="col" style="font-family: 'Poppins', sans-serif;">Jumlah Pengajuan</th>
+                                {% endif %}
                                 <th scope="col" style="font-family: 'Poppins', sans-serif;" class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -257,6 +260,14 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.ras }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.warna }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.status }}</td>
+                                {% if request.session.Role == 'Karyawan' %}
+                                {% if hewan.status == 'Belum diadopsi' %}
+                                <td style="font-family: 'Poppins', sans-serif;">{{ hewan.quantity }}</td>
+                                {% endif %}
+                                {% if hewan.status == 'Diadopsi' %}
+                                <td style="font-family: 'Poppins', sans-serif;">X</td>
+                                {% endif %}
+                                {% endif %}
                                 <td class="text-center">
                                     {% if request.session.Role == 'Karyawan' %}
                                         <a class="btn btn-primary mt-1" href="/adopsi/read-adopsi/{{ hewan.hewan_id }}">Detail</a>
