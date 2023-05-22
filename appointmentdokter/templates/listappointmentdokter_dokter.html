@@ -51,13 +51,6 @@
         background-color: #90c6ff;
         /* Desired hover color */
     }
-    /* .containers {
-        position: absolute;
-        left: -50px;
-        width: 100px;
-        height: 120px;
-        border: 3px solid blue;
-    } */
     
     .custom-table {
         background-color: #ebf2f5;
@@ -75,22 +68,13 @@
         <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600; left: -10px;">List Appointment Dokter</h2>
         <br><br>
         <div class="text-center mb-4">
-            <!-- <br>
-            <h5><strong>Filter Appointment Berdasarkan Status:</strong></h5>
-            <br> -->
             <a class="btn btn-success" href="/appointmentdokter/">Semua</a>
             <a class="btn btn-light" href="/appointmentdokter/disetujui">Disetujui</a>
             <a class="btn btn-light" href="/appointmentdokter/konfirmasi">Menunggu Konfirmasi</a>
             <a class="btn btn-light" href="/appointmentdokter/ditolak">Ditolak</a>
         </div>
-        <!-- <div class="d-grid d-md-flex justify-content-md-end">
-            <a href="/appointmentdokter/create-appointmentdokter">
-                <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">+ Create Appointment Dokter</button>
-            </a>
-        </div> -->
-
         <br>
-        <table id="bootstrapdatatable" class="table table-striped table-bordered table-hover" width="80%">
+        <table id="bootstrapdatatable" class="table table-striped table-bordered table-hover" width="100%">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -156,49 +140,13 @@
         <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
         <script>
             $(document).ready(function() {
-                var table = $('#bootstrapdatatable').DataTable({
-                    "lengthMenu": [
+                $('#bootstrapdatatable').DataTable({
+                    "aLengthMenu": [
                         [3, 5, 10, 25, -1],
                         [3, 5, 10, 25, "All"]
                     ],
-                    "pageLength": 3,
-                    "initComplete": function() {
-                        this.api().columns().every(function() {
-                            var column = this;
-                            var select = $('<select><option value=""></option></select>')
-                                .appendTo($(column.footer()).empty())
-                                .on('change', function() {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-                                    column
-                                        .search(val ? '^' + val + '$' : '', true, false)
-                                        .draw();
-                                });
-                            column.data().unique().sort().each(function(d, j) {
-                                select.append('<option value="' + d + '">' + d + '</option>')
-                            });
-                        });
-                    }
+                    "iDisplayLength": 3
                 });
-
-                $('#bootstrapdatatable thead tr').clone(true).appendTo('#bootstrapdatatable thead');
-
-                $('#bootstrapdatatable thead tr:eq(1) th').each(function(i) {
-                    var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-
-                    $('input', this).on('keyup change', function() {
-                        if (table.column(i).search() !== this.value) {
-                            table
-                                .column(i)
-                                .search(this.value)
-                                .draw();
-                        }
-                    });
-                });
-
-
             });
         </script>
 

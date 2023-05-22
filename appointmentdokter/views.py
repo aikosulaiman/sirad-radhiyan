@@ -225,7 +225,7 @@ def approve_appointmentdokter(request, apptdokter_id):
 
 def disapprove_appointmentdokter(request, apptdokter_id):
     if is_authenticated(request):
-        if request.session['Role'] == 'Groomer':
+        if request.session['Role'] == 'Dokter':
 
             status = "Ditolak"
             cursor = connection.cursor()
