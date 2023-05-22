@@ -162,7 +162,6 @@ def customer_approval(request, id):
     customer_by_id.save()
     return HttpResponseRedirect('/user/list-customer')
 
-
 def customer_registration(request):
     form = CustomerForm()
     if request.method == 'POST':
