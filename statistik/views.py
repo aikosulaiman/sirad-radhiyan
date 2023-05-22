@@ -18,16 +18,6 @@ def is_authenticated(request):
     except:
         return False
 
-def statistik(request):
-    cursor = connection.cursor()
-    if is_authenticated(request):
-
-        context = {}
-
-        return render(request, 'statistik.html', context)
-    else:
-        return HttpResponseRedirect("/login")
-
 def statistik_dokter(request):
     cursor = connection.cursor()
     if is_authenticated(request):
