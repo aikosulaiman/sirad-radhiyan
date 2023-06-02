@@ -190,16 +190,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var monthNames = JSON.parse('{{ month_names|safe }}');
+            var masterData = JSON.parse('{{ master_data|safe }}');
             var appointmentCounts = JSON.parse('{{ appointment_counts|safe }}');
 
             var ctx = document.getElementById('appointmentChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: monthNames,
+                    labels: masterData,
                     datasets: [{
-                        label: 'Jumlah Appointment Grooming',
+                        label: 'Data penjualan dari Appointment Grooming',
                         data: appointmentCounts,
                         backgroundColor: 'rgba(54, 162, 235, 0.5)',
                         borderColor: 'rgba(54, 162, 235, 1)',
@@ -225,7 +225,7 @@
             });
         });
 
-        function filterChart(date) {
+        function filterChart(date, chart) {
             const year = date.value.substring(0, 4);
             const month = date.value.substring(5, 7);
             console.log(year)
