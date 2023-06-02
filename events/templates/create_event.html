@@ -36,10 +36,10 @@
             Statistik
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Statistik Dokter</a>
-                    <a class="dropdown-item" href="#">Statistik Grooming</a>
-                    <a class="dropdown-item" href="#">Statistik Event</a>
-                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -95,6 +95,24 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
+                                            <label class="col-sm-4">Jenis Event:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <select id="jenis" name="{{ form.jenis.name }}" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                            <option selected value="">Pilih Jenis Event</option>
+                                            <option value="Vaksinasi">Vaksinasi</option>
+                                            <option value="Sterilisasi">Sterilisasi</option>
+                                            <option value="Seminar/Webinar">Seminar/Webinar</option>
+                                            <option value="Promo/Sale">Promo/Sale</option>
+                                            <option value="Lomba">Lomba</option>
+                                            <option value="Bazaar">Bazaar</option>
+                                            <option value="Special Event">Special Event</option>
+                        
+                                        </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
                                             <label class="col-sm-4">Lokasi Event (General):</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="{{ form.general_location.name }}" class="form-control" id="general_location" placeholder="e.g. Jakarta Selatan" maxlength="20" required>
@@ -130,6 +148,7 @@
                                             <label class="col-sm-4">Deskripsi:</label>
                                             <div class="col-sm-8">
                                                 <textarea name="description" rows="5" cols="48" id="description" placeholder="e.g. Vaksin kucing gratis" required></textarea><br>
+                                                <input type="hidden" id="quantity" name="quantity" value=0>
                                             </div>
                                         </div>
                                         <div class="row mt-4">

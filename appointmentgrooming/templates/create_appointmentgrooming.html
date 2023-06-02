@@ -1,0 +1,246 @@
+{% extends 'static_appointment.html' %} {% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+
+<head>
+    <title>Create Appointment Grooming</title>
+    <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
+</head>
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#000000;
+                font-family: 'Poppins', sans-serif;
+                font-size: 24px;
+                font-weight: 600;">Create Appointment Grooming</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <a href="/appointmentgrooming/" class="text-left">
+                            <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List Appointment Grooming</p>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="user" method="POST">
+                                    {% csrf_token %} 
+                                    {% if form.errors %}
+                                    <div class="alert alert-danger text-left">{{ form.non_field_errors }}</div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Paket Grooming: *</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" list="list_paket" Placeholder="Pilih Paket Grooming.." class="form-control" id="paket-input" autocomplete="off" required>
+                                                <datalist id="list_paket">
+                                                    {% for paket in list_paket %}
+                                                    <option value="{{ paket.nama }}" data-paket-id="{{ paket.id }}">{{ paket.nama }} Rp{{ paket.harga }}</option>
+                                                    {% endfor %}
+                                                </datalist>
+                                                <input type="hidden" name="paket" id="paket-id">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <div class="col-sm-4">
+                                                <label class="form-check-label">Layanan Tambahan:</label>
+                                            </div>
+                                            <div class="col-sm-8 text-left">
+                                                {% for tambahan in list_tambahan %}
+                                                <div class="form-check text-left">
+                                                    <input class="form-check-input" type="checkbox" name="layanan_tambahan" id="layanan_tambahan-{{ tambahan.id }}" value="{{ tambahan.id }}">
+                                                    <b><label class="form-check-label" for="layanan_tambahan-{{ tambahan.id }}">{{ tambahan.nama }}</label></b><br>
+                                                    <label>Rp{{ tambahan.harga }}</label>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if listHewan %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4" for="hewan">Hewan: *</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" list="hewanlist" Placeholder="Pilih Hewan Peliharaan.." class="form-control" id="hewan-input" autocomplete="off" required>
+                                                <datalist id="hewanlist">
+                                                    {% for hewan in listHewan %}
+                                                    <option value="{{ hewan.nama }}" data-hewan-id="{{ hewan.hewan_id }}"></option>
+                                                    {% endfor %}
+                                                </datalist>
+                                                <input type="hidden" name="hewan" id="hewan-id">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Hewan: *</label>
+                                            <div class="col-sm-8 text-left">
+                                                <input type="text" Placeholder="Pilih Hewan Peliharaan.." class="form-control" id="hewan-input" autocomplete="off" required>
+                                                <p style="color: red">Kamu belum memiliki hewan, silahkan tambahkan hewan</p>
+                                                <a href="/profile/tambah-hewan/{{ user_id }}" class="btn btn-warning">Tambah Hewan</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4">Waktu Appointment: *</label>
+                                            <div class="col-sm-8">
+                                                <input type="datetime-local" name="{{ form.appointment_time.name }}" class="form-control" id="appointment_time" placeholder="appointment_time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-5 text-center">
+                                        <button class="btn btn-primary px-4" type="submit">Create</button>
+                                    </div>
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+                // Get the next day's date
+                const now = new Date();
+                now.setDate(now.getDate() + 1);
+                const year = now.getFullYear();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+              
+                // Set the min and max attributes of the datetime-local inputs
+                const startInput = document.getElementById('appointment_time');
+                startInput.min = `${year}-${month}-${day}T08:00`;
+                startInput.max = `${year + 100}-${month}-${day}T20:00`;
+              
+                // Add event listener to start time input to prevent selecting end time before start time
+                startInput.addEventListener('input', function() {
+                  const selectedTime = new Date(this.value);
+                  const selectedHour = selectedTime.getHours();
+              
+                  // Save the current date, month, and year
+                  const currentDate = selectedTime.getDate().toString().padStart(2, '0');
+                  const currentMonth = (selectedTime.getMonth() + 1).toString().padStart(2, '0');
+                  const currentYear = selectedTime.getFullYear();
+              
+                  // Check if the selected time is outside the allowed range
+                  if (selectedHour < 8) {
+                    this.value = `${currentYear}-${currentMonth}-${currentDate}T08:00`; // Set the selected time to the minimum time (08:00)
+                  } else if (selectedHour >= 20) {
+                    this.value = `${currentYear}-${currentMonth}-${currentDate}T20:00`; // Set the selected time to the maximum time (20:00)
+                  }
+              
+                  startInput.min = this.value;
+                });
+    
+
+                const paketInput = document.getElementById('paket-input');
+                const paketIdInput = document.getElementById('paket-id');
+
+                paketInput.addEventListener('change', (event) => {
+                    const selectedOption = document.querySelector(`#list_paket option[value="${event.target.value}"]`);
+                    const paketId = selectedOption.getAttribute('data-paket-id');
+                    paketIdInput.value = paketId;
+                });
+
+                const tambahanInputs = document.querySelectorAll('input[name="layanan_tambahan"]');
+                const tambahanIdInput = document.getElementById('layanan_tambahan-id');
+
+                tambahanInputs.forEach((input) => {
+                    input.addEventListener('change', (event) => {
+                        const selectedOption = document.querySelector(`#list_tambahan option[value="${event.target.value}"]`);
+                        const tambahanId = selectedOption.getAttribute('data-layanan_tambahan-id');
+                        tambahanIdInput.value = tambahanId;
+                    });
+                });
+
+                const hewanInput = document.getElementById('hewan-input');
+                const hewanIdInput = document.getElementById('hewan-id');
+
+                hewanInput.addEventListener('change', (event) => {
+                    const selectedOption = document.querySelector(`#hewanlist option[value="${event.target.value}"]`);
+                    const hewanId = selectedOption.getAttribute('data-hewan-id');
+                    hewanIdInput.value = hewanId;
+                });
+            </script>
+        </section>
+    </main>
+</div>
+
+{% endblock content %}

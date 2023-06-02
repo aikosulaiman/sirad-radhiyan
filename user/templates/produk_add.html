@@ -132,6 +132,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label class="col-sm-4">Jenis:</label>
+                                        <div class="col-sm-8">
+                                            <select id="jenis" name="{{ form.jenis.name }}" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                                <option selected value="Layanan">Layanan</option>
+                                                <option value="Produk">Produk</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button class="btn btn-primary px-4" type="submit">Create</button>
                                 <button type="button" onclick="history.back()" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Back</button>
                             </form>

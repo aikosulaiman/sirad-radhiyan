@@ -21,7 +21,7 @@
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/event/create-event">Create Event</a>
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -30,7 +30,7 @@
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
-                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -72,7 +72,7 @@
                 font-weight: 600;">Adopsi</h2>
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <a href="/adopsi" class="text-left">
+                        <a href="/adopsi/" class="text-left">
                             <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; Daftar Hewan Adopsi</p>
                         </a>
                     </div>
@@ -93,7 +93,7 @@
                                     {% endif %} {% csrf_token %}
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label for="nama" class="col-sm-4">Nama:</label>
+                                            <label for="nama" class="col-sm-4">Nama: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" id="nama" name="nama" value="{{ user.0.1 }}" class="form-control" required>
                                             </div>
@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label for="jenis" class="col-sm-4">Jenis:</label>
+                                            <label for="jenis" class="col-sm-4">Jenis: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" id="jenis" name="jenis" value="{{ user.0.2 }}" class="form-control" required>
                                             </div>
@@ -109,7 +109,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label for="ras" class="col-sm-4">Ras:</label>
+                                            <label for="ras" class="col-sm-4">Ras: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" id="ras" name="ras" value="{{ user.0.3 }}" class="form-control" required>
                                             </div>
@@ -117,7 +117,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label for="warna" class="col-sm-4">Warna:</label>
+                                            <label for="warna" class="col-sm-4">Warna: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" id="warna" name="warna" value="{{ user.0.4 }}" class="form-control" required>
                                             </div>
@@ -125,7 +125,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label for="deskripsi" class="col-sm-4">Deskripsi:</label>
+                                            <label for="deskripsi" class="col-sm-4">Deskripsi: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" id="deskripsi" name="deskripsi" value="{{ user.0.5 }}" class="form-control" required>
                                             </div>

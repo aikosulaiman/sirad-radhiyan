@@ -1,0 +1,470 @@
+{% extends 'static_appointmentgrooming.html' %} {% block content %}
+<title>List Appointment Grooming</title>
+{% if request.session.Role == 'Groomer' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %} {% if request.session.Role == 'Admin' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Users
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/user/add-user">Create User</a>
+                    <a class="dropdown-item" href="/user/list-user">List User</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/user/list-produk">Layanan Master Data</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Statistik
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %} {% if request.session.Role == 'Customer' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %}
+<br><br>
+<style>
+    .containers {
+        padding: 16px 16px;
+        width: 300px;
+        height: 300px;
+    }
+    
+    .custom-table {
+        background-color: #ebf2f5;
+    }
+</style>
+
+<body style="background-color: rgb(255, 255, 255);">
+    <br>
+    <div class="container">
+        <h2 style="color:#080808;font-family: 'Poppins', sans-serif;font-size: 36px;font-weight: 600;">List Appointment Grooming</h2>
+
+        {% if request.session.Role == 'Customer' %}
+          <div class="d-grid d-md-flex justify-content-md-end">
+              <a href="/appointmentgrooming/create-appointmentgrooming">
+                  <button type="button" class="btn btn-primary" style="font-family: 'Poppins', sans-serif;">+ Buat Appointment Grooming</button>
+              </a>
+          </div>
+        {% endif %}
+
+        <br>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#all">Semua</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#disetujui">Disetujui</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#konfirmasi">Menunggu Konfirmasi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#ditolak">Ditolak</a>
+          </li>
+      </ul>
+
+      
+
+        <br>
+        <div class="tab-content">
+          <div id="all" class="tab-pane fade show active">
+            {% if list_appointmentgrooming %}
+            <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+              <thead class="table-dark">
+                  <tr>
+                      <th>No.</th>
+                      <th>ID</th>
+                      <th>Nama Hewan</th>
+                      <th>Waktu Appointment</th>
+                      <th>Paket</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      {% for appointment in list_appointmentgrooming %}
+                      <td>{{ forloop.counter }}.</td>
+                      <td>{{ appointment.appointment_id }}</td>
+                      <td>{{ appointment.hewan.nama }}</td>
+                      <td>{{ appointment.appointment_time }}</td>
+                      <td>{{ appointment.paket.nama }}</td>
+                      {% if appointment.status == 'Menunggu Konfirmasi' %}
+                      <td>
+                          <p style="text-align: center; 
+                          font-weight: bold; 
+                          background-color:orange; 
+                          border: 1px solid orange; 
+                          padding: 3px; 
+                          border-radius: 10px;">{{appointment.status}}</p>
+                      </td>
+                      {% elif appointment.status == 'Disetujui' %}
+                      <td>
+                          <p style="text-align: center; 
+                          font-weight: bold; 
+                          background-color:greenyellow; 
+                          border: 1px solid greenyellow; 
+                          padding: 3px; 
+                          border-radius: 10px;">{{appointment.status}}</p>
+                      </td>
+                      {% else %}
+                      <td>
+                          <p style="text-align: center; 
+                          font-weight: bold; 
+                          color: white;
+                          background-color:red; 
+                          border: 1px solid red; 
+                          padding: 3px; 
+                          border-radius: 10px;">{{appointment.status}}</p>
+                      </td>
+                      {% endif %}
+                      <td>
+                        <a href="/appointmentgrooming/read-appointmentgrooming/{{ appointment.id }}">
+                            <button type="button" class="btn btn-outline-primary" style="font-family: 'Poppins', sans-serif;">Detail Appointment</button>
+                        </a>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                    
+                </tbody>
+            </table>
+            {% else %}
+              <p>Belum ada appointment grooming yang telah dibuat.</p>
+            {% endif %}
+          </div>
+
+          <div id="disetujui" class="tab-pane fade">
+            {% if list_disetujui %}
+            <table id="bootstrapdatatabledisetujui" class="table table-striped table-bordered" width="100%">
+              <thead class="table-dark">
+                  <tr>
+                      <th>No.</th>
+                      <th>ID</th>
+                      <th>Nama Hewan</th>
+                      <th>Waktu Appointment</th>
+                      <th>Paket</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for appointment in list_disetujui %}
+                  <tr>
+                        <td>{{ forloop.counter }}.</td>
+                        <td>{{ appointment.appointment_id }}</td>
+                        <td>{{ appointment.hewan.nama }}</td>
+                        <td>{{ appointment.appointment_time }}</td>
+                        <td>{{ appointment.paket.nama }}</td>
+                        <td>
+                            <p style="text-align: center; 
+                            font-weight: bold; 
+                            background-color:greenyellow; 
+                            border: 1px solid greenyellow; 
+                            padding: 3px; 
+                            border-radius: 10px;">{{appointment.status}}</p>
+                        </td>
+                        <td>
+                            <a href="/appointmentgrooming/read-appointmentgrooming/{{ appointment.id }}">
+                                <button type="button" class="btn btn-outline-primary" style="font-family: 'Poppins', sans-serif;">Detail Appointment</button>
+                            </a>
+                        </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+              <p>Belum ada appointment grooming yang disetujui.</p>
+            {% endif %}
+            
+          </div>
+          <div id="konfirmasi" class="tab-pane fade">
+            {% if list_konfirmasi %}
+            <table id="bootstrapdatatablekonfirmasi" class="table table-striped table-bordered" width="100%">
+              <thead class="table-dark">
+                  <tr>
+                      <th>No.</th>
+                      <th>ID</th>
+                      <th>Nama Hewan</th>
+                      <th>Waktu Appointment</th>
+                      <th>Paket</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      {% for appointment in list_konfirmasi %}
+                        <td>{{ forloop.counter }}.</td>
+                        <td>{{ appointment.appointment_id }}</td>
+                        <td>{{ appointment.hewan.nama }}</td>
+                        <td>{{ appointment.appointment_time }}</td>
+                        <td>{{ appointment.paket.nama }}</td>
+                        <td>
+                            <p style="text-align: center; 
+                            font-weight: bold; 
+                            background-color:orange; 
+                            border: 1px solid orange; 
+                            padding: 3px; 
+                            border-radius: 10px;">{{appointment.status}}</p>
+                        </td>
+                        <td>
+                            <a href="/appointmentgrooming/read-appointmentgrooming/{{ appointment.id }}">
+                                <button type="button" class="btn btn-outline-primary" style="font-family: 'Poppins', sans-serif;">Detail Appointment</button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            {% else %}
+                <p>Belum ada appointment grooming yang sedang menunggu konfirmasi.</p>
+            {% endif %}
+            
+          </div>
+          <div id="ditolak" class="tab-pane fade">
+            {% if list_ditolak %}
+            <table id="bootstrapdatatableditolak" class="table table-striped table-bordered" width="100%">
+              <thead class="table-dark">
+                  <tr>
+                      <th>No.</th>
+                      <th>ID</th>
+                      <th>Nama Hewan</th>
+                      <th>Waktu Appointment</th>
+                      <th>Paket</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      {% for appointment in list_ditolak %}
+                        <td>{{ forloop.counter }}.</td>
+                        <td>{{ appointment.appointment_id }}</td>
+                        <td>{{ appointment.hewan.nama }}</td>
+                        <td>{{ appointment.appointment_time }}</td>
+                        <td>{{ appointment.paket.nama }}</td>
+                        <td>
+                            <p style="text-align: center; 
+                            font-weight: bold; 
+                            color: white;
+                            background-color:red; 
+                            border: 1px solid red; 
+                            padding: 3px; 
+                            border-radius: 10px;">{{appointment.status}}</p>
+                        </td>
+                        <td>
+                            <a href="/appointmentgrooming/read-appointmentgrooming/{{ appointment.id }}">
+                                <button type="button" class="btn btn-outline-primary" style="font-family: 'Poppins', sans-serif;">Detail Appointment</button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>Belum ada appointment grooming yang ditolak.</p>
+            {% endif %}
+          </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#bootstrapdatatable').DataTable({
+                    "aLengthMenu": [
+                        [3, 5, 10, 25, -1],
+                        [3, 5, 10, 25, "All"]
+                    ],
+                    "iDisplayLength": 3
+                });
+
+                $('#bootstrapdatatabledisetujui').DataTable({
+                    "aLengthMenu": [
+                            [3, 5, 10, 25, -1],
+                            [3, 5, 10, 25, "All"]
+                        ],
+                        "iDisplayLength": 3
+                });
+                $('#bootstrapdatatablekonfirmasi').DataTable({
+                    "aLengthMenu": [
+                            [3, 5, 10, 25, -1],
+                            [3, 5, 10, 25, "All"]
+                        ],
+                        "iDisplayLength": 3
+                });
+                $('#bootstrapdatatableditolak').DataTable({
+                    "aLengthMenu": [
+                            [3, 5, 10, 25, -1],
+                            [3, 5, 10, 25, "All"]
+                        ],
+                        "iDisplayLength": 3
+                });
+            });
+        </script>
+
+
+    </div>
+</body>
+
+
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'static.html' %} {% load static %} {% block content %}
+<title>Beranda</title>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
-    <a class="navbar-brand" style="color:#20a9f8;
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
@@ -24,7 +25,7 @@
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
-                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -32,8 +33,8 @@
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -41,7 +42,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -49,7 +50,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -58,7 +59,7 @@
                 <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -171,7 +172,7 @@
             <div class="card-body">
                 <h5 class="card-title">Groomer</h5>
                 <p class="card-text">Buat appointment grooming disini!</p>
-                <button onclick="window.location.href='/'" class="btn card-button">Buat Appointment</button>
+                <button onclick="window.location.href='/appointmentgrooming/create-appointmentgrooming'" class="btn card-button">Buat Appointment</button>
             </div>
         </div>
     </div>
@@ -181,7 +182,7 @@
             <div class="card-body">
                 <h5 class="card-title">Event</h5>
                 <p class="card-text">Lihat event disini!</p>
-                <button onclick="window.location.href='/event'" class="btn card-button">Lihat Event</button>
+                <button onclick="window.location.href='/event/'" class="btn card-button">Lihat Event</button>
             </div>
         </div>
 
@@ -189,7 +190,7 @@
             <div class="card-body">
                 <h5 class="card-title">Adopsi</h5>
                 <p class="card-text">Lihat hewan adopsi disini!</p>
-                <button onclick="window.location.href='/adopsi'" class="btn card-button">Lihat Hewan</button>
+                <button onclick="window.location.href='/adopsi/'" class="btn card-button">Lihat Hewan</button>
             </div>
         </div>
     </div>

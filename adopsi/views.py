@@ -90,7 +90,7 @@ def update_adopsi_handler(request, user_id):
        return render(request, 'adopt_success.html', {'success_message': success_message})
     except IntegrityError:
         # If the field is not unique, return an error message
-        error_message = 'There was and error.'
+        error_message = 'There was an error.'
         cursor.execute("""
         SELECT *
         FROM user_user
@@ -209,9 +209,19 @@ def register_adopsi(request, hewan_id):
                     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
                     cursor.execute("""
-                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status)
-                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}');
-                        """.format(id, date, customer.id, hewan_id, status)) 
+                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted)
+                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');
+                        """.format(id, date, customer.id, hewan_id, status, date)) 
+                    
+                    reg_event_filtered = Register_Adopsi.objects.filter(hewan=adopsi)
+                    jumlah_pendaftar= reg_event_filtered.count()
+                    print(reg_event_filtered)
+                    
+                    cursor.execute("""
+                    UPDATE adopsi_adopsi
+                    SET quantity = '{0}'
+                    WHERE hewan_id = '{1}';
+                    """.format(jumlah_pendaftar, hewan_id))
 
                     
                     success_message = 'Berhasil mengajukan Adopsi!'
@@ -259,6 +269,7 @@ def approve_adopsi(request, hewan_id, id):
 
             status = "Diadopsi"
             status_registeradopsi = "Disetujui"
+            adopsi_time = datetime.now()
             cursor = connection.cursor()
             cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
@@ -272,7 +283,13 @@ def approve_adopsi(request, hewan_id, id):
                 UPDATE adopsi_register_adopsi
                 SET status = '{0}'
                 WHERE id = '{1}';
-                """.format(status_registeradopsi, id))  
+                """.format(status_registeradopsi, id))
+
+            cursor.execute("""
+                UPDATE adopsi_register_adopsi
+                SET date_adopted = '{0}'
+                WHERE id = '{1}';
+                """.format(adopsi_time, id))
             
             for i in reg_adopsi_filtered:
                 if i.status == "Menunggu konfirmasi":
