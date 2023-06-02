@@ -242,23 +242,24 @@ def statistik_grooming(request):
     cursor = connection.cursor()
     if is_authenticated(request):
         cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-        cursor.execute("""SELECT EXTRACT(MONTH FROM appointment_time), 
-        COUNT(*) FROM appointmentgrooming_appointmentgrooming 
-        GROUP BY EXTRACT(MONTH FROM appointment_time)
-        ORDER BY EXTRACT(MONTH FROM appointment_time)
+        cursor.execute("""SELECT up.nama, COUNT(*)
+        FROM user_produk AS up
+        JOIN appointmentgrooming_appointmentgrooming AS ag 
+        ON ag.paket_id = up.id
+        JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt 
+        ON lt.appointmentgrooming_id = ag.id
+        GROUP BY up.nama;
         """)
-        appointments = cursor.fetchall()
-        print(appointments)
-        for i in appointments:
+        list_master_data = cursor.fetchall()
+        print(list_master_data)
+        for i in list_master_data:
             print(i[0])
             print(i[1])
 
         # Format the data for the chart
         month_names = []
         appointment_counts = []
-        for appointment in appointments:
-            # appointment_date = appointment[0]
-            # month = appointment_date.strftime('%B')  # Get the month name
+        for appointment in list_master_data:
             month = appointment[0]
             count = appointment[1]
             month_names.append(month)
