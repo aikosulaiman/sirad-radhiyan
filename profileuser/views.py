@@ -8,8 +8,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
 import io
-from PIL import Image
-from supabase.client import Client
+# from PIL import Image
 
 SUPABASE_URL = settings.SUPABASE_URL
 SUPABASE_KEY = settings.SUPABASE_KEY
@@ -141,11 +140,13 @@ def update_profile_handler(request, user_id):
         SET username = '{0}', first_name = '{1}', last_name = '{2}', email = '{3}', no_telepon = '{4}', password = '{5}'
         WHERE id = '{6}';
         """.format(username, first_name, last_name, email, no_telepon, password, user_id))
-        success_message = 'Profile updated successfully!'
-        return render(request, 'update_success.html', {'success_message': success_message})
+        response = {
+            'success_message': 'Profil berhasil diperbarui!',
+            'username':username}
+        return render(request, 'update_success.html', response)
     except IntegrityError:
         # If the field is not unique, return an error message
-        error_message = 'Username or email is already taken. Please choose another one.'
+        error_message = 'Username atau email sudah digunakan. Silahkan pilih yang lain.'
         cursor.execute("""
         SELECT *
         FROM user_user
@@ -155,28 +156,13 @@ def update_profile_handler(request, user_id):
         response = {
             'error_message': error_message,
             'user':user,
-            'user_id': user_id}
+            'user_id': user_id,
+            'username' : username}
         return render(request, 'update_profile.html', response)
 
         
     cursor.close()
     return HttpResponseRedirect('/profile')
-
-# def tambah_hewan(request, user_id):
-#     form = HewanForm()
-#     if request.method == 'POST':
-#         form = HewanForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/')
-#         else:
-#             print(form.errors)
-#             # form.add_error(None, "Username or email already exists, please choose another one!")
-#     response = {
-#         'form': form,
-#         'user_id':user_id
-#         }
-#     return render(request, 'tambah_hewan.html', response)
 
 def tambah_hewan(request, user_id):
     cursor = connection.cursor()
@@ -213,7 +199,10 @@ def tambah_hewan_handler(request, user_id):
         VALUES (%s, %s, %s, %s, %s);
         ''', (nama, jenis, umur, note, user_id))
         success_message = 'Hewan Anda berhasil didaftarkan!'
-        return render(request, 'tambah_hewan_success.html', {'success_message': success_message})
+        response = {
+            'success_message': 'Hewan Anda berhasil didaftarkan!',
+            'username':request.session['Username']}
+        return render(request, 'tambah_hewan_success.html', response)
     except IntegrityError as e:
         # If the field is not unique, return an error message
         error_message = 'Hewan Anda gagal ditambahkan.'
@@ -264,8 +253,10 @@ def update_hewan_handler(request, user_id):
         SET nama = '{0}', jenis = '{1}', umur = '{2}', note = '{3}'
         WHERE hewan_id = '{4}';
         """.format(nama, jenis, umur, note, user_id))
-        success_message = 'Hewan updated successfully!'
-        return render(request, 'update_success.html', {'success_message': success_message})
+        response = {
+            'success_message': 'Hewan Anda berhasil diubah!',
+            'username':request.session['Username']}
+        return render(request, 'update_success.html', response)
     except IntegrityError:
         # If the field is not unique, return an error message
         error_message = 'Username or email is already taken. Please choose another one.'
@@ -297,4 +288,7 @@ def delete_hewan(request, hewan_id):
     """.format(hewan_id))
     cursor.close()
     success_message = 'Hewan ini berhasil dihapus!'
-    return render(request, 'delete_success.html', {'success_message': success_message})
+    response = {
+            'success_message': 'Hewan ini berhasil dihapus!',
+            'username':request.session['Username']}
+    return render(request, 'delete_success.html', response)

@@ -1,6 +1,7 @@
 {% extends 'static.html' %} {% block content %}
 <title>Halaman Profile</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> {% if request.session.Role == 'Karyawan' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+{% if request.session.Role == 'Karyawan' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
   font-family: 'Poppins', sans-serif;
@@ -29,8 +30,8 @@
           Adopsi
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Adopsi</a>
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -38,10 +39,10 @@
           Statistik
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Statistik Dokter</a>
-                    <a class="dropdown-item" href="#">Statistik Grooming</a>
-                    <a class="dropdown-item" href="#">Statistik Event</a>
-                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -84,7 +85,7 @@
           Dokter
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -109,7 +110,7 @@
           Adopsi
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -117,16 +118,16 @@
           Statistik
         </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Statistik Dokter</a>
-                    <a class="dropdown-item" href="#">Statistik Grooming</a>
-                    <a class="dropdown-item" href="#">Statistik Event</a>
-                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
             </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -134,9 +135,10 @@
         </ul>
     </div>
 </nav>
-{% endif %} {% if request.session.Role == 'Customer' %}
+{% endif %}
+{% if request.session.Role == 'Groomer' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
-    <a class="navbar-brand" style="color:#20a9f8;
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
@@ -144,11 +146,6 @@
     font-size: 30px;
     font-weight: 600;">RAD</span>
     </a>
-    <!-- <a class="navbar-brand" href="/">
-        <div class="logo-image">
-            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
-        </div>
-    </a> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -156,42 +153,16 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dokter
-          </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Event
-          </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Adopsi
-          </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -242,10 +213,6 @@
                                     <p class="card-text">{{ user_no_telepon }}</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-sm-4">List Hewan:</label>
-                            </div>
-                            <a href="#" class="btn btn-success">Tambah Hewan</a>
                             <a href="/profile/update-profile/{{ user_id }}" class="btn btn-secondary">Update Profile</a>
                         </div>
                     </div>

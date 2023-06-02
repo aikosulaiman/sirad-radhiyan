@@ -1,4 +1,5 @@
 {% extends 'static.html' %} {% load static %} {% block content %}
+<title>Beranda</title>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
@@ -19,7 +20,7 @@
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/event/create-event">Create Event</a>
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -27,8 +28,8 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Adopsi</a>
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -36,11 +37,14 @@
             Statistik
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Statistik Dokter</a>
-                    <a class="dropdown-item" href="#">Statistik Grooming</a>
-                    <a class="dropdown-item" href="#">Statistik Event</a>
-                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/list-customer">VIP Approval</a>
             </li>
         </ul>
         <ul class="navbar-nav">
@@ -148,7 +152,7 @@
             <div class="card-body">
                 <h5 class="card-title">Adopsi</h5>
                 <p class="card-text">Tambah hewan baru untuk diadopsi disini!</p>
-                <button onclick="window.location.href='/'" class="btn card-button">Tambah Hewan</button>
+                <button onclick="window.location.href='/adopsi/create-adopsi'" class="btn card-button">Tambah Hewan</button>
             </div>
         </div>
 
@@ -156,7 +160,7 @@
             <div class="card-body">
                 <h5 class="card-title">Statistik</h5>
                 <p class="card-text">Cek statistik SIRAD disini!</p>
-                <button onclick="window.location.href='/'" class="btn card-button">Lihat Statistik</button>
+                <button onclick="window.location.href='/statistik/statistik-dokter'" class="btn card-button">Lihat Statistik</button>
             </div>
         </div>
     </div>

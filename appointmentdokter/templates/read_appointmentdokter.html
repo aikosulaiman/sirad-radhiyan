@@ -1,0 +1,372 @@
+{% extends 'static_appointment.html' %} {% block content %} 
+{% if request.session.Role == 'Dokter' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{% endif %} {% if request.session.Role == 'Customer' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %}
+<br><br>
+
+<head>
+    <title>Detail Appointment Dokter</title>
+    <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
+</head>
+<div class="container">
+    <!-- Outer Row -->
+    <main id="main">
+        <section>
+            <div class="container-fluid text-center">
+                <br>
+                <h2 style="color:#000000;
+                font-family: 'Poppins', sans-serif;
+                font-size: 24px;
+                font-weight: 600;">Detail Appointment Dokter</h2>
+                <div class="col-md-8">
+                    <a href="/appointmentdokter/" class="text-left">
+                        <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List Appointment Dokter</p>
+                    </a>
+                </div>
+
+                <div class="card" style="padding: 20px;">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card" style="padding-left: 50px;">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <div class="col-sm-6 text-left">
+                                                {% if apptdokter.status == 'Menunggu Konfirmasi' %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                background-color:orange; 
+                                                border: 1px solid orange; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptdokter.status}}</p>
+
+                                                {% elif apptdokter.status == 'Disetujui' %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                background-color:greenyellow; 
+                                                border: 1px solid greenyellow; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptdokter.status}}</p>
+                                                {% else %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                color: white;
+                                                background-color:red; 
+                                                border: 1px solid red; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptdokter.status}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-sm-8 text-left">
+                                                <p style="text-align: center; 
+                                                background-color:#17177e; 
+                                                border: 1px solid #17177e; 
+                                                color: white;
+                                                font-size: x-large;
+                                                padding: 10px; 
+                                                border-radius: 10px;">ID: {{apptdokter.appointment_id}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="padding-left: 50px;">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <h4 for="title" class="text-left"><i class="fa-solid fa-paw" style="color: #17177e;"></i>&nbsp;&nbsp;Data Hewan</h4>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-solid fa-shield-dog"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{hewan.nama}}</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-solid fa-dog"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{hewan.jenis}}</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-solid fa-bone"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{hewan.umur}} bulan</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-12 text-left"><i class="fa-solid fa-note-sticky"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{hewan.note}}</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="padding-left: 50px;">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <h4 for="title" class="text-left"><i class="fa-solid fa-user" style="color: #17177e;"></i>&nbsp;&nbsp;Data Pemilik Hewan</h4>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><span class="fa-regular fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{customer.first_name}} {{customer.last_name}}</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{customer.email}}</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{customer.no_telepon}}</label>
+
+                                        </div>
+                                    </div>
+                                    {% if customer.is_vip == 1 %}
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-solid fa-crown"></i>&nbsp;&nbsp;&nbsp;&nbsp;Member VIP</label>
+
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="form-group">
+                                        <div class="row mt-8">
+                                            <label class="col-sm-8 text-left"><i class="fa-solid fa-file-user"></i>&nbsp;&nbsp;&nbsp;Member Biasa</label>
+
+                                        </div>
+
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card" style="padding-left: 50px;">
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <h2 for="title" class="text-left">Appointment Dokter</h2>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><span class="far fa-calendar-check"></span>&nbsp;&nbsp;&nbsp;Tanggal:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{apptdokter.appointment_time.date}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><span class="fa-regular fa-clock"></span>&nbsp;&nbsp;&nbsp;Waktu:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{apptdokter.appointment_time.time}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row mt-4">
+                                            <label class="col-sm-4 text-left"><i class="fa-solid fa-note-sticky"></i>&nbsp;&nbsp;&nbsp;Keluhan:</label>
+                                            <div class="col-sm-8 text-left">
+                                                <label for="title">{{apptdokter.keluhan}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;"><i class="fa-solid fa-circle-info"></i>&nbsp;&nbsp;NOTE:</i>
+
+                                </div>
+                                {% if apptdokter.status == 'Disetujui' %} {% if request.session.Role == 'Customer' %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        -Mohon membawa tiket ini pada hari H dan dapat ditunjukkan kepada petugas.</i>
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        -Mohon datang 15 menit lebih awal dari waktu appointment.</i>
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        -Pembayaran dilakukan di lokasi pada hari-H.</i>
+                                </div>
+                                {% else %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah disetujui oleh Dokter.</i>
+                                </div>
+                                {% endif %} {% elif apptdokter.status == 'Menunggu Konfirmasi' %} {% if request.session.Role == 'Customer' %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini BELUM disetujui, silakan tunggu hingga status menjadi 'Disetujui'</i>
+                                </div>
+                                {% else %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Anda dapat menyetujui atau menolak appointment ini.</i>
+                                </div>
+                                {% endif %} {% else %} {% if request.session.Role == 'Customer' %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini TIDAK disetujui, silakan membuat appointment baru</i>
+                                </div>
+                                {% else %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah ditolak oleh Dokter.</i>
+                                </div>
+                                {% endif %} {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="row mt-4">
+                            <div class="d-flex justify-content-center">
+                                {% if apptdokter.status == 'Menunggu Konfirmasi' %} {% if request.session.Role == 'Customer' %}
+                                <a href="/appointmentdokter/update-appointmentdokter/{{ apptdokter.appointment_id }}">
+                                    <button class="btn btn-primary mr-3">Ubah Appointment</button>
+                                </a>
+                                <a href="/appointmentdokter/delete-appointmentdokter/{{ apptdokter.appointment_id }}">
+                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin membatalkan appointment ini?')">Batalkan Appointment</button>
+                                </a>
+
+
+                                {% elif request.session.Role == 'Dokter' %}
+                                <a href="/appointmentdokter/approve-appointmentdokter/{{ apptdokter.appointment_id }}">
+                                    <button class="btn btn-primary mr-3" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI appointment dokter hewan ini?')">Setujui</button>
+                                </a>
+                                <a href="/appointmentdokter/disapprove-appointmentdokter/{{ apptdokter.appointment_id }}">
+                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment dokter hewan ini?')">Tidak Setujui</button>
+                                </a>
+
+                                {% endif %} {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+
+
+
+
+                </div>
+
+            </div>
+
+</div>
+</section>
+</main>
+</div>
+
+
+{% endblock content %}

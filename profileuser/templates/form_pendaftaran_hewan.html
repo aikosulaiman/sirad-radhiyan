@@ -1,4 +1,69 @@
 {% extends 'static.html' %} {% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
+    <a class="navbar-brand" style="color:#20a9f8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Create Appointment</a>
+                    <a class="dropdown-item" href="#">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
 <div class="container">
     <!-- Outer Row -->
     <main id="main">
@@ -25,7 +90,7 @@
                                     {% endif %}
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Nama:</label>
+                                            <label class="col-sm-4">Nama: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="{{ form.nama.name }}" class="form-control" id="nama" placeholder="Nama" required>
                                             </div>
@@ -33,7 +98,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Jenis:</label>
+                                            <label class="col-sm-4">Jenis: *</label>
                                             <div class="col-sm-8">
                                                 <select id="jenis" name="{{ form.jenis.name }}" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                                     <option selected>Jenis</option>
@@ -46,7 +111,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Umur:</label>
+                                            <label class="col-sm-4">Umur: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="{{ form.umur.name }}" class="form-control" id="umur" placeholder="Umur" required>
                                             </div>
@@ -54,7 +119,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Note:</label>
+                                            <label class="col-sm-4">Note: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="{{ form.note.name }}" class="form-control" id="note" placeholder="Note" required>
                                             </div>

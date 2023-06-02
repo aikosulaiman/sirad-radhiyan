@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     "user",
     "events",
     "profileuser",
+    "adopsi",
+    "appointmentdokter",
+    "appointmentgrooming",
+    "statistik",
 ]
 
 MIDDLEWARE = [
