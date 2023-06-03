@@ -244,9 +244,9 @@ def statistik_grooming(request):
         cursor.execute("SET SEARCH_PATH TO PUBLIC;")
         cursor.execute("""SELECT up.nama, COUNT(*), EXTRACT(MONTH FROM appointment_time) AS bulan
         FROM user_produk AS up
-        JOIN appointmentgrooming_appointmentgrooming AS ag 
+        FULL OUTER JOIN appointmentgrooming_appointmentgrooming AS ag 
         ON ag.paket_id = up.id
-        JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt 
+        FULL OUTER JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt 
         ON lt.appointmentgrooming_id = ag.id
         GROUP BY up.nama, bulan;
         """)
