@@ -248,6 +248,7 @@ def statistik_grooming(request):
         ON ag.paket_id = up.id
         FULL OUTER JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt 
         ON lt.appointmentgrooming_id = ag.id
+        WHERE up.jenis = 'Produk'
         GROUP BY up.nama, bulan;
         """)
         list_master_data = cursor.fetchall()
