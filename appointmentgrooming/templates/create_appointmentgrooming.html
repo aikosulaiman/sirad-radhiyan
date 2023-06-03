@@ -99,7 +99,7 @@
                                     {% endif %}
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Paket Grooming:</label>
+                                            <label class="col-sm-4">Paket Grooming: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" list="list_paket" Placeholder="Pilih Paket Grooming.." class="form-control" id="paket-input" autocomplete="off" required>
                                                 <datalist id="list_paket">
@@ -131,7 +131,7 @@
                                     {% if listHewan %}
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4" for="hewan">Hewan:</label>
+                                            <label class="col-sm-4" for="hewan">Hewan: *</label>
                                             <div class="col-sm-8">
                                                 <input type="text" list="hewanlist" Placeholder="Pilih Hewan Peliharaan.." class="form-control" id="hewan-input" autocomplete="off" required>
                                                 <datalist id="hewanlist">
@@ -146,7 +146,7 @@
                                     {% else %}
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Hewan:</label>
+                                            <label class="col-sm-4">Hewan: *</label>
                                             <div class="col-sm-8 text-left">
                                                 <input type="text" Placeholder="Pilih Hewan Peliharaan.." class="form-control" id="hewan-input" autocomplete="off" required>
                                                 <p style="color: red">Kamu belum memiliki hewan, silahkan tambahkan hewan</p>
@@ -157,7 +157,7 @@
                                     {% endif %}
                                     <div class="form-group">
                                         <div class="row mt-4">
-                                            <label class="col-sm-4">Waktu Appointment:</label>
+                                            <label class="col-sm-4">Waktu Appointment: *</label>
                                             <div class="col-sm-8">
                                                 <input type="datetime-local" name="{{ form.appointment_time.name }}" class="form-control" id="appointment_time" placeholder="appointment_time" required>
                                             </div>
