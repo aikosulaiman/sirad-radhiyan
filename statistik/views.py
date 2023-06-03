@@ -242,13 +242,13 @@ def statistik_grooming(request):
     cursor = connection.cursor()
     if is_authenticated(request):
         cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-        cursor.execute("""SELECT up.nama, COUNT(*)
+        cursor.execute("""SELECT up.nama, COUNT(*), EXTRACT(MONTH FROM appointment_time) AS bulan
         FROM user_produk AS up
         JOIN appointmentgrooming_appointmentgrooming AS ag 
         ON ag.paket_id = up.id
         JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt 
         ON lt.appointmentgrooming_id = ag.id
-        GROUP BY up.nama;
+        GROUP BY up.nama, bulan;
         """)
         list_master_data = cursor.fetchall()
         print(list_master_data)
