@@ -228,32 +228,6 @@
         function filterChart(input) {
             const year = input.value.substring(0, 4);
             const month = input.value.substring(5, 7);
-
-            // Buat objek data yang akan dikirim ke server
-            const requestData = {
-                year: year,
-                month: month
-            };
-
-            // Kirim permintaan AJAX ke server
-            fetch('/filter-chart/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}' // Sesuaikan dengan token CSRF Django Anda
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Perbarui data chart dengan data hasil query yang baru
-                myChart.data.labels = data.master_data;
-                myChart.data.datasets[0].data = data.appointment_counts;
-                myChart.update();
-            })
-            .catch(error => {
-                console.error('Terjadi kesalahan:', error);
-            });
         }
 
     </script>

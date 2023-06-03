@@ -274,34 +274,3 @@ def statistik_grooming(request):
         return render(request, 'statistik_grooming.html', context)
     else:
         return HttpResponseRedirect("/login")
-
-def filter_chart(request):
-    if request.method == 'POST' and request.is_ajax():
-        year = request.POST.get('year')
-        month = request.POST.get('month')
-
-        # Lakukan filter query SQL berdasarkan tahun dan bulan yang diterima
-        cursor = connection.cursor()
-        cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-        cursor.execute("""
-            SELECT up.nama, COUNT(*), EXTRACT(MONTH FROM appointment_time) AS bulan
-            FROM user_produk AS up
-            FULL OUTER JOIN appointmentgrooming_appointmentgrooming AS ag ON ag.paket_id = up.id
-            FULL OUTER JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt ON lt.appointmentgrooming_id = ag.id
-            WHERE up.jenis = 'Produk' AND EXTRACT(YEAR FROM appointment_time) = %s AND EXTRACT(MONTH FROM appointment_time) = %s
-            GROUP BY up.nama, bulan;
-        """, [year, month])
-        result_set = cursor.fetchall()
-
-        # Format hasil query menjadi bentuk JSON
-        master_data = [row[0] for row in result_set]
-        appointment_counts = [row[1] for row in result_set]
-
-        # Mengirim hasil query sebagai respons JSON
-        data = {
-            'master_data': master_data,
-            'appointment_counts': appointment_counts,
-        }
-        return JsonResponse(data)
-
-    return JsonResponse({'error': 'Invalid request'})
