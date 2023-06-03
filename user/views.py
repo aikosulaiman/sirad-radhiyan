@@ -178,17 +178,6 @@ def customer_registration(request):
 def list_produk(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Admin':
-            # cursor = connection.cursor()
-            # cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-            # cursor.execute("""SELECT up.nama, COUNT(*), EXTRACT(MONTH FROM appointment_time) AS bulan
-            # FROM user_produk AS up
-            # JOIN appointmentgrooming_appointmentgrooming AS ag 
-            # ON ag.paket_id = up.id
-            # JOIN appointmentgrooming_appointmentgrooming_layanan_tambahan AS lt 
-            # ON lt.appointmentgrooming_id = ag.id
-            # GROUP BY up.nama, bulan;
-            # """)
-
             layanan = Produk.objects.filter(jenis="Layanan")
             produk = Produk.objects.filter(jenis="Produk") 
 
