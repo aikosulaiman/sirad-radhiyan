@@ -1,5 +1,4 @@
-{% extends 'static_appointment.html' %} {% block content %} 
-{% if request.session.Role == 'Dokter' %}
+{% extends 'static_appointment.html' %} {% block content %} {% if request.session.Role == 'Dokter' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
@@ -101,6 +100,29 @@
 </nav>
 {% endif %}
 <br><br>
+<style>
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: none;
+    }
+    
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        z-index: 10000;
+        display: none;
+    }
+</style>
 
 <head>
     <title>Detail Appointment Dokter</title>
@@ -145,6 +167,25 @@
                                                 border: 1px solid greenyellow; 
                                                 padding: 3px; 
                                                 border-radius: 10px;">{{apptdokter.status}}</p>
+
+                                                {% elif apptdokter.status == 'Dibatalkan' %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                color: white;
+                                                background-color:darkred; 
+                                                border: 1px solid darkred; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptdokter.status}}</p>
+
+                                                {% elif apptdokter.status == 'Selesai' %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                color: white;
+                                                background-color:dodgerblue; 
+                                                border: 1px solid dodgerblue; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptdokter.status}}</p>
+
                                                 {% else %}
                                                 <p style="text-align: center; 
                                                 font-weight: bold; 
@@ -314,10 +355,31 @@
                                     <i class="col-sm-12 text-left" style="color: #17177e;">
                                         Anda dapat menyetujui atau menolak appointment ini.</i>
                                 </div>
-                                {% endif %} {% else %} {% if request.session.Role == 'Customer' %}
+                                {% endif %} {% elif apptdokter.status == 'Dibatalkan' %} {% if request.session.Role == 'Customer' %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah dibatalkan, silakan membuat appointment baru</i>
+                                </div>
+                                {% else %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah dibatalkan oleh customer.</i>
+                                </div>
+                                {% endif %} {% elif apptdokter.status == 'Selesai' %}
+
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah selesai dilakukan</i></i>
+                                </div>
+
+                                {% else %} {% if request.session.Role == 'Customer' %}
                                 <div class="row mt-8">
                                     <i class="col-sm-12 text-left" style="color: #17177e;">
                                         Appointment ini TIDAK disetujui, silakan membuat appointment baru</i>
+                                    <label class="col-sm-4 text-left">Alasan Penolakan:</label>
+                                    <div class="col-sm-8 text-left">
+                                        <label style="color: #F8241C;">{{ apptdokter.alasan }}</label>
+                                    </div>
                                 </div>
                                 {% else %}
                                 <div class="row mt-8">
@@ -345,10 +407,67 @@
                                 <a href="/appointmentdokter/approve-appointmentdokter/{{ apptdokter.appointment_id }}">
                                     <button class="btn btn-primary mr-3" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI appointment dokter hewan ini?')">Setujui</button>
                                 </a>
-                                <a href="/appointmentdokter/disapprove-appointmentdokter/{{ apptdokter.appointment_id }}">
-                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment dokter hewan ini?')">Tidak Setujui</button>
-                                </a>
 
+                                <!-- Tidak menyetujui appointment -->
+                                <button class="btn btn-danger" onclick="showRejectionDialog()">Tidak Setujui</button>
+
+                                <form id="rejectionForm" method="POST">
+                                    {% csrf_token %}
+                                    <div class="overlay" id="overlay"></div>
+                                    <div id="rejectionDialog" class="modal">
+                                        <div class="modal-content text-left" style="padding: 20px;">
+                                            <div class="col-md-12 text-right">
+                                                <span class="close" onclick="closeRejectionDialog()">&times;</span>
+                                            </div>
+                                            <h2>Alasan Penolakan</h2>
+                                            <input type="text" id="alasan" name="alasan" placeholder="Tulis alasan penolakan di sini" style="padding: 20px;">
+                                            <br>
+                                            <button class="btn btn-danger" onclick="submitRejection(event)">Tidak Setujui</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <script>
+                                    function showRejectionDialog() {
+                                        var rejectionDialog = document.getElementById("rejectionDialog");
+                                        var overlay = document.getElementById("overlay");
+                                        rejectionDialog.style.display = "block";
+                                        overlay.style.display = "block";
+                                    }
+
+                                    function closeRejectionDialog() {
+                                        var rejectionDialog = document.getElementById("rejectionDialog");
+                                        var overlay = document.getElementById("overlay");
+                                        rejectionDialog.style.display = "none";
+                                        overlay.style.display = "none";
+                                    }
+
+                                    function submitRejection(event) {
+                                        event.preventDefault(); // Mencegah pengiriman formulir
+
+                                        var reasonInput = document.getElementById("alasan").value;
+                                        if (reasonInput === "") {
+                                            alert("Mohon isi alasan penolakan.");
+                                        } else {
+                                            var confirmation = confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment grooming hewan ini?');
+                                            if (confirmation) {
+                                                var form = document.getElementById("rejectionForm");
+                                                form.action = "{% url 'disapprove_appointmentdokter' apptdokter.appointment_id %}";
+                                                form.submit();
+                                            }
+                                        }
+                                    }
+                                </script>
+
+
+                                {% endif %} {% elif apptdokter.status == 'Disetujui' %} {% if request.session.Role == 'Customer' %}
+                                <a href="/appointmentdokter/delete-appointmentdokter/{{ apptdokter.appointment_id }}">
+                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin MEMBATALKAN appointment grooming hewan ini?')">Batalkan Appointment</button>
+                                </a>
+                                {% elif request.session.Role == 'Dokter' %}
+                                <a href="/appointmentdokter/finished-appointmentdokter/{{ apptdokter.appointment_id }}">
+                                    <button class="btn btn-primary" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYELESAIKAN appointment grooming hewan ini?')">Selesaikan Appointment</button>
+                                </a>
                                 {% endif %} {% endif %}
                             </div>
                         </div>
