@@ -1,4 +1,5 @@
 import datetime
+import json
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from appointmentgrooming.forms import AppointmentGroomingForm
@@ -24,9 +25,10 @@ def create_appointmentgrooming(request):
             my_username = request.session['Username']
             my_uuid = str(request.session['UUID'])
             list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
-            list_paket = Produk.objects.filter(jenis="Produk")
-            list_tambahan = Produk.objects.filter(jenis="Layanan")
-            
+            list_paket = Produk.objects.filter(jenis="Produk", status=True)
+            list_tambahan = Produk.objects.filter(jenis="Layanan", status=True)
+
+                        
 
             if request.method == 'POST':
                 form = AppointmentGroomingForm(request.POST)
@@ -47,13 +49,19 @@ def create_appointmentgrooming(request):
                     # Get the selected layanan_tambahan checkboxes
                     selected_layanan_tambahan = request.POST.getlist('layanan_tambahan', [])
 
+                    # Copy paket values
+                    appointment.nama_paket = appointment.paket.nama
+                    appointment.harga_paket = int(appointment.paket.harga)
+
                     # Save the appointment object
                     appointment.save()
 
+                    
                     # Add the selected layanan_tambahan to the appointment
                     if selected_layanan_tambahan:
                         appointment.layanan_tambahan.set(selected_layanan_tambahan)
-
+                                        
+                       
                     # Calculate the total_biaya
                     appointment.total_biaya = int(appointment.paket.harga)
                     
@@ -62,6 +70,17 @@ def create_appointmentgrooming(request):
                         layanan_tambahan_harga = 0  
                     appointment.total_biaya += int(layanan_tambahan_harga)
                     appointment.save()
+
+                    layanan_tambahan_list = []
+                    if appointment.layanan_tambahan.exists():
+                        for layanan in appointment.layanan_tambahan.all():
+                            nama = layanan.nama
+                            harga = layanan.harga
+                            layanan_tambahan_list.append({'nama': nama, 'harga': harga})
+                    appointment.layanan_tambahan_list = layanan_tambahan_list
+
+                    appointment.save()
+
                     
 
                     success_message = 'Appointment Grooming dengan ID ' + appointment.appointment_id + ' berhasil terbuat!'
@@ -161,6 +180,7 @@ def read_appointmentgrooming(request, apptgrooming_id):
                 apptgrooming = cursor.fetchall()
 
                 response['apptgrooming'] = apptgrooming
+                response['apptgrooming_id'] = apptgrooming_id
 
                 # Fetch object Customer/Pemilik Hewan/Pendaftar Appointment
                 customer_id = apptgrooming[0][7]
@@ -185,27 +205,18 @@ def read_appointmentgrooming(request, apptgrooming_id):
                     response['hewan'] = hewan
 
                     # Fetch object Paket Grooming
-                    paket_id = apptgrooming[0][6]
-                    paket = Produk.objects.get(id=paket_id)
+                    nama_paket = apptgrooming[0][11]
 
-                    response['paket'] = paket
+                    harga_paket = apptgrooming[0][9]
 
-                    # Fetch object Layanan Tambahan
-                    cursor.execute("""
-                    SET SEARCH_PATH TO PUBLIC;
-                    SELECT * 
-                    FROM appointmentgrooming_appointmentgrooming_layanan_tambahan 
-                    WHERE appointmentgrooming_id = '{0}';
-                    """.format(apptgrooming_id))
-                    relasi_tambahan = cursor.fetchall()
+                    response['nama_paket'] = nama_paket
 
-                    tambahan = []
-                    for i in relasi_tambahan:
-                        tambahan_id = i[2]
-                        produk = Produk.objects.get(id=tambahan_id)
-                        tambahan.append(produk)
+                    response['harga_paket'] = harga_paket
 
-                    response['tambahan'] = tambahan                
+                    relasi_tambahan_json = apptgrooming[0][10]
+                    relasi_tambahan = json.loads(relasi_tambahan_json)
+
+                    response['tambahan'] = relasi_tambahan                
 
                     cursor.close()
 
@@ -256,8 +267,73 @@ def approve_appointmentgrooming(request, apptgrooming_id):
 def disapprove_appointmentgrooming(request, apptgrooming_id):
     if is_authenticated(request):
         if request.session['Role'] == 'Groomer':
-
             status = "Ditolak"
+            alasan = request.POST.get('alasan')
+            print(alasan) 
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            cursor.execute("""
+                UPDATE appointmentgrooming_appointmentgrooming
+                SET status = '{0}', alasan = '{1}'
+                WHERE id = '{2}';
+            """.format(status, alasan, apptgrooming_id)) 
+            
+            appointment = AppointmentGrooming.objects.get(id=apptgrooming_id)
+            
+            success_message = 'Appointment Grooming dengan ID ' + appointment.appointment_id + ' berhasil ditolak!'
+            cursor.close()
+            context = {
+                'success_message': success_message,
+                'apptgrooming_id': apptgrooming_id,
+                'apptgrm_id': appointment.appointment_id
+            }
+            return render(request, 'success_page_grooming.html', context)
+        else:
+            context = {
+                'error_message': 'Akses Ditolak!'
+            }
+            return render(request, 'error_page_grooming.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def delete_appointmentgrooming(request, apptgrooming_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Customer':
+            apptgrooming = AppointmentGrooming.objects.get(id=apptgrooming_id)
+            
+            if apptgrooming.status == "Menunggu Konfirmasi" or apptgrooming.status == "Disetujui":
+                status = "Dibatalkan"
+                cursor = connection.cursor()
+                cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+                cursor.execute("""
+                    UPDATE appointmentgrooming_appointmentgrooming
+                    SET status = '{0}'
+                    WHERE id = '{1}';
+                    """.format(status, apptgrooming_id)) 
+            
+                success_message = 'Appointment Grooming dengan ID ' + apptgrooming.appointment_id + ' berhasil dibatalkan!'
+                context = {'success_message': success_message,
+                            'apptgrooming_id': apptgrooming_id,
+                            'apptgrm_id': apptgrooming.appointment_id}
+                return render(request, 'success_page_grooming.html', context)
+            else:
+                context = {
+                    'error_message': 'Tidak bisa membatalkan Appointment Grooming yang telah ditolak atau telah dibatalkan/diselesaikan.'}
+                return render(request, 'error_page_grooming.html', context)
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page_grooming.html', context)
+    else:
+        return HttpResponseRedirect("/login")
+
+def finished_appointmentgrooming(request, apptgrooming_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Groomer':
+
+            status = "Selesai"
             cursor = connection.cursor()
             cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
@@ -269,34 +345,13 @@ def disapprove_appointmentgrooming(request, apptgrooming_id):
             
             appointment = AppointmentGrooming.objects.get(id=apptgrooming_id)
             
-            success_message = 'Appointment Grooming dengan ID ' + appointment.appointment_id + ' berhasil ditolak!'
-            cursor.close()
+        
+            success_message = 'Appointment Grooming dengan ID ' + appointment.appointment_id + ' berhasil diselesaikan!'
             context = {'success_message': success_message,
                         'apptgrooming_id': apptgrooming_id,
                         'apptgrm_id': appointment.appointment_id}
             return render(request, 'success_page_grooming.html', context)
                      
-        else:
-            context = {
-            'error_message': 'Akses Ditolak!'}
-            return render(request, 'error_page_grooming.html', context)
-    else:
-        return HttpResponseRedirect("/login")
-    
-def delete_appointmentgrooming(request, apptgrooming_id):
-    if is_authenticated(request):
-        if request.session['Role'] == 'Customer':
-            apptgrooming = AppointmentGrooming.objects.get(id=apptgrooming_id)
-            
-            if apptgrooming.status == "Menunggu Konfirmasi":
-                apptgrm_id = apptgrooming.appointment_id
-                apptgrooming.delete()
-                success_message = 'Appointment Grooming dengan ID ' + apptgrm_id + ' berhasil dibatalkan!'
-                return render(request, 'success_page_grooming.html', {'success_message': success_message})
-            else:
-                context = {
-                    'error_message': 'Tidak bisa membatalkan Appointment Grooming yang telah disetujui/ditolak.'}
-                return render(request, 'error_page_grooming.html', context)
         else:
             context = {
             'error_message': 'Akses Ditolak!'}
@@ -339,8 +394,8 @@ def update_appointmentgrooming(request, apptgrooming_id):
 
                 my_uuid = str(request.session['UUID'])
                 list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
-                list_paket = Produk.objects.filter(jenis="Produk")
-                list_tambahan = Produk.objects.filter(jenis="Layanan")
+                list_paket = Produk.objects.filter(jenis="Produk", status=True)
+                list_tambahan = Produk.objects.filter(jenis="Layanan", status=True)
                 
                 appointment_layanan_tambahan = appointment.layanan_tambahan.all()
                 
@@ -409,10 +464,28 @@ def update_appointmentgrooming_handler(request, apptgrooming_id):
                             VALUES (%s, %s);
                         """, [apptgrooming_id, tambahan_id])
 
+                    # update copy paket & layanan
+                    cursor.execute("""
+                        UPDATE appointmentgrooming_appointmentgrooming
+                        SET nama_paket = %s, harga_paket = %s
+                        WHERE id = %s;
+                    """, [appointment.paket.nama, appointment.paket.harga, apptgrooming_id])
+
                     cursor.close()
 
                     # Fetch the updated appointment object after the changes
                     appointment = AppointmentGrooming.objects.get(id=apptgrooming_id)
+
+                    layanan_tambahan_list = []
+                    if appointment.layanan_tambahan.exists():
+                        for layanan in appointment.layanan_tambahan.all():
+                            nama = layanan.nama
+                            harga = layanan.harga
+                            layanan_tambahan_list.append({'nama': nama, 'harga': harga})
+
+                    appointment.layanan_tambahan_list = layanan_tambahan_list
+
+                    
 
                     # Calculate the total_biaya
                     appointment.total_biaya = int(appointment.paket.harga)

@@ -16,4 +16,5 @@ urlpatterns = [
     path('ditolak', list_ditolak, name='list_ditolak'),
     path('update-appointmentdokter/<str:apptdokter_id>', update_appointmentdokter, name='update_appointmentdokter'),
     path('update-appointment-handler/<str:apptdokter_id>', update_appointment_handler, name='update_appointment_handler'),
+    path('finished-appointmentdokter/<str:apptdokter_id>', finished_appointmentdokter, name='finished_appointmentdokter'),
 ]

@@ -26,3 +26,4 @@ class Register_Adopsi(models.Model):
     date = models.DateTimeField()
     status = models.CharField(max_length=50, blank=False, null=False, default='Menunggu konfirmasi')
     date_adopted = models.DateTimeField(default=timezone.now)
+    alasan = models.TextField(default="")

@@ -249,7 +249,7 @@
                     </div>
                     <br><br>
                     <!-- Tabel List Pendaftar Adopsi untuk Karyawan -->
-                    {% if request.session.Role == 'Karyawan' %}
+                    {% if request.session.Role == 'Karyawan' or request.session.Role == 'Admin' %}
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="card" style="padding-left: 50px;">
@@ -281,16 +281,19 @@
                                                     <td style="font-family: 'Poppins', sans-serif;">{{ i.date }}</td>
                                                     <td class="text-center">
                                                         <button class="btn btn-info" onclick="showReason('{{ i.alasan }}')">Detail Alasan</button>
-                                                        {% if i.status == 'Menunggu konfirmasi' and  i.hewan.status == 'Belum diadopsi' %}
-                                                            <a href="/adopsi/approve-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
-                                                                <button class="btn btn-info" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI adopsi hewan ini?')">Setujui</button>
-                                                            </a>
-                                                            <a href="/adopsi/disapprove-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
-                                                                <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI adopsi hewan ini?')">Tidak Setujui</button>
-                                                            </a>
-                                                        {% elif i.status == 'Disetujui' %}
+                                                        {% if request.session.Role == 'Karyawan' %}
+                                                            {% if i.status == 'Menunggu konfirmasi' and  i.hewan.status == 'Belum diadopsi' %}
+                                                                <a href="/adopsi/approve-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
+                                                                    <button class="btn btn-info" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI adopsi hewan ini?')">Setujui</button>
+                                                                </a>
+                                                                <a href="/adopsi/disapprove-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
+                                                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI adopsi hewan ini?')">Tidak Setujui</button>
+                                                                </a>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                        {% if i.status == 'Disetujui' %}
                                                             <label style="font-style: italic; color: #107bef;">Sudah disetujui.</label>
-                                                        {% else %}
+                                                        {% elif i.status == 'Tidak disetujui' %}
                                                             <label style="font-style: italic; color: #ef1017;">Tidak disetujui.</label>
                                                         {% endif %}
                                                     </td>

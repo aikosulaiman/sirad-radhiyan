@@ -25,6 +25,7 @@ def statistik_dokter(request):
         cursor.execute("SET SEARCH_PATH TO PUBLIC;")
         cursor.execute("""SELECT EXTRACT(MONTH FROM appointment_time), 
         COUNT(*) FROM appointmentdokter_appointmentdokter 
+        WHERE status = 'Selesai'
         GROUP BY EXTRACT(MONTH FROM appointment_time)
         ORDER BY EXTRACT(MONTH FROM appointment_time)
         """)
@@ -244,6 +245,7 @@ def statistik_grooming(request):
         cursor.execute("SET SEARCH_PATH TO PUBLIC;")
         cursor.execute("""SELECT EXTRACT(MONTH FROM appointment_time), 
         COUNT(*) FROM appointmentgrooming_appointmentgrooming 
+        WHERE status = 'Selesai'
         GROUP BY EXTRACT(MONTH FROM appointment_time)
         ORDER BY EXTRACT(MONTH FROM appointment_time)
         """)

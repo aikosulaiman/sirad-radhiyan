@@ -76,15 +76,35 @@ def list_appointmentdokter(request):
         my_uuid = str(request.session['UUID'])
         if request.session['Role'] == 'Customer':
             list_appointmentdokter = AppointmentDokter.objects.filter(pemilik_id=my_uuid)
+            list_disetujui_customer = AppointmentDokter.objects.filter(status='Disetujui', pemilik_id=my_uuid)
+            list_konfirmasi_customer = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', pemilik_id=my_uuid)
+            list_ditolak_customer = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
+            list_dibatalkan_customer = AppointmentDokter.objects.filter(status='Dibatalkan', pemilik_id=my_uuid)
+            list_selesai_customer = AppointmentDokter.objects.filter(status='Selesai', pemilik_id=my_uuid)
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
+                'list_disetujui': list_disetujui_customer,
+                'list_konfirmasi': list_konfirmasi_customer,
+                'list_ditolak': list_ditolak_customer,
+                'list_dibatalkan': list_dibatalkan_customer,
+                'list_selesai': list_selesai_customer,
                 'username': my_username,
             }
             return render(request, 'listappointmentdok_customer.html', context)
         elif request.session['Role'] == 'Dokter':
             list_appointmentdokter = AppointmentDokter.objects.filter(dokter_id=my_uuid)
+            list_disetujui_dokter = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
+            list_konfirmasi_dokter = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
+            list_ditolak_dokter = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
+            list_dibatalkan_dokter = AppointmentDokter.objects.filter(status='Dibatalkan', dokter_id=my_uuid)
+            list_selesai_dokter = AppointmentDokter.objects.filter(status='Selesai', dokter_id=my_uuid)
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
+                'list_disetujui': list_disetujui_dokter,
+                'list_konfirmasi': list_konfirmasi_dokter,
+                'list_ditolak': list_ditolak_dokter,
+                'list_dibatalkan': list_dibatalkan_dokter,
+                'list_selesai': list_selesai_dokter,
                 'username': my_username,
             }
             return render(request, 'listappointmentdokter_dokter.html', context)
@@ -282,6 +302,9 @@ def disapprove_appointmentdokter(request, apptdokter_id):
         if request.session['Role'] == 'Dokter':
 
             status = "Ditolak"
+            alasan = request.POST.get('alasan')
+            print(alasan) 
+
             cursor = connection.cursor()
             cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
@@ -308,9 +331,20 @@ def delete_appointmentdokter(request, apptdokter_id):
         if request.session['Role'] == 'Customer':
             apptdokter = AppointmentDokter.objects.get(appointment_id=apptdokter_id)
             
-            if apptdokter.status == "Menunggu Konfirmasi":
-                apptdokter.delete()
-                success_message = 'Berhasil membatalkan Appointment Dokter!'
+            if apptdokter.status == "Menunggu Konfirmasi" or apptgrooming.status == "Disetujui":
+                status = "Dibatalkan"
+                cursor = connection.cursor()
+                cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+                cursor.execute("""
+                    UPDATE appointmentdokter_appointmentdokter
+                    SET status = '{0}'
+                    WHERE appointment_id = '{1}';
+                    """.format(status, apptdokter_id)) 
+
+                success_message = 'Appointment Dokter dengan ID ' + apptdokter.appointment_id + ' berhasil dibatalkan!'
+                context = {'success_message': success_message,
+                            'apptdokter_id': apptdokter.appointment_id}
                 return render(request, 'success_page_appt.html', {'success_message': success_message})
             else:
                 context = {
@@ -383,3 +417,33 @@ def update_appointment_handler(request, apptdokter_id):
             cursor.close()
                 
             return render(request, 'update_appointmentdokter.html', response)
+
+
+def finished_appointmentdokter(request, apptdokter_id):
+    if is_authenticated(request):
+        if request.session['Role'] == 'Dokter':
+
+            status = "Selesai"
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+
+            cursor.execute("""
+                UPDATE appointmentdokter_appointmentdokter
+                SET status = '{0}'
+                WHERE appointment_id = '{1}';
+                """.format(status, apptdokter_id)) 
+            
+            appointment = AppointmentDokter.objects.get(appointment_id=apptdokter_id)
+            
+        
+            success_message = 'Appointment Dokter dengan ID ' + appointment.appointment_id + ' berhasil diselesaikan!'
+            context = {'success_message': success_message,
+                        'apptdokter_id': appointment.appointment_id}
+            return render(request, 'success_page_appt.html', context)
+                     
+        else:
+            context = {
+            'error_message': 'Akses Ditolak!'}
+            return render(request, 'error_page_apptdokter.html', context)
+    else:
+        return HttpResponseRedirect("/login")
