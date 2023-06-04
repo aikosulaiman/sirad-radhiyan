@@ -10,6 +10,12 @@ ROLE_CHOICES = [
     ('Groomer', 'Groomer'),
 ]
 
+HEWAN_CHOICES = [
+    ('Kucing', 'Kucing'),
+    ('Anjing', 'Anjing'),
+    ('Kelinci', 'Kelinci'),
+]
+
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=40, unique=True)
@@ -29,7 +35,7 @@ class Dokter(User):
 class Hewan(models.Model):
     hewan_id = models.AutoField(primary_key=True)
     nama = models.CharField(max_length=50)
-    jenis = models.CharField(max_length=50)
+    jenis = models.CharField(choices=HEWAN_CHOICES, max_length=50, blank=False, null=False, default='Kucing')
     umur = models.IntegerField()
     note = models.CharField(max_length=200)
     pemilik = models.ForeignKey(Customer, on_delete=models.CASCADE)
