@@ -235,7 +235,7 @@
         {% if request.session.Role == 'Customer' %}
             <div class="d-grid d-md-flex justify-content-md-end">
                 <a href="/adopsi/list-adopsi-customer">
-                    <button type="button" class="btn btn-secondary" style="font-family: 'Poppins', sans-serif;">Daftar Adopsi Anda 🐈‍⬛🐈🐕‍🦺</button>
+                    <button type="button" class="btn btn-info" style="font-family: 'Poppins', sans-serif;">Daftar Adopsi Anda 🐈‍⬛🐈🐕‍🦺</button>
                 </a>
             </div>
         {% endif %}
@@ -268,12 +268,7 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.warna }}</td>
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.status }}</td>
                                 {% if request.session.Role == 'Karyawan' %}
-                                {% if hewan.status == 'Belum diadopsi' %}
                                 <td style="font-family: 'Poppins', sans-serif;">{{ hewan.quantity }}</td>
-                                {% endif %}
-                                {% if hewan.status == 'Diadopsi' %}
-                                <td style="font-family: 'Poppins', sans-serif;">X</td>
-                                {% endif %}
                                 {% endif %}
                                 <td class="text-center">
                                     {% if request.session.Role == 'Karyawan' %}
@@ -285,7 +280,7 @@
                                     {% endif %}
                                     {% if request.session.Role == 'Customer' %}
                                         {% if hewan.status == 'Diadopsi' %} 
-                                            <a disabled class="btn btn-info" href="#">Tidak Tersedia</a>
+                                            <a disabled class="btn btn-info disabled" href="#">Tidak Tersedia</a>
                                         {% else %}
                                             <a class="btn btn-primary" href="/adopsi/read-adopsi/{{ hewan.hewan_id }}">Detail</a>
                                         {% endif %}
