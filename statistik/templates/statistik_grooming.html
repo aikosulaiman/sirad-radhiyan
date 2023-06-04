@@ -180,7 +180,7 @@
                 <div class="card">
                     <div class="card-body">
                         <canvas id="appointmentChart" width="15" height="5"></canvas>
-                        <input type="month" onchange="filterChart(this)" />
+                        <input type="month" />
                     </div>
                 </div>
             </div>
@@ -225,10 +225,6 @@
             });
         });
 
-        function filterChart(input) {
-            const year = input.value.substring(0, 4);
-            const month = input.value.substring(5, 7);
-        }
 
     </script>
 </body>
