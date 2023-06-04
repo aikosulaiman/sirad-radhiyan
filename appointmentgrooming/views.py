@@ -96,6 +96,8 @@ def list_appointmentgrooming(request):
         list_disetujui = []
         list_konfirmasi = []
         list_ditolak = []
+        list_dibatalkan = []
+        list_selesai = []
         if request.session['Role'] == 'Customer':
             list_appointmentgrooming = AppointmentGrooming.objects.filter(pemilik_id=my_uuid).order_by('-id')
 
@@ -104,6 +106,10 @@ def list_appointmentgrooming(request):
             list_konfirmasi = AppointmentGrooming.objects.filter(pemilik_id=my_uuid, status='Menunggu Konfirmasi').order_by('-id')
 
             list_ditolak = AppointmentGrooming.objects.filter(pemilik_id=my_uuid, status='Ditolak').order_by('-id')
+
+            list_dibatalkan = AppointmentGrooming.objects.filter(pemilik_id=my_uuid, status='Dibatalkan').order_by('-id')
+
+            list_selesai = AppointmentGrooming.objects.filter(pemilik_id=my_uuid, status='Selesai').order_by('-id')
 
         elif request.session['Role'] == 'Groomer' or request.session['Role'] == 'Admin':
             list_appointmentgrooming = AppointmentGrooming.objects.all().order_by('-id')
@@ -114,6 +120,10 @@ def list_appointmentgrooming(request):
 
             list_ditolak = AppointmentGrooming.objects.filter(status='Ditolak').order_by('-id')
 
+            list_dibatalkan = AppointmentGrooming.objects.filter(status='Dibatalkan').order_by('-id')
+
+            list_selesai = AppointmentGrooming.objects.filter(status='Selesai').order_by('-id')
+
         else:
             context = {
             'error_message': 'Akses Ditolak!'}
@@ -123,6 +133,8 @@ def list_appointmentgrooming(request):
             'list_disetujui': list_disetujui,
             'list_konfirmasi': list_konfirmasi,
             'list_ditolak': list_ditolak,
+            'list_dibatalkan': list_dibatalkan,
+            'list_selesai': list_selesai,
             'username': my_username,
         }
         return render(request, 'list_appointmentgrooming.html', context)

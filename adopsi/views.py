@@ -161,7 +161,8 @@ def read_adopsi(request, hewan_id):
                     for i in reg_adopsi_filtered:                         
                          if i.customer == customer: # Restrict button daftar adopsi untuk Customer yang telah mendaftar????
                             button_bool = 1 
-                        
+                     
+
 
                 for i in reg_adopsi_filtered:  
                     print(i.id)

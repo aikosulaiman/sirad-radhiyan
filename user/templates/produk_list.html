@@ -134,7 +134,9 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{% if produk.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
                                 <td class="text-center">
                                     <a class="btn btn-info" href="/user/update-produk/{{ produk.id }}">Update</a>
-                                    <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
+                                    {% if produk.id not in paket_id_all%}
+                                        <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -165,7 +167,9 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{% if layanan.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
                                 <td class="text-center">
                                     <a class="btn btn-info" href="/user/update-produk/{{ layanan.id }}">Update</a>
-                                    <a class="btn btn-danger" href="/user/delete-produk/{{ layanan.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus layanan ini?')">Delete</a>
+                                    {% if layanan.id not in layanan_id_all %}
+                                        <a class="btn btn-danger" href="/user/delete-produk/{{ layanan.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus layanan ini?')">Delete</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}

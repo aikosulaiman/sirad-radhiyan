@@ -126,6 +126,9 @@
 <head>
     <title>Detail Adopsi</title>
     <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </head>
 <div class="container">
     <!-- Outer Row -->
@@ -248,7 +251,7 @@
                     <!-- Tabel List Pendaftar Adopsi untuk Karyawan -->
                     {% if request.session.Role == 'Karyawan' %}
                     <div class="row justify-content-center">
-                        <!-- <div class="col-md-8"> -->
+                        <div class="col-md-12">
                             <div class="card" style="padding-left: 50px;">
                                 <div class="card-body">
                                 <div class="row mt-4">
@@ -277,6 +280,7 @@
                                                     <td style="font-family: 'Poppins', sans-serif;">{{ i.customer.no_telepon }}</td>
                                                     <td style="font-family: 'Poppins', sans-serif;">{{ i.date }}</td>
                                                     <td class="text-center">
+                                                        <button class="btn btn-info" onclick="showReason('{{ i.alasan }}')">Detail Alasan</button>
                                                         {% if i.status == 'Menunggu konfirmasi' and  i.hewan.status == 'Belum diadopsi' %}
                                                             <a href="/adopsi/approve-adopsi/{{ i.hewan.hewan_id }}/{{ i.id }}">
                                                                 <button class="btn btn-info" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI adopsi hewan ini?')">Setujui</button>
@@ -294,11 +298,42 @@
                                                 {% endfor %}
                                             </tbody>
                                         </table>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="reasonModalLabel">Detail Alasan</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p id="reasonContent"></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function showReason(alasan) {
+                                                document.getElementById('reasonContent').innerHTML = alasan;
+                                                $('#reasonModal').modal('show');
+                                            }
+                                        </script>
+                                        <!-- <script>
+                                            function showReason(alasan) {
+                                                alert('Alasan: ' + alasan);
+                                            }
+                                        </script> -->
                                     {% else %}
                                     <div class="row mt-4">
                                         <label class="col-sm-4 text-left" style="font-style: italic; color: #107bef;">Belum ada pendaftar.</label>
                                     </div>
-                            
+                                    
                         {% endif %} {% endif %}
                         </div></div></div>
                 </div>

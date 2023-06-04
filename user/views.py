@@ -1,6 +1,7 @@
 import uuid
 from django.shortcuts import render
 from .models import User, Produk, Customer
+from appointmentgrooming.models import AppointmentGrooming
 from .forms import UserForm, CustomerForm, ProdukForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError, connection
@@ -176,12 +177,37 @@ def customer_registration(request):
     return render(request, 'customer_registration.html', response)
 
 def list_produk(request):
+    cursor = connection.cursor()
+    response = {}
+
     if is_authenticated(request):
         if request.session['Role'] == 'Admin':
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
             layanan = Produk.objects.filter(jenis="Layanan")
             produk = Produk.objects.filter(jenis="Produk") 
+            
+            # Fetch all id paket (produk)
+            cursor.execute("""
+            SET SEARCH_PATH TO PUBLIC;
+            SELECT paket_id 
+            FROM appointmentgrooming_appointmentgrooming;
+            """)
+            paket_id = cursor.fetchall()
+            paket_id_all = [x[0] for x in paket_id]
 
-            response = {'layanan':layanan, 'produk':produk}
+            # Fetch all id layanan tambahan (layanan)
+            cursor.execute("""
+            SET SEARCH_PATH TO PUBLIC;
+            SELECT produk_id 
+            FROM appointmentgrooming_appointmentgrooming_layanan_tambahan;
+            """)
+            layanan_id = cursor.fetchall()
+            layanan_id_all = [x[0] for x in layanan_id]
+    
+            cursor.close()
+
+            
+            response = {'layanan':layanan, 'produk':produk, 'paket_id_all':paket_id_all, 'layanan_id_all':layanan_id_all}
             return render(request, 'produk_list.html', response)
         else:
             context = {
