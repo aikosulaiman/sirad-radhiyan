@@ -102,6 +102,30 @@
 {% endif %}
 <br><br>
 
+<style>
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: none;
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        z-index: 10000;
+        display: none;
+    }
+</style>
+
 <head>
     <title>Detail Appointment Grooming</title>
     <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
@@ -145,17 +169,43 @@
                                                 border: 1px solid greenyellow; 
                                                 padding: 3px; 
                                                 border-radius: 10px;">{{apptgrooming.0.3}}</p>
-                                            {% else %}
+                                            {% elif apptgrooming.0.3 == 'Ditolak' %}
                                                 <p style="text-align: center; 
                                                 font-weight: bold; 
                                                 color: white;
                                                 background-color:red; 
                                                 border: 1px solid red; 
                                                 padding: 3px; 
-                                                border-radius: 10px;">{{apptgrooming.0.3}}</p>               
+                                                border-radius: 10px;">{{apptgrooming.0.3}}</p>  
+                                            {% elif apptgrooming.0.3 == 'Dibatalkan' %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                color: white;
+                                                background-color:darkred; 
+                                                border: 1px solid darkred; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptgrooming.0.3}}</p> 
+                                            {% elif apptgrooming.0.3 == 'Selesai' %}
+                                                <p style="text-align: center; 
+                                                font-weight: bold; 
+                                                color: white;
+                                                background-color:dodgerblue; 
+                                                border: 1px solid dodgerblue; 
+                                                padding: 3px; 
+                                                border-radius: 10px;">{{apptgrooming.0.3}}</p>           
                                             {% endif %}
                                         </div>
                                     </div>
+                                        {% if apptgrooming.0.3 == 'Ditolak' %} 
+                                                <div class="form-group">
+                                                    <div class="row mt-2">
+                                                        <label class="col-sm-4 text-left">Alasan Penolakan:</label>
+                                                        <div class="col-sm-8 text-left">
+                                                            <label style="color: #F8241C;">{{apptgrooming.0.8}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                        {% endif %}
                                     <div class="row mt-2">
                                         <div class="col-sm-8 text-left">                                                                 
                                                 <p style="text-align: center; 
@@ -277,7 +327,7 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4 text-left"><i class="fa-solid fa-shower"></i>&nbsp;&nbsp;&nbsp;Paket Grooming:</label>
                                             <div class="col-sm-8 text-left">
-                                                <label for="title"><b>{{paket.nama}}</b></label><br><label>Rp{{paket.harga}}</label>
+                                                <label for="title"><b>{{nama_paket}}</b></label><br><label>Rp{{harga_paket}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -285,13 +335,14 @@
                                         <div class="row mt-4">
                                             <label class="col-sm-4 text-left"><i class="fa-solid fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Layanan Tambahan:</label>
                                             {% if tambahan %} 
-                                                {% for i in tambahan %}
+                                                {% for item in tambahan %}
                                                     {% if forloop.counter > 1 %} 
                                                         <label class="col-sm-4 text-left"></label>
                                                     {% endif %}
-                                                <div class="col-sm-8 text-left">
-                                                    <label for="title"><b>{{ forloop.counter }}. {{i.nama}}</b></label><br><label>Rp{{i.harga}}</label>
-                                                </div>
+                                                    <div class="col-sm-8 text-left">
+                                                        <label for="title"><b>{{ forloop.counter }}. {{ item.nama }}</b></label><br>
+                                                        <label>Rp{{ item.harga }}</label>
+                                                    </div>
                                                 {% endfor %}
                                             {% else %}
                                                 <div class="col-sm-8 text-left">
@@ -300,6 +351,7 @@
                                             {% endif %}
                                         </div>
                                     </div>
+                                    
                                     
                                     <div class="form-group">
                                         <div class="row mt-4">
@@ -353,7 +405,7 @@
                                         Anda dapat menyetujui atau menolak appointment ini.</i>
                                 </div>
                                 {% endif %}
-                            {% else %}
+                            {% elif apptgrooming.0.3 == 'Ditolak' %}
                                 {% if request.session.Role == 'Customer' %}
                                 <div class="row mt-8">
                                     <i class="col-sm-12 text-left" style="color: #17177e;">
@@ -365,6 +417,23 @@
                                         Appointment ini telah ditolak oleh groomer.</i>
                                 </div>
                                 {% endif %}
+                            {% elif apptgrooming.0.3 == 'Dibatalkan' %}
+                                {% if request.session.Role == 'Customer' %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah dibatalkan, silakan membuat appointment baru</i>
+                                </div>
+                                {% else %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah dibatalkan oleh customer.</i>
+                                </div>
+                                {% endif %}
+                            {% elif apptgrooming.0.3 == 'Selesai' %}
+                                <div class="row mt-8">
+                                    <i class="col-sm-12 text-left" style="color: #17177e;">
+                                        Appointment ini telah selesai dilakukan</i>
+                                </div>
                             {% endif %}
                         </div>
                         </div>
@@ -387,11 +456,72 @@
                                     <a href="/appointmentgrooming/approve-appointmentgrooming/{{ apptgrooming.0.0 }}">
                                         <button class="btn btn-primary mr-3" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYETUJUI appointment grooming hewan ini?')">Setujui</button>
                                     </a>
-                                    <a href="/appointmentgrooming/disapprove-appointmentgrooming/{{ apptgrooming.0.0 }}">
-                                        <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment grooming hewan ini?')">Tidak Setujui</button>
-                                    </a>
+
+                                    
+                                    <button class="btn btn-danger" onclick="showRejectionDialog()">Tidak Setujui</button>
+
+                                    <form id="rejectionForm" method="POST">
+                                    {% csrf_token %}
+                                    <div class="overlay" id="overlay"></div>
+                                    <div id="rejectionDialog" class="modal">
+                                        <div class="modal-content text-left" style="padding: 20px;">
+                                        <div class="col-md-12 text-right">
+                                            <span class="close" onclick="closeRejectionDialog()">&times;</span>
+                                        </div>
+                                        <h2>Alasan Penolakan</h2>
+                                        <input type="text" id="alasan" name="alasan" placeholder="Tulis alasan penolakan di sini" style="padding: 20px;">
+                                        <br>
+                                        <button class="btn btn-danger" onclick="submitRejection(event)">Tidak Setujui</button>
+                                        </div>
+                                    </div>
+                                    </form>
+
+                                    <script>
+                                    function showRejectionDialog() {
+                                    var rejectionDialog = document.getElementById("rejectionDialog");
+                                    var overlay = document.getElementById("overlay");
+                                    rejectionDialog.style.display = "block";
+                                    overlay.style.display = "block";
+                                    }
+
+                                    function closeRejectionDialog() {
+                                    var rejectionDialog = document.getElementById("rejectionDialog");
+                                    var overlay = document.getElementById("overlay");
+                                    rejectionDialog.style.display = "none";
+                                    overlay.style.display = "none";
+                                    }
+
+                                    function submitRejection(event) {
+                                    event.preventDefault(); // Mencegah pengiriman formulir
+
+                                    var reasonInput = document.getElementById("alasan").value;
+                                    if (reasonInput === "") {
+                                        alert("Mohon isi alasan penolakan.");
+                                    } else {
+                                        var confirmation = confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment grooming hewan ini?');
+                                        if (confirmation) {
+                                        var form = document.getElementById("rejectionForm");
+                                        form.action = "{% url 'disapprove_appointmentgrooming' apptgrooming_id %}";
+                                        form.submit();
+                                        }
+                                    }
+                                    }
+                                    </script>
+                                    
+
                                 
                                 {% endif %}
+                            {% elif apptgrooming.0.3 == 'Disetujui' %}
+                                {% if request.session.Role == 'Customer' %}
+                                <a href="/appointmentgrooming/delete-appointmentgrooming/{{ apptgrooming.0.0 }}">
+                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin MEMBATALKAN appointment grooming hewan ini?')">Batalkan Appointment</button>
+                                </a>
+                                {% elif request.session.Role == 'Groomer' %}
+                                <a href="/appointmentgrooming/finished-appointmentgrooming/{{ apptgrooming.0.0 }}">
+                                    <button class="btn btn-primary" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYELESAIKAN appointment grooming hewan ini?')">Selesaikan Appointment</button>
+                                </a>
+                                {% endif %}
+                                
                             {% endif %}
                         </div>
                         </div>

@@ -6,6 +6,8 @@ STATUS_CHOICES = [
     ('Menunggu Konfirmasi', 'Menunggu Konfirmasi'),
     ('Disetujui', 'Disetujui'),
     ('Ditolak', 'Ditolak'),
+    ('Dibatalkan', 'Dibatalkan'),
+    ('Selesai', 'Selesai'),
 ]
 
 class AppointmentGrooming(models.Model):
@@ -17,6 +19,10 @@ class AppointmentGrooming(models.Model):
     paket = models.ForeignKey(Produk, on_delete=models.CASCADE, related_name='paket_appointmentgrooming')
     layanan_tambahan = models.ManyToManyField(Produk, related_name='layanan_tambahan_appointmentgrooming', blank=True)
     total_biaya = models.IntegerField()
+    alasan = models.CharField(max_length=500, null=True, default='')
+    nama_paket = models.CharField(max_length=100, default='')
+    harga_paket = models.IntegerField(default=0)
+    layanan_tambahan_list = models.JSONField(blank=True, null=True)
 
     def save(self, *args, **kwargs):   
         # check if appointment_id has been set, otherwise generate it
@@ -33,5 +39,11 @@ class AppointmentGrooming(models.Model):
                 next_number = 1
 
             self.appointment_id = f'APTGRM{next_number:04d}'
+
+        if self.paket:
+            self.nama_paket = self.paket.nama
+            self.harga_paket = self.paket.harga
+
+        
 
         super().save(*args, **kwargs)

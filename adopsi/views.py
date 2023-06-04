@@ -161,7 +161,8 @@ def read_adopsi(request, hewan_id):
                     for i in reg_adopsi_filtered:                         
                          if i.customer == customer: # Restrict button daftar adopsi untuk Customer yang telah mendaftar????
                             button_bool = 1 
-                        
+                     
+
 
                 for i in reg_adopsi_filtered:  
                     print(i.id)
@@ -202,6 +203,7 @@ def register_adopsi(request, hewan_id):
                     date = datetime.now()
                     status = "Menunggu konfirmasi"
                     id = shortuuid.uuid()[:6]
+                    alasan = request.POST.get('alasan')
 
                     register_adopsi = Register_Adopsi(customer=customer, hewan=adopsi, date=date)
                     # register_adopsi.save()
@@ -209,9 +211,9 @@ def register_adopsi(request, hewan_id):
                     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
                     cursor.execute("""
-                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted)
-                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');
-                        """.format(id, date, customer.id, hewan_id, status, date)) 
+                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted, alasan)
+                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');
+                        """.format(id, date, customer.id, hewan_id, status, date, alasan)) 
                     
                     reg_event_filtered = Register_Adopsi.objects.filter(hewan=adopsi)
                     jumlah_pendaftar= reg_event_filtered.count()
