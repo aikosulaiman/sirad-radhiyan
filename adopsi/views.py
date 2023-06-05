@@ -42,7 +42,10 @@ def create_adopsi(request):
         return HttpResponseRedirect("/adopsi")
 
 def list_hewan_adopsi(request):
-    all_hewan = Adopsi.objects.all().values
+    if request.session['Role'] == 'Customer':
+        all_hewan = Adopsi.objects.filter(status="Belum diadopsi")
+    else:
+        all_hewan = Adopsi.objects.all().values
 
     context = {
         'all_hewan': all_hewan,
@@ -203,6 +206,7 @@ def register_adopsi(request, hewan_id):
                     date = datetime.now()
                     status = "Menunggu konfirmasi"
                     id = shortuuid.uuid()[:6]
+                    alasan = request.POST.get('alasan')
 
                     register_adopsi = Register_Adopsi(customer=customer, hewan=adopsi, date=date)
                     # register_adopsi.save()
@@ -210,9 +214,9 @@ def register_adopsi(request, hewan_id):
                     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
                     cursor.execute("""
-                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted)
-                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');
-                        """.format(id, date, customer.id, hewan_id, status, date)) 
+                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted, alasan)
+                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');
+                        """.format(id, date, customer.id, hewan_id, status, date, alasan)) 
                     
                     reg_event_filtered = Register_Adopsi.objects.filter(hewan=adopsi)
                     jumlah_pendaftar= reg_event_filtered.count()
