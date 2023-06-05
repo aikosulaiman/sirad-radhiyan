@@ -21,6 +21,7 @@ def create_adopsi(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Karyawan':
             form = AdopsiForm()
+            username = request.session['Username']
             if request.method == 'POST':
                 form = AdopsiForm(request.POST or None)
                 if form.is_valid():
@@ -33,7 +34,7 @@ def create_adopsi(request):
                     print("FORM ERROR:\n")
                     print(form.errors)
                     print("\nItu errornya di atas")
-            return render(request, 'create_adopsi.html', {'form': form})
+            return render(request, 'create_adopsi.html', {'form': form, 'username': username})
         else:
             context = {
             'error_message': 'Access denied!'}
@@ -47,8 +48,10 @@ def list_hewan_adopsi(request):
     else:
         all_hewan = Adopsi.objects.all().values
 
+    username = request.session['Username']
     context = {
         'all_hewan': all_hewan,
+        'username': username
     }
 
     return render(request, 'list_hewan_adopsi.html', context)
@@ -67,10 +70,12 @@ def update_adopsi(request, user_id):
     user = cursor.fetchall()
     list_jenis = ["Kucing", "Anjing", "Kelinci"]
         
+    username = request.session['Username']
     response = {
             'user_id':user_id,
             'user':user,
-            'list_jenis': list_jenis,}
+            'list_jenis': list_jenis,
+            'username': username}
     cursor.close()
     return render(request, 'update_adopsi.html', response)
 
@@ -103,10 +108,12 @@ def update_adopsi_handler(request, user_id):
         WHERE id = '{0}' ;
         """.format(user_id))
         user = cursor.fetchall()
+        username = request.session['Username']
         response = {
             'error_message': error_message,
             'user':user,
-            'user_id': user_id}
+            'user_id': user_id,
+            'username': username}
         return render(request, 'update_adopsi.html', response)
 
         
@@ -174,6 +181,7 @@ def read_adopsi(request, hewan_id):
                     print(i.id)
                 response['reg_adopsi'] = reg_adopsi_filtered
                 response['button_bool'] = button_bool
+                response['username'] = request.session['Username']
                 return render(request, 'read_adopsi.html', response)
     else:
         return HttpResponseRedirect("/login")
@@ -201,9 +209,11 @@ def register_adopsi(request, hewan_id):
                 except Adopsi.DoesNotExist:
                     return redirect('list_adopsi')
 
+                username = request.session['Username']
                 response = {
                     'adopsi': adopsi,
-                    'customer': customer
+                    'customer': customer,
+                    'username': username
                 }
                 if request.method == 'POST':
                     date = datetime.now()
@@ -261,10 +271,11 @@ def list_adopsi_customer(request):
     #     list_adopsi_customer.append(hewan)
     #     list_adopsi_status.append(i.status)
 
-    
+    username = request.session['Username']
     context = {
         # 'list_adopsi_customer': list_adopsi_customer,
-        'reg_adopsi': reg_adopsi_filtered
+        'reg_adopsi': reg_adopsi_filtered,
+        'username': username
     }
 
     return render(request, 'list_adopsi_customer.html', context)

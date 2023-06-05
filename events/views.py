@@ -20,6 +20,7 @@ def is_authenticated(request):
 def create_event(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Karyawan':
+            username = request.session['Username']
             form = EventForm()
             if request.method == 'POST':
                 form = EventForm(request.POST or None)
@@ -28,7 +29,7 @@ def create_event(request):
                     success_message = 'Berhasil membuat Event!'
                     return render(request, 'success_page.html', {'success_message': success_message})
 
-            return render(request, 'create_event.html', {'form': form})
+            return render(request, 'create_event.html', {'form': form, 'username': username})
         else:
             context = {
             'error_message': 'Akses Ditolak!'}
@@ -55,11 +56,13 @@ def list_event(request):
 
     all_events = Event.objects.all().values
 
+    username = request.session['Username']
     context = {
         'all_events': all_events,
         'past_events': past_events,
         'today_events': today_events,
         'upcoming_events': upcoming_events,
+        'username': username
     }
 
     if request.session['Role'] == 'Customer':
@@ -109,6 +112,7 @@ def read_event(request, event_id):
 
                 response['event'] = event
                 response['event_id'] = event_id
+                response['username'] = uname
                 
                 # Fetch data role user yang sedang login
                 role = request.session['Role']
@@ -157,7 +161,8 @@ def register_event(request, event_id):
 
                 response = {
                     'event': event,
-                    'customer': customer
+                    'customer': customer,
+                    'username': uname
                 }
                 if request.method == 'POST':
                     date = datetime.now()
@@ -232,7 +237,8 @@ def tiket_event(request, tiket_id, customer_id):
                 response = {
                 'tiket_event': tiket_event,
                 'event': event,
-                'customer': customer
+                'customer': customer,
+                'username': uname
                 }
             
                 cursor.close()
@@ -275,6 +281,7 @@ def update_event(request, event_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
+    username = request.session['Username']
     reg_event_filtered = Register_Event.objects.filter(event_id=event_id)
     if reg_event_filtered:
         context = {
@@ -291,7 +298,8 @@ def update_event(request, event_id):
             
         response = {
                 'event_id':event_id,
-                'event':event,}
+                'event':event,
+                'username': username}
         cursor.close()
         return render(request, 'update_event.html', response)
     
@@ -331,10 +339,12 @@ def update_event_handler(request, event_id):
                 WHERE id = '{0}' ;
                 """.format(event_id))
                 event = cursor.fetchall()
+                username = request.session['Username']
                 response = {
                     'error_message': error_message,
                     'event':event,
-                    'event_id': event_id}
+                    'event_id': event_id,
+                    'username': username}
                 cursor.close()
                 
                 return render(request, 'update_event.html', response)

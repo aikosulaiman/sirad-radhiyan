@@ -176,6 +176,7 @@ def list_ditolak(request):
 
 def update_appointment(request, id):
     cursor = connection.cursor()
+    username = request.session['Username']
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
     # Mencari user
@@ -194,7 +195,8 @@ def update_appointment(request, id):
             'appointmentdokter':appointmentdokter,
             'listDokter': list_dokter,
             'listHewan': list_hewan,
-            'user_id': my_uuid,}
+            'user_id': my_uuid,
+            'username': username}
     cursor.close()
     return render(request, 'update_appointmentdokter.html', response)
 
@@ -227,10 +229,12 @@ def update_appointment_handler(request, id):
             WHERE id = '{0}' ;
             """.format(id))
             appointmentdokter = cursor.fetchall()
+            username = request.session['Username']
             response = {
                 'error_message': error_message,
                 'appointmentdokter':appointmentdokter,
-                'id': id}
+                'id': id,
+                'username': username}
             cursor.close()
                 
             return render(request, 'update_appointmentdokter.html', response)
@@ -261,6 +265,7 @@ def read_appointmentdokter(request, apptdokter_id):
             response['hewan'] = hewan
             role = request.session['Role']
             response['role'] = role
+            response['username'] = uname
 
             return render(request, 'read_appointmentdokter.html', response)
         else:
@@ -331,7 +336,7 @@ def delete_appointmentdokter(request, apptdokter_id):
         if request.session['Role'] == 'Customer':
             apptdokter = AppointmentDokter.objects.get(appointment_id=apptdokter_id)
             
-            if apptdokter.status == "Menunggu Konfirmasi" or apptgrooming.status == "Disetujui":
+            if apptdokter.status == "Menunggu Konfirmasi" or apptdokter.status == "Disetujui":
                 status = "Dibatalkan"
                 cursor = connection.cursor()
                 cursor.execute("SET SEARCH_PATH TO PUBLIC;")
@@ -372,12 +377,14 @@ def update_appointmentdokter(request, apptdokter_id):
     list_dokter = User.objects.filter(role='Dokter')
     list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
         
+    username = request.session['Username']
     response = {
             'apptdokter_id':apptdokter_id,
             'appointmentdokter':appointmentdokter,
             'listDokter': list_dokter,
             'listHewan': list_hewan,
-            'user_id': my_uuid,}
+            'user_id': my_uuid,
+            'username': username}
     cursor.close()
     return render(request, 'update_appointmentdokter.html', response)
 
@@ -410,10 +417,12 @@ def update_appointment_handler(request, apptdokter_id):
             WHERE appointment_id = '{0}' ;
             """.format(apptdokter_id))
             appointmentdokter = cursor.fetchall()
+            username = request.session['Username']
             response = {
                 'error_message': error_message,
                 'appointmentdokter':appointmentdokter,
-                'apptdokter_id': apptdokter_id}
+                'apptdokter_id': apptdokter_id,
+                'username': username}
             cursor.close()
                 
             return render(request, 'update_appointmentdokter.html', response)

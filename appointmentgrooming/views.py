@@ -225,6 +225,7 @@ def read_appointmentgrooming(request, apptgrooming_id):
                     # Fetch data role user yang sedang login
                     role = request.session['Role']
                     response['role'] = role
+                    response['username'] = uname
 
                     return render(request, 'read_appointmentgrooming.html', response)
                 else:
@@ -410,7 +411,8 @@ def update_appointmentgrooming(request, apptgrooming_id):
                     'list_hewan': list_hewan,
                     'list_paket': list_paket,
                     'list_tambahan': list_tambahan,
-                    'appointment_layanan_tambahan': appointment_layanan_tambahan
+                    'appointment_layanan_tambahan': appointment_layanan_tambahan,
+                    'username': uname
                 }
                 cursor.close()
                 return render(request, 'update_appointmentgrooming.html', response)
