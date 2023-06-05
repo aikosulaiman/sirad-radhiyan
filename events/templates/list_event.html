@@ -57,46 +57,49 @@
 {% if request.session.Role == 'Karyawan' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;">RAD</span>
-  </a>
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Event
-        </a>
+            Event
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/event/create-event">Create Event</a>
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Adopsi
-        </a>
+            Adopsi
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/adopsi/create-adopsi">Create Adopsi</a>
-                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Statistik
-        </a>
+            Statistik
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
                     <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
                     <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
                     <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/list-customer">VIP Approval</a>
             </li>
         </ul>
         <ul class="navbar-nav">
@@ -112,22 +115,22 @@
 {% endif %} {% if request.session.Role == 'Admin' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;">RAD</span>
-  </a>
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Users
-        </a>
+            Users
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/user/add-user">Create User</a>
                     <a class="dropdown-item" href="/user/list-user">List User</a>
@@ -135,41 +138,41 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dokter
-        </a>
+            Dokter
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Grooming
-        </a>
+            Grooming
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Layanan Master Data</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/user/list-produk">Layanan Master Data</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Event
-        </a>
+            Event
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Adopsi
-        </a>
+            Adopsi
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Statistik
-        </a>
+            Statistik
+          </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
                     <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
@@ -190,7 +193,7 @@
 </nav>
 {% endif %} {% if request.session.Role == 'Customer' %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
-    <a class="navbar-brand" style="color:#20a9f8;
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
@@ -214,7 +217,7 @@
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
-                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -222,8 +225,8 @@
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -231,7 +234,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -239,7 +242,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -253,7 +256,9 @@
         </ul>
     </div>
 </nav>
+
 {% endif %}
+<br>
 <br>
 
 <head>

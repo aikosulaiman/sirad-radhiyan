@@ -1,6 +1,6 @@
 {% extends 'static_event.html' %} {% block content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
-    <a class="navbar-brand" style="color:#20a9f8;
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
@@ -24,7 +24,7 @@
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
-                    <a class="dropdown-item" href="/appointmentdokter">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -32,8 +32,8 @@
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -41,7 +41,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -49,7 +49,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/adopsi">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -63,6 +63,8 @@
         </ul>
     </div>
 </nav>
+<br>
+<br>
 
 <style>
     .table-label {
@@ -85,7 +87,7 @@
                 font-size: 24px;
                 font-weight: 600;">Form Pendaftaran Event</h2>
                 <div class="col-md-8">
-                        <a href="/event" class="text-left">
+                        <a href="/event/" class="text-left">
                             <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; List Event</p>
                         </a>
                     </div>

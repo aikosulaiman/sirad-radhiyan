@@ -53,6 +53,7 @@ def list_hewan_adopsi(request):
 
     return render(request, 'list_hewan_adopsi.html', context)
 
+
 def update_adopsi(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
@@ -64,10 +65,12 @@ def update_adopsi(request, user_id):
     WHERE hewan_id = '{0}' ;
     """.format(user_id))
     user = cursor.fetchall()
+    list_jenis = ["Kucing", "Anjing", "Kelinci"]
         
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'list_jenis': list_jenis,}
     cursor.close()
     return render(request, 'update_adopsi.html', response)
 

@@ -229,10 +229,13 @@ def update_hewan(request, user_id):
     WHERE hewan_id = '{0}' ;
     """.format(user_id))
     user = cursor.fetchall()
+    list_jenis = ["Kucing", "Anjing", "Kelinci"]
         
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'list_jenis': list_jenis,}
+            
     cursor.close()
     return render(request, 'update_hewan.html', response)
 
