@@ -242,6 +242,7 @@ def update_appointment_handler(request, id):
 def read_appointmentdokter(request, apptdokter_id):
     response = {}
     if is_authenticated(request):
+        uname = request.session['Username']
         appointment_dokter = AppointmentDokter.objects.get(appointment_id=apptdokter_id)
         print(appointment_dokter.appointment_id)
         print(appointment_dokter.pemilik_id)
@@ -255,7 +256,6 @@ def read_appointmentdokter(request, apptdokter_id):
         customer_login = Customer
         if request.session['Role'] == 'Customer':
             # Fetch object Customer login
-            uname = request.session['Username']
             user = User.objects.get(username=uname)
             customer_login = Customer.objects.get(user_ptr=user)
         if customer_login.id == appointment_dokter.pemilik_id or request.session['Role'] == 'Dokter': 

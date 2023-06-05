@@ -165,6 +165,7 @@ def read_appointmentgrooming(request, apptgrooming_id):
     response = {}
     
     if is_authenticated(request):
+            uname = request.session['Username']
             if request.method != "POST":
                 cursor.execute("SET SEARCH_PATH TO PUBLIC;")
                 if len(request.session.keys()) == 0:
@@ -191,7 +192,6 @@ def read_appointmentgrooming(request, apptgrooming_id):
                 customer_login = Customer
                 if request.session['Role'] == 'Customer':
                     # Fetch object Customer login
-                    uname = request.session['Username']
                     user = User.objects.get(username=uname)
                     customer_login = Customer.objects.get(user_ptr=user)
 
