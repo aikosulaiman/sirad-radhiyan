@@ -178,8 +178,7 @@ def customer_registration(request):
             return HttpResponseRedirect('/login')
         else:
             form.add_error(None, "Username or email already exists, please choose another one!")
-    response = {'form': form,
-                'username':request.session['Username']}
+    response = {'form': form,}
     return render(request, 'customer_registration.html', response)
 
 def list_produk(request):

@@ -40,7 +40,7 @@ def create_adopsi(request):
             'error_message': 'Access denied!'}
             return render(request, 'adopt_error.html', context)
     else:
-        return HttpResponseRedirect("/adopsi")
+        return HttpResponseRedirect("/adopsi/")
 
 def list_hewan_adopsi(request):
     if request.session['Role'] == 'Customer':
@@ -118,7 +118,7 @@ def update_adopsi_handler(request, user_id):
 
         
     cursor.close()
-    return HttpResponseRedirect('/adopsi')
+    return HttpResponseRedirect('/adopsi/')
 
 def delete_adopsi(request, hewan_id):
     if is_authenticated(request):
@@ -126,13 +126,13 @@ def delete_adopsi(request, hewan_id):
             hewan_adopsi = Adopsi.objects.get(hewan_id=hewan_id)
 
             hewan_adopsi.delete()
-            return HttpResponseRedirect('/adopsi')
+            return HttpResponseRedirect('/adopsi/')
         else:
             context = {
             'error_message': 'Akses Ditolak!'}
             return render(request, 'error_page.html', context)
     else:
-        return HttpResponseRedirect("/adopsi")
+        return HttpResponseRedirect("/adopsi/")
 
 def read_adopsi(request, hewan_id):
     cursor = connection.cursor()
@@ -255,7 +255,7 @@ def register_adopsi(request, hewan_id):
             'error_message': 'Akses Ditolak!'}
             return render(request, 'adopt_error.html', context)
     else:
-        return HttpResponseRedirect("/adopsi")
+        return HttpResponseRedirect("/adopsi/")
 
 
 def list_adopsi_customer(request):

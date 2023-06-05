@@ -82,7 +82,7 @@ def read_event(request, event_id):
     cursor = connection.cursor()
     response = {}
     uname = request.session['Username']
-    
+
     if is_authenticated(request):
             if request.method != "POST":
                 cursor.execute("SET SEARCH_PATH TO PUBLIC;")
@@ -268,7 +268,7 @@ def delete_event(request, event_id):
                 return render(request, 'error_page.html', context)
             else:
                 event.delete()
-                return HttpResponseRedirect('/event')
+                return HttpResponseRedirect('/event/')
         else:
             context = {
             'error_message': 'Akses Ditolak!'}
