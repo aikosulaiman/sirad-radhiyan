@@ -81,6 +81,7 @@ def list_event(request):
 def read_event(request, event_id):
     cursor = connection.cursor()
     response = {}
+    uname = request.session['Username']
     
     if is_authenticated(request):
             if request.method != "POST":
@@ -89,7 +90,6 @@ def read_event(request, event_id):
                         return redirect('/')
                 # Ambil isVIP value Customer untuk keperluan restict button daftar event VIP
                 if request.session['Role'] == 'Customer':
-                    uname = request.session['Username']
                     cursor.execute("SET search_path TO public")
                     cursor.execute("""
                     SELECT user_customer.is_vip FROM user_customer
