@@ -449,7 +449,7 @@
                                         if (reasonInput === "") {
                                             alert("Mohon isi alasan penolakan.");
                                         } else {
-                                            var confirmation = confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment grooming hewan ini?');
+                                            var confirmation = confirm('⚠️ Apakah Anda yakin ingin TIDAK MENYETUJUI appointment dokter hewan ini?');
                                             if (confirmation) {
                                                 var form = document.getElementById("rejectionForm");
                                                 form.action = "{% url 'disapprove_appointmentdokter' apptdokter.appointment_id %}";
@@ -462,11 +462,11 @@
 
                                 {% endif %} {% elif apptdokter.status == 'Disetujui' %} {% if request.session.Role == 'Customer' %}
                                 <a href="/appointmentdokter/delete-appointmentdokter/{{ apptdokter.appointment_id }}">
-                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin MEMBATALKAN appointment grooming hewan ini?')">Batalkan Appointment</button>
+                                    <button class="btn btn-danger" onclick="return confirm('⚠️ Apakah Anda yakin ingin MEMBATALKAN appointment dokter hewan ini?')">Batalkan Appointment</button>
                                 </a>
                                 {% elif request.session.Role == 'Dokter' %}
                                 <a href="/appointmentdokter/finished-appointmentdokter/{{ apptdokter.appointment_id }}">
-                                    <button class="btn btn-primary" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYELESAIKAN appointment grooming hewan ini?')">Selesaikan Appointment</button>
+                                    <button class="btn btn-primary" onclick="return confirm('⚠️ Apakah Anda yakin ingin MENYELESAIKAN appointment dokter hewan ini?')">Selesaikan Appointment</button>
                                 </a>
                                 {% endif %} {% endif %}
                             </div>
