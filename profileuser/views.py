@@ -293,16 +293,31 @@ def update_hewan_handler(request, user_id):
 def delete_hewan(request, hewan_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-
-    # Mencari user
-    cursor.execute("""
-    DELETE
-    FROM user_hewan
-    WHERE hewan_id = '{0}' ;
-    """.format(hewan_id))
-    cursor.close()
-    success_message = 'Hewan ini berhasil dihapus!'
-    response = {
-            'success_message': 'Hewan ini berhasil dihapus!',
+    try:
+        # Mencari user
+        cursor.execute("""
+        DELETE
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(hewan_id))
+        cursor.close()
+        success_message = 'Hewan ini berhasil dihapus!'
+        response = {
+                'success_message': 'Hewan ini berhasil dihapus!',
+                'username':request.session['Username']}
+        return render(request, 'delete_success.html', response)
+    except IntegrityError:
+        # If the field is not unique, return an error message
+        success_message = 'Hewan tidak dapat dihapus karena memiliki appointment.'
+        cursor.execute("""
+        SELECT *
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(hewan_id))
+        user = cursor.fetchall()
+        response = {
+            'success_message': success_message,
+            'user':user,
+            'hewan_id': hewan_id,
             'username':request.session['Username']}
-    return render(request, 'delete_success.html', response)
+        return render(request, 'delete_success.html', response)

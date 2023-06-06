@@ -33,7 +33,6 @@ def create_adopsi(request):
                 else:
                     print("FORM ERROR:\n")
                     print(form.errors)
-                    print("\nItu errornya di atas")
             return render(request, 'create_adopsi.html', {'form': form, 'username': username})
         else:
             context = {
@@ -175,10 +174,6 @@ def read_adopsi(request, hewan_id):
                          if i.customer == customer: # Restrict button daftar adopsi untuk Customer yang telah mendaftar????
                             button_bool = 1 
                      
-
-
-                for i in reg_adopsi_filtered:  
-                    print(i.id)
                 response['reg_adopsi'] = reg_adopsi_filtered
                 response['button_bool'] = button_bool
                 response['username'] = request.session['Username']
@@ -233,7 +228,6 @@ def register_adopsi(request, hewan_id):
                     
                     reg_event_filtered = Register_Adopsi.objects.filter(hewan=adopsi)
                     jumlah_pendaftar= reg_event_filtered.count()
-                    print(reg_event_filtered)
                     
                     cursor.execute("""
                     UPDATE adopsi_adopsi

@@ -25,27 +25,14 @@ def create_appointmentdokter(request):
             list_dokter = User.objects.filter(role='Dokter')
             list_hewan = Hewan.objects.filter(pemilik_id=my_uuid)
 
-            print(list_dokter)
-            print(list_hewan)
-
-
             if request.method == 'POST':
                 form = AppointmentDokterForm(request.POST)
                 print(form.errors)
                 if form.is_valid():
                     appointment = form.save(commit=False)
-                    # last_id = AppointmentDokter.objects.order_by('-id').first()
-                    # if last_id:
-                    #     last_id = int(last_id.id[6:])
-                    # else:
-                    #     last_id = 0
-                    # appointment.id = 'APTDOC' + str(last_id + 1).zfill(6)
-                    print(form.cleaned_data)
-                    print('ngetest')
                     hewan = form.cleaned_data['hewan']
                     if hewan:
                         appointment.hewan = hewan
-                    print(hewan)
                     cust_instance = Customer.objects.get(username=request.session["Username"])
                     appointment.pemilik = cust_instance
                     appointment.status = 'Menunggu Konfirmasi'
