@@ -8,14 +8,19 @@ STATUS_CHOICES = [
     ('Belum diadopsi', 'Belum diadopsi'),
     ('Diadopsi', 'Diadopsi'),
 ]
+
+HEWAN_CHOICES = [
+    ('Kucing', 'Kucing'),
+    ('Anjing', 'Anjing'),
+    ('Kelinci', 'Kelinci'),
+]
 class Adopsi(models.Model):
     hewan_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nama = models.CharField(max_length=1000)
-    jenis = models.CharField(max_length=1000)
+    jenis = models.CharField(choices=HEWAN_CHOICES, max_length=50, blank=False, null=False, default='Kucing')
     ras = models.CharField(max_length=1000)
     warna = models.CharField(max_length=1000)
     deskripsi =  models.CharField(max_length=1000)
-    # status =  models.CharField(max_length=50, default="Belum diadopsi")
     status = models.CharField(choices=STATUS_CHOICES, max_length=50, blank=False, null=False, default='Belum diadopsi')
     quantity = models.IntegerField(default=0)
 

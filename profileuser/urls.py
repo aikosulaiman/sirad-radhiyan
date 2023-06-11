@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import index, update_profile, update_profile_handler, update_hewan, update_hewan_handler, read_profile, submit_vip_validation, tambah_hewan, tambah_hewan_handler, delete_hewan
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', index, name='Index'),
@@ -12,4 +13,5 @@ urlpatterns = [
     path('tambah-hewan/<uuid:user_id>', tambah_hewan, name='tambah_hewan'),
     path('tambah-hewan-handler/<uuid:user_id>', tambah_hewan_handler, name='tambah_hewan_handler'),
     path('delete-hewan/<int:hewan_id>', delete_hewan, name='delete_hewan'),
+    path('password/', auth_views.PasswordChangeView.as_view(), name='password'),
 ]
