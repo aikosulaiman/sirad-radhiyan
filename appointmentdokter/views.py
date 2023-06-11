@@ -68,6 +68,9 @@ def list_appointmentdokter(request):
             list_ditolak_customer = AppointmentDokter.objects.filter(status='Ditolak', pemilik_id=my_uuid)
             list_dibatalkan_customer = AppointmentDokter.objects.filter(status='Dibatalkan', pemilik_id=my_uuid)
             list_selesai_customer = AppointmentDokter.objects.filter(status='Selesai', pemilik_id=my_uuid)
+            
+            print(list_appointmentdokter.all)
+            
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
                 'list_disetujui': list_disetujui_customer,
@@ -79,18 +82,17 @@ def list_appointmentdokter(request):
             }
             return render(request, 'listappointmentdok_customer.html', context)
         elif request.session['Role'] == 'Dokter':
-            list_appointmentdokter = AppointmentDokter.objects.filter(dokter_id=my_uuid)
+            list_appointmentdokter = AppointmentDokter.objects.filter(dokter_id=my_uuid).exclude(status='Dibatalkan')
             list_disetujui_dokter = AppointmentDokter.objects.filter(status='Disetujui', dokter_id=my_uuid)
             list_konfirmasi_dokter = AppointmentDokter.objects.filter(status='Menunggu Konfirmasi', dokter_id=my_uuid)
             list_ditolak_dokter = AppointmentDokter.objects.filter(status='Ditolak', dokter_id=my_uuid)
-            list_dibatalkan_dokter = AppointmentDokter.objects.filter(status='Dibatalkan', dokter_id=my_uuid)
+
             list_selesai_dokter = AppointmentDokter.objects.filter(status='Selesai', dokter_id=my_uuid)
             context = {
                 'listAppointmentDokter': list_appointmentdokter,
                 'list_disetujui': list_disetujui_dokter,
                 'list_konfirmasi': list_konfirmasi_dokter,
                 'list_ditolak': list_ditolak_dokter,
-                'list_dibatalkan': list_dibatalkan_dokter,
                 'list_selesai': list_selesai_dokter,
                 'username': my_username,
             }

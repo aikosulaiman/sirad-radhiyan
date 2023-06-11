@@ -85,9 +85,9 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#ditolak">Ditolak</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#dibatalkan">Dibatalkan</a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#selesai">Selesai</a>
             </li>
@@ -183,8 +183,7 @@
             </div>
 
             <div id="disetujui" class="tab-pane fade">
-                <br>
-                {% if list_disetujui %}
+                <br> {% if list_disetujui %}
                 <table id="bootstrapdatatabledisetujui" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
@@ -253,9 +252,8 @@
             </div>
 
             <div id="konfirmasi" class="tab-pane fade">
-                <br>
-                {% if list_konfirmasi %}
-                
+                <br> {% if list_konfirmasi %}
+
                 <table id="bootstrapdatatablekonfirmasi" class="table table-striped table-bordered" width="100%">
                     <thead ">
                         <tr>
@@ -360,7 +358,7 @@
                 {% endif %}
             </div>
 
-            <div id='dibatalkan' class='tab-pane fade'>
+            <!-- <div id='dibatalkan' class='tab-pane fade'>
                 <br>
                 {% if list_dibatalkan %}
                 
@@ -402,7 +400,7 @@
                 {% else %}
                 <p>Belum ada appointment dokter yang dibatalkan.</p>
                 {% endif %}
-            </div>
+            </div> -->
 
             <div id='selesai' class='tab-pane fade'>
                 <br>
