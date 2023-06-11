@@ -227,6 +227,11 @@ def add_produk(request):
             form = ProdukForm()
             if request.method == 'POST':
                 form = ProdukForm(request.POST or None)
+                cursor = connection.cursor()
+                cursor.execute("SET SEARCH_PATH TO PUBLIC;")
+                cursor.execute("""ALTER TABLE user_produk
+                ADD CONSTRAINT add_constraint 
+                UNIQUE (nama);""")
                 if form.is_valid():
                     form.save()
                     return HttpResponseRedirect('/user/list-produk')
