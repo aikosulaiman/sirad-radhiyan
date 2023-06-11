@@ -446,7 +446,31 @@ def update_appointmentgrooming_handler(request, apptgrooming_id):
                 layanan_tambahan = request.POST.getlist('layanan_tambahan')
                 appointment_time = request.POST.get('appointment_time')
 
+                print(appointment.paket.id)
+                print(appointment.layanan_tambahan_list)
+                print(appointment.hewan)
+                print(appointment.appointment_time)
+
+                # Fetch object Appointment Grooming
+                cursor.execute("""
+                SET SEARCH_PATH TO PUBLIC;
+                SELECT PRODUK_ID 
+                FROM appointmentgrooming_appointmentgrooming_layanan_tambahan  
+                WHERE APPOINTMENTGROOMING_ID= '{0}';
+                """.format(apptgrooming_id))
+                list_tambah_awal = cursor.fetchall()
+
+                print(paket)
+                print("INI LIST BARU",layanan_tambahan)
+                print(hewan)
+                print(appointment_time)
+
+                print("INI LIST AWAL",list_tambah_awal)
+
                 try:
+                    if int(appointment.paket.id) == int(paket) and int(appointment.hewan.hewan_id) == int(hewan):
+                        print("VALUE SAMA")
+                        return render(request, 'error_page.html', {'error_message': 'Data yang diinput tidak ada yang berubah!'})
                     # update appointmentgrooming
                     cursor.execute("""
                         UPDATE appointmentgrooming_appointmentgrooming
