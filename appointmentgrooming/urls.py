@@ -11,4 +11,5 @@ urlpatterns = [
     path('update-appointmentgrooming/<int:apptgrooming_id>', update_appointmentgrooming, name='update_appointmentgrooming'),
     path('update-appointmentgrooming-handler/<int:apptgrooming_id>', update_appointmentgrooming_handler, name='update_appointmentgrooming_handler'),
     path('delete-appointmentgrooming/<int:apptgrooming_id>', delete_appointmentgrooming, name='delete_appointmentgrooming'),
+    path('finished-appointmentgrooming/<int:apptgrooming_id>', finished_appointmentgrooming, name='finished_appointmentgrooming'),
 ]

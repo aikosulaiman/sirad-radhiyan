@@ -89,6 +89,7 @@ def submit_vip_validation(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
+    username = request.session['Username']
     # Mencari user
     cursor.execute("""
     SELECT *
@@ -99,7 +100,8 @@ def submit_vip_validation(request, user_id):
         
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'username': username}
     cursor.close()
     return render(request, 'submit_vip_validation.html', response)
 
@@ -107,6 +109,7 @@ def update_profile(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
+    username = request.session['Username']
     # Mencari user
     cursor.execute("""
     SELECT *
@@ -117,7 +120,8 @@ def update_profile(request, user_id):
         
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'username': username}
     cursor.close()
     return render(request, 'update_profile.html', response)
 
@@ -168,6 +172,7 @@ def tambah_hewan(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
+    username = request.session['Username']
     # Mencari user
     cursor.execute("""
     SELECT *
@@ -178,7 +183,8 @@ def tambah_hewan(request, user_id):
         
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'username': username}
     cursor.close()
     return render(request, 'tambah_hewan.html', response)
 
@@ -191,6 +197,7 @@ def tambah_hewan_handler(request, user_id):
     jenis = request.POST.get('jenis')
     umur = request.POST.get('umur')
     note = request.POST.get('note')
+    username = request.session['Username']
 
     try:
         # update
@@ -215,13 +222,15 @@ def tambah_hewan_handler(request, user_id):
         response = {
             'error_message': e.__cause__,
             'user':user,
-            'user_id': user_id}
+            'user_id': user_id,
+            'username': username}
         return render(request, 'tambah_hewan.html', response)
 
 def update_hewan(request, user_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
+    username = request.session['Username']
     # Mencari user
     cursor.execute("""
     SELECT *
@@ -229,10 +238,14 @@ def update_hewan(request, user_id):
     WHERE hewan_id = '{0}' ;
     """.format(user_id))
     user = cursor.fetchall()
+    list_jenis = ["Kucing", "Anjing", "Kelinci"]
         
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'list_jenis': list_jenis,
+            'username': username}
+            
     cursor.close()
     return render(request, 'update_hewan.html', response)
 
@@ -269,7 +282,8 @@ def update_hewan_handler(request, user_id):
         response = {
             'error_message': error_message,
             'user':user,
-            'user_id': user_id}
+            'user_id': user_id,
+            'username': request.session['Username']}
         return render(request, 'update_hewan.html', response)
 
         
@@ -279,16 +293,31 @@ def update_hewan_handler(request, user_id):
 def delete_hewan(request, hewan_id):
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
-
-    # Mencari user
-    cursor.execute("""
-    DELETE
-    FROM user_hewan
-    WHERE hewan_id = '{0}' ;
-    """.format(hewan_id))
-    cursor.close()
-    success_message = 'Hewan ini berhasil dihapus!'
-    response = {
-            'success_message': 'Hewan ini berhasil dihapus!',
+    try:
+        # Mencari user
+        cursor.execute("""
+        DELETE
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(hewan_id))
+        cursor.close()
+        success_message = 'Hewan ini berhasil dihapus!'
+        response = {
+                'success_message': 'Hewan ini berhasil dihapus!',
+                'username':request.session['Username']}
+        return render(request, 'delete_success.html', response)
+    except IntegrityError:
+        # If the field is not unique, return an error message
+        success_message = 'Hewan tidak dapat dihapus karena memiliki appointment.'
+        cursor.execute("""
+        SELECT *
+        FROM user_hewan
+        WHERE hewan_id = '{0}' ;
+        """.format(hewan_id))
+        user = cursor.fetchall()
+        response = {
+            'success_message': success_message,
+            'user':user,
+            'hewan_id': hewan_id,
             'username':request.session['Username']}
-    return render(request, 'delete_success.html', response)
+        return render(request, 'delete_success.html', response)

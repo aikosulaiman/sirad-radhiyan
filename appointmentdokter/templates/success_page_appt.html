@@ -1,4 +1,4 @@
-{% extends 'static_event.html' %} {% block content %}
+{% extends 'static_appointment.html' %} {% block content %}
 <title>Success Page</title>
 <div class="container">
     <div class="card m-4 p-4">
@@ -6,11 +6,13 @@
             <div class="justify-content-center">
                 <h2>{{ success_message }}</h2>
                 <br>
-                <a class="btn btn-primary px-4" href="/appointmentdokter/">List Appointment Dokter</a>
+                <a class="btn btn-primary px-4" href="/appointmentdokter/">List Appointment Dokter</a> {% if apptdokter_id %}
+                <a class="btn btn-primary px-4" href="/appointmentdokter/read-appointmentdokter/{{ apptdokter_id }}" style="background-color: orange; border-color: orange;">Lihat Detail {{ apptdokter_id }}</a> {% endif %}
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     setTimeout(function() {

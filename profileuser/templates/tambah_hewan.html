@@ -3,7 +3,7 @@
 <script src="https://kit.fontawesome.com/98a151f25f.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
-    <a class="navbar-brand" href='/' style="color:#20a9f8;
+    <a class="navbar-brand" href="/" style="color:#20a9f8;
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
@@ -26,8 +26,8 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -35,8 +35,8 @@
             Grooming
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Create Appointment</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -44,7 +44,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -52,7 +52,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -66,7 +66,8 @@
         </ul>
     </div>
 </nav>
-<br><br>
+<br>
+<br>
 <main id="main">
     <section>
         <div class="container-fluid text-center">
@@ -77,7 +78,7 @@
             font-weight: 600;">Tambah Hewan</h2>
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <a href="/" class="text-left">
+                    <a href="/profile/read-profile/{{ username }}" class="text-left">
                         <p> <i class="fa-solid fa-chevron-left"></i>&nbsp;&nbsp; Profile</p>
                     </a>
                 </div>
@@ -101,9 +102,14 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row mt-4">
-                                        <label for="jenis" class="col-sm-4">Jenis: *</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="jenis" name="jenis" class="form-control" required>
+                                        <label class="col-sm-4">Jenis Hewan: *</label>
+                                        <div class="col-sm-8 text-left">
+                                            <select id="jenis" name="jenis" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                        <option selected value="">Pilih Jenis Hewan</option>
+                                        <option value="Kucing">Kucing</option>
+                                        <option value="Anjing">Anjing</option>
+                                        <option value="Kelinci">Kelinci</option>
+                                    </select>
                                         </div>
                                     </div>
                                 </div>

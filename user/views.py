@@ -1,6 +1,7 @@
 import uuid
 from django.shortcuts import render
 from .models import User, Produk, Customer
+from appointmentgrooming.models import AppointmentGrooming
 from .forms import UserForm, CustomerForm, ProdukForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError, connection
@@ -27,7 +28,8 @@ def add_user(request):
                     return HttpResponseRedirect('/user/list-user')
                 else:
                     form.add_error(None, "Username or email already exists, please choose another one!")
-            response = {'form': form}
+            response = {'form': form,
+                        'username':request.session['Username']}
             return render(request, 'user_add.html', response)
         else:
             context = {
@@ -53,7 +55,8 @@ def list_user(request):
                         'user_customer':user_customer,
                         'user_dokter':user_dokter,
                         'user_groomer':user_groomer,
-                        'user_karyawan':user_karyawan
+                        'user_karyawan':user_karyawan,
+                        'username':request.session['Username']
                         }
             return render(request, 'user_list.html', response)
         else:
@@ -84,7 +87,8 @@ def update_user(request, user_id):
                 
             response = {
                     'user_id':user_id,
-                    'user':user,}
+                    'user':user,
+                    'username':request.session['Username']}
             cursor.close()
             return render(request, 'user_update.html', response)
         else:
@@ -129,7 +133,8 @@ def update_user_handler(request, user_id):
                 response = {
                     'error_message': error_message,
                     'user':user,
-                    'user_id': user_id}
+                    'user_id': user_id,
+                    'username':request.session['Username']}
                 cursor.close()
                 return render(request, 'user_update.html', response)
         else:
@@ -147,6 +152,7 @@ def list_customer(request):
 
             response = {
                         'customer':customer,
+                        'username':request.session['Username']
                         }
             return render(request, 'customer_list.html', response)
         else:
@@ -172,16 +178,41 @@ def customer_registration(request):
             return HttpResponseRedirect('/login')
         else:
             form.add_error(None, "Username or email already exists, please choose another one!")
-    response = {'form': form}
+    response = {'form': form,}
     return render(request, 'customer_registration.html', response)
 
 def list_produk(request):
+    cursor = connection.cursor()
+    response = {}
+
     if is_authenticated(request):
         if request.session['Role'] == 'Admin':
+            cursor.execute("SET SEARCH_PATH TO PUBLIC;")
             layanan = Produk.objects.filter(jenis="Layanan")
             produk = Produk.objects.filter(jenis="Produk") 
+            
+            # Fetch all id paket (produk)
+            cursor.execute("""
+            SET SEARCH_PATH TO PUBLIC;
+            SELECT paket_id 
+            FROM appointmentgrooming_appointmentgrooming;
+            """)
+            paket_id = cursor.fetchall()
+            paket_id_all = [x[0] for x in paket_id]
 
-            response = {'layanan':layanan, 'produk':produk}
+            # Fetch all id layanan tambahan (layanan)
+            cursor.execute("""
+            SET SEARCH_PATH TO PUBLIC;
+            SELECT produk_id 
+            FROM appointmentgrooming_appointmentgrooming_layanan_tambahan;
+            """)
+            layanan_id = cursor.fetchall()
+            layanan_id_all = [x[0] for x in layanan_id]
+    
+            cursor.close()
+
+            
+            response = {'layanan':layanan, 'produk':produk, 'paket_id_all':paket_id_all, 'layanan_id_all':layanan_id_all, 'username':request.session['Username']}
             return render(request, 'produk_list.html', response)
         else:
             context = {
@@ -205,7 +236,7 @@ def add_produk(request):
             return render(request, 'produk_add.html', response)
         else:
             context = {
-            'error_message': 'Access denied!'}
+            'error_message': 'Access denied!', 'username':request.session['Username']}
             return render(request, 'error_page.html', context)
     else:
         return HttpResponseRedirect("/login")
@@ -234,7 +265,8 @@ def update_produk(request, produk_id):
             response = {
                     'produk_id':produk_id,
                     'produk':produk,
-                    'status':status}
+                    'status':status,
+                    'username':request.session['Username']}
             cursor.close()
             return render(request, 'produk_update.html', response)
         else:
@@ -277,7 +309,8 @@ def update_produk_handler(request, produk_id):
                 response = {
                     'error_message': error_message,
                     'produk':produk,
-                    'produk_id': produk_id}
+                    'produk_id': produk_id,
+                    'username':request.session['Username']}
                 cursor.close()
                 return render(request, 'produk_update.html', response)
         else:

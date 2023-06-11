@@ -8,6 +8,13 @@ STATUS_CHOICES = [
     ('Belum diadopsi', 'Belum diadopsi'),
     ('Diadopsi', 'Diadopsi'),
 ]
+
+HEWAN_CHOICES = [
+    ('Kucing', 'Kucing'),
+    ('Anjing', 'Anjing'),
+    ('Kelinci', 'Kelinci'),
+]
+
 class Adopsi(models.Model):
     hewan_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nama = models.CharField(max_length=1000)
@@ -26,3 +33,4 @@ class Register_Adopsi(models.Model):
     date = models.DateTimeField()
     status = models.CharField(max_length=50, blank=False, null=False, default='Menunggu konfirmasi')
     date_adopted = models.DateTimeField(default=timezone.now)
+    alasan = models.TextField(default="")

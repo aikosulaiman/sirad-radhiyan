@@ -1,65 +1,71 @@
 {% extends 'static.html' %} {% block content %}
-<title>Detail Adopsi</title>
+<title>Register Adopsi</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #a8d3f1;">
     <a class="navbar-brand" href="/" style="color:#20a9f8;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;">RAD</span>
-  </a>
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">SI<span class="navbar-brand" style="color:#F8241C;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: 600;">RAD</span>
+    </a>
+    <!-- <a class="navbar-brand" href="/">
+        <div class="logo-image">
+            <img src="SIRADLOGO.png" alt="img" style="max-width: 20px; max-height: 24px"></img>
+        </div>
+    </a> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dokter
-      </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
-                <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Grooming
-      </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
-                <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Event
-      </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/event/">List Event</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Adopsi
-      </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
-            </div>
-        </li>
-    </ul>
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
-        </li>
-    </ul>
-</div>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dokter
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentdokter/create-appointmentdokter">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Grooming
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/appointmentgrooming/create-appointmentgrooming">Create Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/event/">List Event</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Adopsi
+          </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/read-profile/{{ username }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
 </nav>
+
 <br><br>
 
 <head>
@@ -119,7 +125,16 @@
                                         </div>                                     
                                     </div>
                                 </div>
-                                <br>
+                                <div class="form-group">
+                                    <div class="row mt-4">
+                                        <label class="col-sm-12 text-left"><i class="fa-solid fa-pencil"></i>&nbsp;&nbsp;Alasan Adopsi:</label>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-4" style="text-align: right;">
+                                            <textarea name="alasan" cols="40" id="alasan" placeholder="e.g. Saya berpengalaman memelihara kucing selama 5 tahun. dst." required></textarea><br>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                   <div class="row mt-8">
                                       <i class="col-sm-12 text-left" style="color: #17177e;"><i class="fa-solid fa-circle-info"></i>&nbsp;&nbsp;NOTE:</i>
@@ -175,7 +190,7 @@
                                 </div>
                             </div>                           
                               <div class="mt-5 text-center">
-                                      <button class="btn btn-primary px-4" type="submit" onclick="return confirm('⚠️ Apakah Anda yakin ingin mengajukan Adopsi ini?')">Ajukan Adopsi</button>
+                                      <button class="btn btn-primary px-4" type="submit">Ajukan Adopsi</button>
                               </div>
                         </div>
                         </div>        

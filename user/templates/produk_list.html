@@ -28,7 +28,7 @@
             Dokter
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentdokter/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -37,7 +37,7 @@
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/user/list-produk">Layanan Master Data</a>
-                    <a class="dropdown-item" href="#">List Appointment</a>
+                    <a class="dropdown-item" href="/appointmentgrooming/">List Appointment</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -45,7 +45,7 @@
             Event
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/event">List Event</a>
+                    <a class="dropdown-item" href="/event/">List Event</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -53,7 +53,7 @@
             Adopsi
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">List Adopsi</a>
+                    <a class="dropdown-item" href="/adopsi/">List Adopsi</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -61,10 +61,10 @@
             Statistik
           </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Statistik Dokter</a>
-                    <a class="dropdown-item" href="#">Statistik Grooming</a>
-                    <a class="dropdown-item" href="#">Statistik Event</a>
-                    <a class="dropdown-item" href="#">Statistik Adopsi</a>
+                    <a class="dropdown-item" href="/statistik/statistik-dokter">Statistik Dokter</a>
+                    <a class="dropdown-item" href="/statistik/statistik-grooming">Statistik Grooming</a>
+                    <a class="dropdown-item" href="/statistik/statistik-event">Statistik Event</a>
+                    <a class="dropdown-item" href="/statistik/statistik-adopsi">Statistik Adopsi</a>
                 </div>
             </li>
         </ul>
@@ -78,6 +78,8 @@
         </ul>
     </div>
 </nav>
+<br>
+<br>
 <style>
     .containers {
         padding: 16px 16px;
@@ -134,7 +136,9 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{% if produk.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
                                 <td class="text-center">
                                     <a class="btn btn-info" href="/user/update-produk/{{ produk.id }}">Update</a>
-                                    <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
+                                    {% if produk.id not in paket_id_all%}
+                                        <a class="btn btn-danger" href="/user/delete-produk/{{ produk.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -165,7 +169,9 @@
                                 <td style="font-family: 'Poppins', sans-serif;">{% if layanan.status %}Tersedia{% else %}Tidak tersedia{% endif %}</td>
                                 <td class="text-center">
                                     <a class="btn btn-info" href="/user/update-produk/{{ layanan.id }}">Update</a>
-                                    <a class="btn btn-danger" href="/user/delete-produk/{{ layanan.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus layanan ini?')">Delete</a>
+                                    {% if layanan.id not in layanan_id_all %}
+                                        <a class="btn btn-danger" href="/user/delete-produk/{{ layanan.id }}" onclick="return confirm('⚠️ Apakah anda yakin ingin menghapus layanan ini?')">Delete</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}

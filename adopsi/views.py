@@ -21,6 +21,7 @@ def create_adopsi(request):
     if is_authenticated(request):
         if request.session['Role'] == 'Karyawan':
             form = AdopsiForm()
+            username = request.session['Username']
             if request.method == 'POST':
                 form = AdopsiForm(request.POST or None)
                 if form.is_valid():
@@ -32,23 +33,28 @@ def create_adopsi(request):
                 else:
                     print("FORM ERROR:\n")
                     print(form.errors)
-                    print("\nItu errornya di atas")
-            return render(request, 'create_adopsi.html', {'form': form})
+            return render(request, 'create_adopsi.html', {'form': form, 'username': username})
         else:
             context = {
             'error_message': 'Access denied!'}
             return render(request, 'adopt_error.html', context)
     else:
-        return HttpResponseRedirect("/adopsi")
+        return HttpResponseRedirect("/adopsi/")
 
 def list_hewan_adopsi(request):
-    all_hewan = Adopsi.objects.all().values
+    if request.session['Role'] == 'Customer':
+        all_hewan = Adopsi.objects.filter(status="Belum diadopsi")
+    else:
+        all_hewan = Adopsi.objects.all().values
 
+    username = request.session['Username']
     context = {
         'all_hewan': all_hewan,
+        'username': username
     }
 
     return render(request, 'list_hewan_adopsi.html', context)
+
 
 def update_adopsi(request, user_id):
     cursor = connection.cursor()
@@ -61,10 +67,14 @@ def update_adopsi(request, user_id):
     WHERE hewan_id = '{0}' ;
     """.format(user_id))
     user = cursor.fetchall()
+    list_jenis = ["Kucing", "Anjing", "Kelinci"]
         
+    username = request.session['Username']
     response = {
             'user_id':user_id,
-            'user':user,}
+            'user':user,
+            'list_jenis': list_jenis,
+            'username': username}
     cursor.close()
     return render(request, 'update_adopsi.html', response)
 
@@ -97,15 +107,17 @@ def update_adopsi_handler(request, user_id):
         WHERE id = '{0}' ;
         """.format(user_id))
         user = cursor.fetchall()
+        username = request.session['Username']
         response = {
             'error_message': error_message,
             'user':user,
-            'user_id': user_id}
+            'user_id': user_id,
+            'username': username}
         return render(request, 'update_adopsi.html', response)
 
         
     cursor.close()
-    return HttpResponseRedirect('/adopsi')
+    return HttpResponseRedirect('/adopsi/')
 
 def delete_adopsi(request, hewan_id):
     if is_authenticated(request):
@@ -113,13 +125,13 @@ def delete_adopsi(request, hewan_id):
             hewan_adopsi = Adopsi.objects.get(hewan_id=hewan_id)
 
             hewan_adopsi.delete()
-            return HttpResponseRedirect('/adopsi')
+            return HttpResponseRedirect('/adopsi/')
         else:
             context = {
             'error_message': 'Akses Ditolak!'}
             return render(request, 'error_page.html', context)
     else:
-        return HttpResponseRedirect("/adopsi")
+        return HttpResponseRedirect("/adopsi/")
 
 def read_adopsi(request, hewan_id):
     cursor = connection.cursor()
@@ -161,12 +173,10 @@ def read_adopsi(request, hewan_id):
                     for i in reg_adopsi_filtered:                         
                          if i.customer == customer: # Restrict button daftar adopsi untuk Customer yang telah mendaftar????
                             button_bool = 1 
-                        
-
-                for i in reg_adopsi_filtered:  
-                    print(i.id)
+                     
                 response['reg_adopsi'] = reg_adopsi_filtered
                 response['button_bool'] = button_bool
+                response['username'] = request.session['Username']
                 return render(request, 'read_adopsi.html', response)
     else:
         return HttpResponseRedirect("/login")
@@ -194,14 +204,17 @@ def register_adopsi(request, hewan_id):
                 except Adopsi.DoesNotExist:
                     return redirect('list_adopsi')
 
+                username = request.session['Username']
                 response = {
                     'adopsi': adopsi,
-                    'customer': customer
+                    'customer': customer,
+                    'username': username
                 }
                 if request.method == 'POST':
                     date = datetime.now()
                     status = "Menunggu konfirmasi"
                     id = shortuuid.uuid()[:6]
+                    alasan = request.POST.get('alasan')
 
                     register_adopsi = Register_Adopsi(customer=customer, hewan=adopsi, date=date)
                     # register_adopsi.save()
@@ -209,13 +222,12 @@ def register_adopsi(request, hewan_id):
                     cursor.execute("SET SEARCH_PATH TO PUBLIC;")
 
                     cursor.execute("""
-                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted)
-                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');
-                        """.format(id, date, customer.id, hewan_id, status, date)) 
+                        INSERT INTO adopsi_register_adopsi(id, date, customer_id, hewan_id, status, date_adopted, alasan)
+                        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');
+                        """.format(id, date, customer.id, hewan_id, status, date, alasan)) 
                     
                     reg_event_filtered = Register_Adopsi.objects.filter(hewan=adopsi)
                     jumlah_pendaftar= reg_event_filtered.count()
-                    print(reg_event_filtered)
                     
                     cursor.execute("""
                     UPDATE adopsi_adopsi
@@ -237,7 +249,7 @@ def register_adopsi(request, hewan_id):
             'error_message': 'Akses Ditolak!'}
             return render(request, 'adopt_error.html', context)
     else:
-        return HttpResponseRedirect("/adopsi")
+        return HttpResponseRedirect("/adopsi/")
 
 
 def list_adopsi_customer(request):
@@ -253,10 +265,11 @@ def list_adopsi_customer(request):
     #     list_adopsi_customer.append(hewan)
     #     list_adopsi_status.append(i.status)
 
-    
+    username = request.session['Username']
     context = {
         # 'list_adopsi_customer': list_adopsi_customer,
-        'reg_adopsi': reg_adopsi_filtered
+        'reg_adopsi': reg_adopsi_filtered,
+        'username': username
     }
 
     return render(request, 'list_adopsi_customer.html', context)

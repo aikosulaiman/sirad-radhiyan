@@ -6,7 +6,10 @@ STATUS_CHOICES = [
     ('Menunggu Konfirmasi', 'Menunggu Konfirmasi'),
     ('Disetujui', 'Disetujui'),
     ('Ditolak', 'Ditolak'),
+    ('Dibatalkan', 'Dibatalkan'),
+    ('Selesai', 'Selesai'),
 ]
+
 
 class AppointmentDokter(models.Model):
     appointment_id = models.CharField(max_length=10, unique=True)
@@ -16,6 +19,7 @@ class AppointmentDokter(models.Model):
     appointment_time = models.DateTimeField()
     status = models.CharField(choices=STATUS_CHOICES, max_length=40, blank=False, null=False, default='Menunggu Konfirmasi')
     keluhan = models.TextField(blank=True, null=True)
+    alasan = models.CharField(max_length=500, null=True, default='')
     def save(self, *args, **kwargs):   
         # check if appointment_id has been set, otherwise generate it
         if not self.appointment_id:
